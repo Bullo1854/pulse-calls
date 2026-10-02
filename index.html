@@ -42,7 +42,8 @@
     .readout .slim { padding: 4px 0; }
     .readout .slim b { font-size: 14px; }
     .readout .slim > span span { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .readout h1 { font-size: 20px; margin: 8px 0 2px; }
+    .hot { color: var(--call); font-weight: 560; }
+    .tipbox { min-height: 2.6em; font-size: 13px; margin: 6px 0 0; }
     .filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 0; }
     .filters select, .storefilter { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 10px; font: inherit; font-size: 14px; }
     .storefilter { margin-top: 8px; }
@@ -236,9 +237,10 @@
           const eh = Math.max(2, d.exp / max * 32);
           const ah = Math.max(2, Math.abs(d.net) / max * 32);
           const beat = d.net >= d.exp * 0.97;
-          return `<rect x="${x + 6}" y="${36 - eh}" width="8" height="${eh}" rx="1.5" fill="#e4d8c8"><title>${d.wd} own pace ${money(d.exp)}</title></rect>
-                  <rect x="${x + 18}" y="${d.net < 0 ? 36 : 36 - ah}" width="8" height="${ah}" rx="1.5" fill="${beat ? "#1d5c40" : "#8d3419"}"><title>${d.wd} net ${money(d.net)} versus ${money(d.exp)} pace</title></rect>
-                  <text x="${x + 16}" y="45" font-size="8" fill="#8d847a" text-anchor="middle">${d.wd[0]}</text>`;
+          return `<g data-tip="${d.wd}: ${money(d.net)} versus ${money(d.exp)} own pace">
+                  <rect x="${x + 6}" y="${36 - eh}" width="8" height="${eh}" rx="1.5" fill="#e4d8c8"/>
+                  <rect x="${x + 18}" y="${d.net < 0 ? 36 : 36 - ah}" width="8" height="${ah}" rx="1.5" fill="${beat ? "#1d5c40" : "#8d3419"}"/>
+                  <text x="${x + 16}" y="45" font-size="8" fill="#8d847a" text-anchor="middle">${d.wd[0]}</text></g>`;
         }).join("")}
       </svg>`;
     }
@@ -248,7 +250,7 @@
       const x = (p) => 16 + (Math.max(min, Math.min(max, p)) - min) / (max - min) * 300;
       const dots = rows.map((r) => {
         const color = r.pct <= -30 ? "#8d3419" : r.pct < 0 ? "#8a5a16" : "#1d5c40";
-        return `<circle cx="${x(r.pct)}" cy="28" r="${r.pct <= -30 ? 6 : 4}" fill="${color}"><title>${r.s.name}: ${pct(r.pct)} and ${money(r.gap)}</title></circle>`;
+        return `<circle cx="${x(r.pct)}" cy="28" r="${r.pct <= -30 ? 7 : 5}" fill="${color}" data-tip="${r.s.name}: ${pct(r.pct)} and ${money(r.gap)}"></circle>`;
       }).join("");
       return `<svg viewBox="0 0 332 52" role="img" aria-label="Every store on the percent off pace scale">
         <line x1="16" y1="28" x2="316" y2="28" stroke="#cfc4b4"/>
@@ -266,16 +268,10 @@
       const dayMode = state.mode !== "week";
       const idx = dayMode ? allDays.indexOf(state.day) : weeks.findIndex((w) => w.as_of === D.as_of);
       const rows = scoped.map((s) => {
-        if (!dayMode) return { s, pct: s.adj_pct, gap: s.adj_gap, note: positive(s).title };
+        const w = worstShift(s);
+        const note = `<span class="hot">${w.label} ${pct(w.pct)}</span>`;
+        if (!dayMode) return { s, pct: s.adj_pct, gap: s.adj_gap, note };
         const v = daySnap(s);
-        const soft = [
-          ["SPG", v.spgPace ? (v.spg - v.spgPace) / v.spgPace * 100 : 0],
-          ["Ticket", v.ticketPace ? (v.ticket - v.ticketPace) / v.ticketPace * 100 : 0],
-          ["SPH", v.sphPace ? (v.sph - v.sphPace) / v.sphPace * 100 : 0],
-          ["Traffic", v.trafPct],
-          ["Close", v.close - v.closePace]
-        ].sort((a, b) => a[1] - b[1])[0];
-        const note = v.pacePct >= 0 ? "Ahead of the same " + v.d.wd : soft[1] <= -15 ? soft[0] + " " + pct(soft[1]) : "Off the same " + v.d.wd;
         return { s, pct: v.pacePct, gap: v.gap, note };
       }).sort((a, b) => a.pct - b.pct);
       const calls = rows.filter((r) => r.pct <= -30);
@@ -308,6 +304,7 @@
           ${calls.length ? calls.map((r) => row(r, true)).join("") : `<p class="note">None in this filter.</p>`}
         </section>
         <div class="zrow">${dotPlot(rows)}</div>
+        <p class="tipbox" id="plot-tip">Tap a dot for the store.</p>
         <div class="legend"><span><i class="sw" style="background:#8d3419"></i>30% or more off</span><span><i class="sw" style="background:#8a5a16"></i>Under</span><span><i class="sw" style="background:#1d5c40"></i>On pace</span></div>
         <h3 class="sec">The rest</h3>
         ${rest.map((r) => row(r, false)).join("")}
@@ -321,6 +318,11 @@
       document.getElementById("mm-filter").onchange = (e) => { state.manager = e.target.value; save(); render(); };
       document.getElementById("store-filter").onchange = (e) => { state.store = e.target.value; save(); render(); };
       document.querySelectorAll("[data-open]").forEach((b) => b.onclick = () => openSheet(evidence(b.dataset.open)));
+      document.querySelectorAll("[data-tip]").forEach((el) => el.onclick = (e) => {
+        e.stopPropagation();
+        const box = document.getElementById("plot-tip");
+        if (box) box.textContent = el.getAttribute("data-tip");
+      });
       const m = document.getElementById("open-method");
       if (m) m.onclick = () => openSheet(methodSheet());
     }
@@ -387,16 +389,37 @@
         ["Close", close == null ? "—" : close.toFixed(0) + "%", `${closePts >= 0 ? "+" : "−"}${Math.abs(closePts).toFixed(1)} pts vs ${closePace == null ? "—" : closePace.toFixed(0)}% habit`, closePts <= -3 ? "bad" : closePts >= 2 ? "good" : "", "Close rate versus habit."],
         ["Weather", wx.high + "°", `${tempGap >= 0 ? "+" : "−"}${Math.abs(tempGap).toFixed(0)}° vs last year · ${inches} in vs ${lyIn} in`, inches > lyIn + 0.4 ? "bad" : "", "High " + wx.high + "° versus " + ly.high + "° last year."]
       ];
-      return `<div class="mcards">${cards.map(([name, big, sub, tone, title]) => `<div class="mcard ${tone}" title="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
+      return `<div class="mcards">${cards.map(([name, big, sub, tone, title]) => `<div class="mcard ${tone}" data-tip="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
     }
-    function positive(s) {
-      if (s.adj_pct < 0) return { title: s.title, say: s.say };
-      const soft = (s.metrics || []).filter((m) => m.pct <= -10).sort((a, b) => a.pct - b.pct)[0];
-      const title = s.adj_pct >= 15 ? "Ahead of its own pace" : "Holding its pace";
-      const say = soft
-        ? `The week is ${pct(s.adj_pct)} after weather. Keep what is working, and still look at ${shortMetric(soft.label)} — ${pct(soft.pct)} versus this store’s habit.`
-        : `The week is ${pct(s.adj_pct)} after weather, and SPG, ticket, and SPH are inside the habit. Protect the Saturday crew. Do not add a discount to a week that is already ahead.`;
-      return { title, say };
+    function worstShift(s) {
+      const dayMode = state.mode !== "week";
+      const v = dayMode ? daySnap(s) : null;
+      const shifts = dayMode ? [
+        ["SPG", v.spgPace ? (v.spg - v.spgPace) / v.spgPace * 100 : 0],
+        ["SPH", v.sphPace ? (v.sph - v.sphPace) / v.sphPace * 100 : 0],
+        ["Ticket", v.ticketPace ? (v.ticket - v.ticketPace) / v.ticketPace * 100 : 0],
+        ["Traffic", v.trafPct],
+        ["Close", v.close - v.closePace]
+      ] : [
+        ["SPG", ((s.metrics || []).find((m) => m.label === "Sales per guest") || {}).pct || 0],
+        ["SPH", ((s.metrics || []).find((m) => m.label === "Sales per hour") || {}).pct || 0],
+        ["Ticket", ((s.metrics || []).find((m) => m.label === "Average ticket") || {}).pct || 0],
+        ["Traffic", s.expected.traf ? (s.actual.traf - s.expected.traf) / s.expected.traf * 100 : 0],
+        ["Close", (s.rates.close || 0) - (s.base_rates.close || 0)]
+      ];
+      shifts.sort((a, b) => a[1] - b[1]);
+      return { label: shifts[0][0], pct: shifts[0][1] };
+    }
+    function coachBlurb(s) {
+      const w = worstShift(s);
+      const lines = {
+        SPG: "Guests came. The ticket did not. One-up the next open, and do not buy it with a discount.",
+        SPH: "The hours did not pay for themselves. Match posted hours to who actually worked.",
+        Ticket: "The ticket shrank. Step the mattress, then the base, then the care plan.",
+        Traffic: "The door slowed and the weather does not explain it. Check the circular and the road sign.",
+        Close: "Traffic did not turn into tickets. Watch the first sit. No one works a guest alone."
+      };
+      return w.label + " is the worst shift, " + pct(w.pct) + ". " + lines[w.label];
     }
     function metricFlags(s) {
       return (s.metrics || []).filter((m) => m.pct <= -15);
@@ -433,10 +456,11 @@
         const label = spec.money
           ? `${d.wd}: ${money(d.act)} versus ${money(d.exp)} own pace, ${pct(d.gap)}`
           : `${d.wd}: $${Math.round(d.act)} versus $${Math.round(d.exp)} own pace, ${pct(d.gap)}`;
-        return `<rect x="${x + 4}" y="${58 - eh}" width="10" height="${eh}" rx="1.5" fill="#e4d8c8"><title>${tip(label)}. Sand is own pace.</title></rect>
-                <rect x="${x + 16}" y="${58 - ah}" width="10" height="${ah}" rx="1.5" fill="${d.gap < -15 ? "#8d3419" : "#1d5c40"}"><title>${tip(label)}. Ink is the day.</title></rect>
+        return `<g data-tip="${tip(label)}">
+                <rect x="${x + 4}" y="${58 - eh}" width="10" height="${eh}" rx="1.5" fill="#e4d8c8"/>
+                <rect x="${x + 16}" y="${58 - ah}" width="10" height="${ah}" rx="1.5" fill="${d.gap < -15 ? "#8d3419" : "#1d5c40"}"/>
                 <text x="${x + 15}" y="72" font-size="8" fill="#8d847a" text-anchor="middle">${d.wd[0]}</text>
-                <text x="${x + 15}" y="82" font-size="8" fill="${d.gap < -15 ? "#8d3419" : "#6d645b"}" text-anchor="middle">${pct(d.gap)}</text>`;
+                <text x="${x + 15}" y="82" font-size="8" fill="${d.gap < -15 ? "#8d3419" : "#6d645b"}" text-anchor="middle">${pct(d.gap)}</text></g>`;
       }).join("");
       return `<p class="note" style="margin:12px 0 4px"><b>${spec.label}</b> · ${spec.week}</p>
         <svg viewBox="0 0 280 86" width="100%" height="86" role="img" aria-label="${tip(spec.label + " by day versus own pace")}">
@@ -488,9 +512,10 @@
           const x = i * 40;
           const h1 = d.wx.inches / max * 36;
           const h2 = d.ly.inches / max * 36;
-          return `<rect x="${x + 6}" y="${40 - h1}" width="8" height="${Math.max(h1, 1)}" fill="#31556a"/>
+          return `<g data-tip="${d.wd}: ${d.wx.inches} in, high ${d.wx.high}° versus ${d.ly.inches} in and ${d.ly.high}° last year">
+                  <rect x="${x + 6}" y="${40 - h1}" width="8" height="${Math.max(h1, 1)}" fill="#31556a"/>
                   <rect x="${x + 18}" y="${40 - h2}" width="8" height="${Math.max(h2, 1)}" fill="#c9dde6"/>
-                  <text x="${x + 16}" y="54" font-size="8" fill="#8d847a" text-anchor="middle">${d.wd}</text>`;
+                  <text x="${x + 16}" y="54" font-size="8" fill="#8d847a" text-anchor="middle">${d.wd}</text></g>`;
         }).join("")}
         <text x="0" y="62" font-size="8" fill="#31556a">This week</text>
         <text x="70" y="62" font-size="8" fill="#8aa4b0">Last year</text>
@@ -513,7 +538,9 @@
         <h2>${s.name}</h2>
         <p class="meta">${s.zone} · ${s.climate}</p>
         ${metricCards(s)}
-        ${state.mode === "week" ? weekSvg(s) + wxSvg(s) : ""}
+        <p class="note">${coachBlurb(s)}</p>
+        ${state.mode === "week" ? weekSvg(s) + wxSvg(s) + metricCharts(s) : ""}
+        <p class="tipbox" id="sheet-tip">Tap a bar or a card for the numbers.</p>
         <label>Entered by</label>
         <input id="who" list="who-list" placeholder="Search a manager" value="${log ? log.who : ""}" style="width:100%;border:1px solid var(--line-strong);background:var(--card);border-radius:10px;padding:8px;font:inherit" />
         <datalist id="who-list">${peopleOptions()}</datalist>
@@ -555,6 +582,11 @@
       sheet.classList.add("open");
       document.getElementById("back").classList.add("open");
       sheet.querySelectorAll("[data-close]").forEach((b) => b.onclick = closeSheet);
+      sheet.querySelectorAll("[data-tip]").forEach((el) => el.onclick = (e) => {
+        e.stopPropagation();
+        const box = document.getElementById("sheet-tip");
+        if (box) box.textContent = el.getAttribute("data-tip");
+      });
       sheet.querySelectorAll("[data-scope]").forEach((b) => b.onclick = () => { state.scope = b.dataset.scope; save(); closeSheet(); render(); });
       sheet.querySelectorAll("[data-review]").forEach((b) => b.onclick = () => {
         state.reviews[b.dataset.review] = { driver: b.dataset.driver, recovered: b.dataset.rec === "true" };
