@@ -5,795 +5,326 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#1b1612" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Calls" />
   <title>Pulse · Calls</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="favicon.png" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@380;460;560&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --paper: #e7e1d5;
-      --sheet: #f6f2ea;
-      --card: #fbf8f2;
-      --ink: #1b1612;
-      --muted: #6d645b;
-      --faint: #8d847a;
-      --line: #ddd4c6;
-      --line-strong: #cfc4b4;
-      --call: #8d3419;
-      --call-soft: #f4e4dc;
-      --ok: #1d5c40;
-      --ok-soft: #e3f0e8;
-      --watch: #8a5a16;
-      --watch-soft: #f6edd9;
-      --stamp: #1b1612;
-      --shadow: 0 16px 40px rgba(48, 32, 16, 0.1);
-      --serif: "Fraunces", "Iowan Old Style", Palatino, serif;
-      --sans: "Outfit", "Avenir Next", "Segoe UI", sans-serif;
+      --paper: #e7e1d5; --sheet: #f6f2ea; --card: #fbf8f2; --ink: #1b1612;
+      --muted: #6d645b; --faint: #8d847a; --line: #ddd4c6; --line-strong: #cfc4b4;
+      --call: #8d3419; --ok: #1d5c40; --watch: #8a5a16; --sand: #e4d8c8;
+      --serif: Fraunces, Palatino, serif; --sans: Outfit, "Avenir Next", sans-serif;
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body {
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-weight: 380;
-      line-height: 1.35;
-      min-height: 100dvh;
-    }
-    button, input { font: inherit; color: inherit; }
-    button { cursor: pointer; }
-    .stage {
-      min-height: 100dvh;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-    }
-    @media (min-width: 1040px) {
-      .stage { grid-template-columns: 460px minmax(0, 1fr); }
-      body { background: #ddd6c8; }
-    }
-    .phone {
-      width: min(100%, 480px);
-      margin: 0 auto;
-      min-height: 100dvh;
-      background: var(--paper);
-      position: relative;
-    }
-    @media (min-width: 1040px) {
-      .phone {
-        margin: 28px auto;
-        min-height: calc(100dvh - 56px);
-        border-radius: 28px;
-        box-shadow: var(--shadow);
-        overflow: hidden;
-      }
-    }
-    .app {
-      padding: calc(18px + env(safe-area-inset-top)) 18px calc(28px + env(safe-area-inset-bottom));
-    }
-    header.top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-    }
-    .mark {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-    .mark b {
-      font-weight: 560;
-      letter-spacing: 0.16em;
-      font-size: 12px;
-    }
-    .mark span {
-      font-family: var(--serif);
-      font-weight: 500;
-      font-size: 22px;
-      letter-spacing: -0.03em;
-    }
-    .fresh {
-      text-align: right;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid var(--line-strong);
-      background: var(--sheet);
-      border-radius: 999px;
-      padding: 4px 9px 4px 7px;
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--watch);
-    }
-    .pill i {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--watch);
-      display: block;
-    }
-    .fresh small {
-      display: block;
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .scope {
-      margin-top: 16px;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: transparent;
-      border: 0;
-      border-bottom: 1px solid var(--line);
-      padding: 8px 0 10px;
-      text-align: left;
-    }
-    .scope .who { font-size: 15px; font-weight: 560; }
-    .scope .sub { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
-    .scope .chg {
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--call);
-    }
-    .figure span { color: var(--muted); font-size: 13px; max-width: 120px; }
-    .hero { margin-top: 12px; }
-    .q {
-      margin: 0;
-      font-family: var(--serif);
-      font-weight: 500;
-      font-size: 30px;
-      letter-spacing: -0.035em;
-      line-height: 0.95;
-    }
-    .figure { margin-top: 8px; display: flex; align-items: baseline; gap: 10px; }
-    .figure strong {
-      font-family: var(--serif);
-      font-weight: 560;
-      font-size: 36px;
-      letter-spacing: -0.04em;
-      color: var(--call);
-      font-variant-numeric: tabular-nums;
-    }
-    .lede { margin: 6px 0 0; font-size: 14px; max-width: 38em; }
-    .chips { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-    .list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
-    .card { padding: 10px 12px 9px; }
-    .card h2 { font-size: 16px; }
-    .title { margin: 6px 0 0; font-size: 15.5px; }
-    .action {
-      margin: 4px 0 0;
-      font-size: 13px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .foot { margin-top: 6px; }
-    .chip {
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      border-radius: 999px;
-      padding: 4px 8px;
-      background: var(--sheet);
-      border: 1px solid var(--line);
-      color: var(--muted);
-    }
-    .chip.daily { color: var(--watch); border-color: #e4d3b0; background: var(--watch-soft); }
-    .note {
-      margin: 12px 0 0;
-      font-size: 12.5px;
-      color: var(--muted);
-    }
-    .list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 10px 12px 8px;
-      text-align: left;
-      width: 100%;
-      box-shadow: 0 1px 0 rgba(255,255,255,0.7) inset;
-    }
-    .card:active { transform: scale(0.992); }
-    .card.called { background: var(--ok-soft); border-color: #c9dfd2; }
-    .card .row1, .card .row2 { display: flex; justify-content: space-between; gap: 8px; }
-    .idx {
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      color: var(--faint);
-    }
-    .gap {
-      font-family: var(--serif);
-      font-size: 22px;
-      letter-spacing: -0.03em;
-      color: var(--call);
-      font-variant-numeric: tabular-nums;
-    }
-    .card h2 {
-      margin: 1px 0 0;
-      font-size: 16px;
-      font-weight: 560;
-      letter-spacing: -0.02em;
-    }
-    .meta { color: var(--muted); font-size: 12px; margin-top: 1px; }
-    .title {
-      margin: 5px 0 0;
-      font-family: var(--serif);
-      font-size: 15.5px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-    }
-    .action {
-      margin: 3px 0 0;
-      font-size: 13px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .foot {
-      margin-top: 6px;
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      color: var(--faint);
-      font-size: 11px;
-      letter-spacing: 0.01em;
-    }
-    .stamp {
-      color: var(--ok);
-      font-weight: 560;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-size: 10px;
-    }
-    h3.sec {
-      margin: 20px 0 8px;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--faint);
-      font-weight: 560;
-    }
-    .slim {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: baseline;
-      background: transparent;
-      border: 0;
-      border-top: 1px solid var(--line);
-      padding: 9px 0;
-      text-align: left;
-    }
-    .slim b { font-weight: 560; font-size: 14px; }
-    .slim span { color: var(--muted); font-size: 12px; display: block; }
-    .slim em {
-      font-style: normal;
-      font-variant-numeric: tabular-nums;
-      font-family: var(--serif);
-      font-size: 16px;
-      color: var(--watch);
-    }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-weight: 380; line-height: 1.35; }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    .phone { width: min(100%, 480px); margin: 0 auto; min-height: 100dvh; background: var(--paper); }
+    .app { padding: calc(16px + env(safe-area-inset-top)) 16px 36px; }
+    header.top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .mark b { letter-spacing: 0.16em; font-size: 12px; font-weight: 560; }
+    .mark span { display: block; font-family: var(--serif); font-size: 22px; }
+    .pill { display: inline-flex; gap: 6px; align-items: center; border: 1px solid var(--line-strong); background: var(--sheet); border-radius: 999px; padding: 4px 9px; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--watch); }
+    .pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--watch); }
+    .fresh { text-align: right; }
+    .fresh small { display: block; margin-top: 6px; color: var(--muted); }
+    .scope { width: 100%; display: flex; justify-content: space-between; align-items: center; background: none; border: 0; border-bottom: 1px solid var(--line); padding: 10px 0; text-align: left; }
+    .scope .who { font-weight: 560; }
+    .scope .sub { display: block; color: var(--muted); font-size: 12px; }
+    .scope .chg { color: var(--call); letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; }
+    h1 { font-family: var(--serif); font-weight: 500; font-size: 30px; letter-spacing: -0.03em; margin: 14px 0 4px; }
+    .lede { margin: 0; font-size: 14.5px; }
+    .zrow { margin: 12px 0 4px; }
+    .zrow svg { width: 100%; height: 78px; display: block; }
+    .legend { display: flex; gap: 12px; color: var(--faint); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
+    .sw { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+    .card, .slim { width: 100%; text-align: left; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px; margin-top: 10px; }
+    .card .topr, .slim { display: flex; justify-content: space-between; gap: 8px; }
+    .z { font-family: var(--serif); font-size: 28px; color: var(--call); letter-spacing: -0.03em; }
+    .z small { font-family: var(--sans); font-size: 11px; color: var(--faint); letter-spacing: 0.08em; display: block; }
+    h2 { margin: 2px 0 0; font-size: 18px; font-weight: 560; }
+    .meta, .note { color: var(--muted); font-size: 12.5px; }
+    .title { font-family: var(--serif); font-size: 17px; margin: 6px 0 0; }
+    .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .chip { font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; color: var(--muted); background: var(--sheet); }
+    .chip.daily { color: var(--watch); background: #f6edd9; border-color: #e4d3b0; }
+    .chip.wx { color: #31556a; background: #e7f0f4; border-color: #c9dde6; }
+    h3.sec { margin: 18px 0 4px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); }
+    .slim { background: transparent; border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 9px 0; margin: 0; }
+    .slim b { font-weight: 560; }
+    .slim span { display: block; color: var(--muted); font-size: 12px; }
+    .slim em { font-style: normal; font-family: var(--serif); color: var(--watch); }
     .slim.ok em { color: var(--ok); }
-    .learn {
-      margin-top: 18px;
-      background: var(--sheet);
-      border-radius: 16px;
-      padding: 12px;
-      border: 1px solid var(--line);
-    }
-    .learn p { margin: 6px 0 0; font-size: 13.5px; }
-    .weeks { display: flex; gap: 4px; align-items: flex-end; height: 46px; margin-top: 10px; }
-    .weeks i {
-      flex: 1;
-      background: #e4d3c4;
-      border-radius: 3px 3px 0 0;
-      position: relative;
-      min-height: 4px;
-    }
-    .weeks i b {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      background: var(--call);
-      border-radius: 3px 3px 0 0;
-    }
-    .tie {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .tie strong { color: var(--ink); font-weight: 560; font-variant-numeric: tabular-nums; }
-    .textbtn {
-      background: none;
-      border: 0;
-      padding: 0;
-      color: var(--call);
-      font-size: 13px;
-      letter-spacing: 0.01em;
-    }
-    .empty {
-      margin-top: 16px;
-      padding: 16px;
-      border: 1px dashed var(--line-strong);
-      border-radius: 16px;
-    }
-    .empty h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 26px; letter-spacing: -0.03em; }
-    .empty p { color: var(--muted); }
-
-    .sheet-back {
-      position: fixed;
-      inset: 0;
-      background: rgba(28, 22, 16, 0.38);
-      z-index: 20;
-      display: none;
-    }
+    .learn { background: var(--sheet); border: 1px solid var(--line); border-radius: 16px; padding: 12px; margin-top: 14px; }
+    .barline { display: grid; grid-template-columns: 78px 1fr 52px; gap: 8px; align-items: center; font-size: 12.5px; margin-top: 6px; }
+    .track { height: 8px; background: #efe7dc; border-radius: 99px; overflow: hidden; }
+    .track b { display: block; height: 100%; background: var(--ok); }
+    .tie { color: var(--muted); font-size: 12px; }
+    .textbtn { background: none; border: 0; padding: 0; color: var(--call); }
+    .sheet-back { position: fixed; inset: 0; background: rgba(28,22,16,.4); display: none; z-index: 20; }
     .sheet-back.open { display: block; }
-    .sheet {
-      position: fixed;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: min(480px, 100%);
-      max-height: min(88dvh, 760px);
-      overflow: auto;
-      background: var(--sheet);
-      border-radius: 22px 22px 0 0;
-      z-index: 21;
-      padding: 10px 18px calc(22px + env(safe-area-inset-bottom));
-      box-shadow: var(--shadow);
-      display: none;
-    }
+    .sheet { position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); width: min(480px, 100%); max-height: 88dvh; overflow: auto; background: var(--sheet); border-radius: 20px 20px 0 0; z-index: 21; padding: 12px 16px 28px; display: none; }
     .sheet.open { display: block; }
-    .grab {
-      width: 36px; height: 4px; border-radius: 4px; background: var(--line-strong);
-      margin: 4px auto 12px;
-    }
-    .sheet h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.03em; margin: 4px 0; font-size: 28px; }
-    .sheet .sub { color: var(--muted); margin: 0 0 10px; }
-    .bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 12px 0; }
-    .bars .col { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .plot { height: 86px; width: 100%; position: relative; }
-    .plot .zero {
-      position: absolute; left: 0; right: 0; top: 62px; height: 1px; background: var(--line-strong);
-    }
-    .plot .exp, .plot .act {
-      position: absolute; left: 18%; width: 28%; border-radius: 3px 3px 0 0;
-    }
-    .plot .exp { background: #e4d8c8; }
-    .plot .act { left: 52%; background: var(--call); }
-    .plot .act.beat { background: var(--ok); }
-    .bars small { color: var(--faint); font-size: 10px; letter-spacing: 0.04em; }
-    .split { display: flex; flex-direction: column; gap: 6px; margin: 8px 0 12px; }
-    .split .line { display: grid; grid-template-columns: 92px 1fr 64px; gap: 8px; align-items: center; font-size: 12.5px; }
-    .track { height: 7px; background: #efe7dc; border-radius: 99px; overflow: hidden; }
-    .track b { display: block; height: 100%; background: var(--call); border-radius: 99px; }
-    .facts { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
-    .facts th { text-align: left; font-weight: 460; color: var(--faint); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .facts td { padding: 5px 0; border-top: 1px solid var(--line); }
-    .facts td.n, .facts th.n { text-align: right; }
-    .acts { display: flex; gap: 8px; margin-top: 14px; }
-    .acts button {
-      flex: 1;
-      border-radius: 999px;
-      padding: 11px 8px;
-      border: 1px solid var(--line-strong);
-      background: var(--card);
-    }
-    .acts button.primary { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
-    .close-x {
-      float: right;
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .scopes button {
-      width: 100%;
-      text-align: left;
-      background: transparent;
-      border: 0;
-      border-top: 1px solid var(--line);
-      padding: 11px 0;
-      display: flex;
-      justify-content: space-between;
-    }
+    .sheet h2 { font-family: var(--serif); font-weight: 500; font-size: 28px; }
+    .try { margin: 8px 0; padding-left: 18px; }
+    .try li { margin: 4px 0; }
+    label { display: block; font-size: 12px; color: var(--muted); margin-top: 10px; }
+    select, textarea { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 8px; font: inherit; }
+    .acts { display: flex; gap: 8px; margin-top: 12px; }
+    .acts button { flex: 1; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--card); padding: 10px; }
+    .acts .primary { background: var(--ink); color: var(--sheet); }
+    .close-x { float: right; border: 0; background: none; color: var(--muted); }
+    .scopes button { width: 100%; text-align: left; background: none; border: 0; border-top: 1px solid var(--line); padding: 10px 0; display: flex; justify-content: space-between; }
     .scopes button.on { color: var(--call); font-weight: 560; }
-    .aside {
-      display: none;
-      padding: 42px 48px 64px 12px;
-      max-width: 740px;
-    }
-    @media (min-width: 1040px) { .aside { display: block; } }
-    .aside h1 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.03em; font-size: 36px; margin: 0 0 8px; }
-    .aside h2 { font-family: var(--serif); font-weight: 500; font-size: 24px; margin: 28px 0 6px; letter-spacing: -0.02em; }
-    .aside p, .aside li { font-size: 15.5px; color: #3b342c; }
-    .aside .kicker { letter-spacing: 0.14em; text-transform: uppercase; font-size: 11px; color: var(--muted); }
-    .mobile-note { margin-top: 16px; }
-    @media (min-width: 1040px) { .mobile-note { display: none; } }
+    .logged { color: var(--ok); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 560; }
   </style>
 </head>
 <body>
-  <div class="stage">
-    <main class="phone">
-      <div class="app" id="app"></div>
-    </main>
-    <aside class="aside" id="aside"></aside>
-  </div>
+  <main class="phone"><div class="app" id="app"></div></main>
   <div class="sheet-back" id="back"></div>
-  <section class="sheet" id="sheet" aria-live="polite"></section>
+  <section class="sheet" id="sheet"></section>
   <script src="data.js"></script>
   <script>
     const D = window.PULSE2;
     const byId = Object.fromEntries(D.stores.map((s) => [s.id, s]));
-    const KEY = "pulse2.v1";
+    const KEY = "pulse2.z.v1";
     const state = {
       scope: localStorage.getItem(KEY + ".scope") || "company",
-      decisions: JSON.parse(localStorage.getItem(KEY + ".decisions") || "{}"),
+      logs: JSON.parse(localStorage.getItem(KEY + ".logs") || "{}"),
+      reviews: JSON.parse(localStorage.getItem(KEY + ".reviews") || "{}"),
     };
-
-    const $ = (sel) => document.querySelector(sel);
-
-    function money(n, digits) {
-      if (n == null || Number.isNaN(n)) return "—";
+    const save = () => {
+      localStorage.setItem(KEY + ".scope", state.scope);
+      localStorage.setItem(KEY + ".logs", JSON.stringify(state.logs));
+      localStorage.setItem(KEY + ".reviews", JSON.stringify(state.reviews));
+    };
+    const inScope = (s) => state.scope === "company" || (state.scope.startsWith("region:") && s.region === state.scope.slice(7)) || (state.scope.startsWith("market:") && s.market === state.scope.slice(7));
+    const scopeLabel = () => state.scope === "company" ? "Company" : state.scope.split(":")[1];
+    const money = (n) => {
+      if (n == null) return "—";
       const sign = n < 0 ? "−" : n > 0 ? "+" : "";
       const a = Math.abs(n);
-      if (a >= 10000) return sign + "$" + (a / 1000).toFixed(digits == null ? 1 : digits) + "k";
-      if (a >= 1000) return sign + "$" + (a / 1000).toFixed(1) + "k";
-      return sign + "$" + Math.round(a).toLocaleString("en-US");
-    }
-    function signed(n) {
-      if (n == null) return "—";
-      return (n < 0 ? "−" : "+") + Math.abs(n).toFixed(0) + "%";
-    }
-    function pennies(n) {
-      const sign = n < 0 ? "−" : "";
-      return sign + "$" + Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-    function inScope(s) {
-      if (state.scope === "company") return true;
-      if (state.scope.startsWith("region:")) return s.region === state.scope.slice(7);
-      if (state.scope.startsWith("market:")) return s.market === state.scope.slice(7);
-      return true;
-    }
-    function scopeLabel() {
-      if (state.scope === "company") return "Company";
-      if (state.scope.startsWith("region:")) return state.scope.slice(7);
-      return state.scope.slice(7);
-    }
-    function scopeDetail() {
-      const stores = D.stores.filter(inScope);
-      if (state.scope === "company") return "Exec view · 23 stores";
-      if (state.scope.startsWith("region:")) return "Regional view · " + stores.length + " stores";
-      return stores[0] ? stores[0].region + " · " + stores.length + " stores" : "";
-    }
-    function save() {
-      localStorage.setItem(KEY + ".scope", state.scope);
-      localStorage.setItem(KEY + ".decisions", JSON.stringify(state.decisions));
-    }
-    function callsInScope() {
-      return D.call_ids.map((id) => byId[id]).filter(inScope);
-    }
-    function hidden(id) {
-      const d = state.decisions[id];
-      return d && (d.kind === "dismiss" || d.kind === "snooze");
+      return a >= 1000 ? sign + "$" + (a / 1000).toFixed(1) + "k" : sign + "$" + Math.round(a);
+    };
+    const pct = (n) => (n < 0 ? "−" : "+") + Math.abs(n).toFixed(0) + "%";
+
+    function rateFor(driver) {
+      const stat = D.learning.by_driver.find((d) => d.driver === driver) || { n: 0, recovered: 0, rate: null };
+      const extra = Object.values(state.reviews).filter((r) => r.driver === driver);
+      const n = stat.n + extra.length;
+      const recovered = stat.recovered + extra.filter((r) => r.recovered).length;
+      return { n, recovered, rate: n ? recovered / n : null, base: stat };
     }
 
-    function render() {
-      const all = callsInScope();
-      const visible = all.filter((s) => !hidden(s.id));
-      const primary = visible.slice(0, 3);
-      const second = visible.slice(3);
-      const gap = primary.reduce((sum, s) => sum + s.gap, 0);
-      const watches = D.watch_ids.map((id) => byId[id]).filter(inScope).filter((s) => !hidden(s.id) && !D.call_ids.includes(s.id));
-      const quiet = D.quiet_ids.map((id) => byId[id]).filter(inScope);
-      const otherRegions = [...new Set(D.call_ids.map((id) => byId[id].region))];
-
-      const app = $("#app");
-      app.innerHTML = `
-        <header class="top">
-          <div class="mark"><b>PULSE</b><span>Calls</span></div>
-          <div class="fresh">
-            <div class="pill"><i></i> ${D.freshness}</div>
-            <small>${D.as_of_label}</small>
-          </div>
-        </header>
-        <button class="scope" id="open-scope">
-          <span><span class="who">${scopeLabel()}</span><span class="sub">${scopeDetail()} · no sign-on in this build</span></span>
-          <span class="chg">Scope</span>
-        </button>
-        ${visible.length ? hero(primary, second, gap) : empty(otherRegions)}
-        <div class="list">
-          ${primary.map((s, i) => card(s, i + 1)).join("")}
-        </div>
-        ${second.length ? `<h3 class="sec">If the morning allows</h3>` + second.map(slim).join("") : ""}
-        ${watches.length ? `<h3 class="sec">Watch, don’t drive for</h3>` + watches.map(slim).join("") : ""}
-        ${quiet.length ? `<h3 class="sec">Leave alone</h3>` + quiet.slice(0, 2).map(quietRow).join("") : ""}
-        ${learnBlock()}
-        <p class="tie">Week net <strong>${pennies(D.company_week.net)}</strong> across ${D.company_week.rows} daily rows. Ties to the file, to the penny. Pace is not in the file — no budget, no last-year rows.</p>
-        <p class="mobile-note"><button class="textbtn" id="open-method">How a call is earned</button></p>
-      `;
-      $("#open-scope").onclick = () => openSheet(scopeSheet());
-      const method = $("#open-method");
-      if (method) method.onclick = () => openSheet(methodSheet());
-      app.querySelectorAll("[data-open]").forEach((btn) => {
-        btn.onclick = () => openSheet(evidenceSheet(btn.dataset.open));
-      });
-    }
-
-    function hero(primary, second, gap) {
-      const n = primary.length;
-      const extra = second.length ? ` ${second.length} more ${second.length === 1 ? "is" : "are"} off pace if the morning allows.` : "";
-      return `
-        <section class="hero">
-          <h1 class="q">Who do I call?</h1>
-          <div class="figure"><strong>${money(gap, 0)}</strong><span>under their own pace</span></div>
-          <p class="lede">${n === 1 ? "One call" : n + " calls"} before open. Company median was ${signed(D.company_week.median_gap_pct)} — these are the stores, not the week.${extra}</p>
-          <div class="chips">
-            <span class="chip daily">Daily</span>
-            <span class="chip">${D.week_label}</span>
-            <span class="chip">Thu cancels ${D.thursday.cancel_rate}% company-wide</span>
-          </div>
-        </section>`;
-    }
-
-    function empty(regions) {
-      const names = D.call_ids.map((id) => byId[id].name + " (" + byId[id].region + ")").slice(0, 3).join(", ");
-      return `
-        <section class="hero">
-          <h1 class="q">No call here.</h1>
-          <p class="lede">Nothing in ${scopeLabel()} cleared the bar. The company calls are ${names}. Don’t drive a clean market to feel busy.</p>
-          <div class="chips"><span class="chip daily">Daily</span><span class="chip">${D.week_label}</span></div>
-        </section>`;
-    }
-
-    function card(s, n) {
-      const d = state.decisions[s.id];
-      const called = d && d.kind === "called";
-      return `
-        <button class="card ${called ? "called" : ""}" data-open="${s.id}">
-          <div class="row1"><span class="idx">${String(n).padStart(2, "0")}</span><span class="gap">${money(s.gap)}</span></div>
-          <div class="row2"><h2>${s.name}</h2></div>
-          <div class="meta">${s.format} · ${s.market}</div>
-          <p class="title">${s.title}</p>
-          <p class="action">${s.action}</p>
-          <div class="foot">
-            <span>${s.days_off} of ${s.days_n} days · ${Math.abs(s.peer_adj).toFixed(0)} pts worse than the company</span>
-            ${called ? `<span class="stamp">Called</span>` : `<span>Daily</span>`}
-          </div>
-        </button>`;
-    }
-
-    function slim(s) {
-      return `
-        <button class="slim" data-open="${s.id}">
-          <span><b>${s.name}</b><span>${s.title}</span></span>
-          <em>${money(s.gap)}</em>
-        </button>`;
-    }
-    function quietRow(s) {
-      const spg = s.rates.spg && s.base_rates.spg ? Math.round(s.rates.spg / s.base_rates.spg * 100 - 100) : null;
-      const line = spg != null && spg >= 10 ? `sales per guest ${spg > 0 ? "+" : ""}${spg}% vs its habit` : "ahead of its own pace";
-      return `
-        <button class="slim ok" data-open="${s.id}">
-          <span><b>${s.name}</b><span>${line}</span></span>
-          <em>${money(s.gap)}</em>
-        </button>`;
-    }
-
-    function learnBlock() {
-      const L = D.learning;
-      const local = Object.values(state.decisions);
-      const dismissed = local.filter((d) => d.kind === "dismiss").length;
-      const called = local.filter((d) => d.kind === "called").length;
-      const maxF = Math.max(1, ...L.weeks.map((w) => w.flags));
-      const bars = L.weeks.map((w) => {
-        const h = Math.max(8, w.flags / maxF * 46);
-        const sh = w.flags ? Math.round(w.still / w.flags * 100) : 0;
-        return `<i style="height:${h}px" title="${w.label}: ${w.flags} flags, ${w.still} still off"><b style="height:${sh}%"></b></i>`;
-      }).join("");
-      return `
-        <section class="learn">
-          <h3 class="sec" style="margin-top:0">What the rule has been worth</h3>
-          <p>${L.confirmed} of ${L.flagged} flags over the prior 8 weeks were still off pace the next week. ${L.snapped} snapped back — usually one soft Saturday. A call is a lead, not a verdict.</p>
-          <div class="weeks">${bars}</div>
-          <p>${called ? called + " marked called on this phone. " : ""}${dismissed ? dismissed + " marked not-a-miss. This phone hides those until you reset. The shared rule does not retrain from one handset." : "Mark a call and this phone remembers. It does not pretend to retrain the company."}</p>
-          <button class="textbtn" id="open-method-2">How a call is earned</button>
-        </section>`;
-    }
-
-    function openSheet(html) {
-      $("#sheet").innerHTML = `<div class="grab"></div>` + html;
-      $("#sheet").classList.add("open");
-      $("#back").classList.add("open");
-      $("#sheet").querySelectorAll("[data-close]").forEach((b) => b.onclick = closeSheet);
-      const method = $("#sheet").querySelector("#open-method-3");
-      if (method) method.onclick = () => openSheet(methodSheet());
-      $("#sheet").querySelectorAll("[data-scope]").forEach((b) => {
-        b.onclick = () => { state.scope = b.dataset.scope; save(); closeSheet(); render(); wireLearn(); };
-      });
-      $("#sheet").querySelectorAll("[data-decide]").forEach((b) => {
-        b.onclick = () => {
-          state.decisions[b.dataset.id] = { kind: b.dataset.decide, at: new Date().toISOString() };
-          save();
-          closeSheet();
-          render();
-          wireLearn();
-        };
-      });
-    }
-    function closeSheet() {
-      $("#sheet").classList.remove("open");
-      $("#back").classList.remove("open");
-      $("#sheet").innerHTML = "";
-    }
-    function wireLearn() {
-      const b = document.getElementById("open-method-2");
-      if (b) b.onclick = () => openSheet(methodSheet());
-    }
-
-    function dayChart(s) {
+    function weekSvg(s) {
       const max = Math.max(...s.days.map((d) => Math.max(Math.abs(d.net), d.exp)), 1);
-      const w = 44, h = 92, base = 64;
-      return `<svg viewBox="0 0 ${s.days.length * w} ${h}" width="100%" height="92" role="img" aria-label="Seven days against own pace">
-        <line x1="0" y1="${base}" x2="${s.days.length * w}" y2="${base}" stroke="#cfc4b4" stroke-width="1"/>
+      return `<svg viewBox="0 0 280 46" width="100%" height="46" aria-label="Seven days against own pace">
         ${s.days.map((d, i) => {
-          const x = i * w;
-          const expH = Math.max(2, d.exp / max * 52);
-          const actH = Math.max(2, Math.abs(d.net) / max * 52);
+          const x = i * 40;
+          const eh = Math.max(2, d.exp / max * 32);
+          const ah = Math.max(2, Math.abs(d.net) / max * 32);
           const beat = d.net >= d.exp * 0.97;
-          const color = beat ? "#1d5c40" : "#8d3419";
-          const actY = d.net >= 0 ? base - actH : base;
-          return `
-            <rect x="${x + 8}" y="${base - expH}" width="10" height="${expH}" rx="2" fill="#e4d8c8"/>
-            <rect x="${x + 22}" y="${actY}" width="10" height="${actH}" rx="2" fill="${color}"/>
-            <text x="${x + 20}" y="86" text-anchor="middle" font-size="10" fill="#8d847a" font-family="Outfit, sans-serif">${d.wd}</text>`;
+          return `<rect x="${x + 6}" y="${36 - eh}" width="8" height="${eh}" rx="1.5" fill="#e4d8c8"/>
+                  <rect x="${x + 18}" y="${d.net < 0 ? 36 : 36 - ah}" width="8" height="${ah}" rx="1.5" fill="${beat ? "#1d5c40" : "#8d3419"}"/>
+                  <text x="${x + 16}" y="45" font-size="8" fill="#8d847a" text-anchor="middle">${d.wd[0]}</text>`;
         }).join("")}
       </svg>`;
     }
-    function evidenceSheet(id) {
+
+    function dotPlot(list) {
+      const min = -70, max = 50;
+      const x = (p) => 16 + (Math.max(min, Math.min(max, p)) - min) / (max - min) * 300;
+      const dots = list.map((s) => {
+        const call = D.call_ids.includes(s.id);
+        const watch = D.watch_ids.includes(s.id);
+        const color = call ? "#8d3419" : watch ? "#8a5a16" : "#1d5c40";
+        return `<circle cx="${x(s.adj_pct)}" cy="28" r="${call ? 6 : 4}" fill="${color}"><title>${s.name} ${s.adj_pct}%</title></circle>`;
+      }).join("");
+      return `<svg viewBox="0 0 332 52" role="img" aria-label="Percent off pace after weather">
+        <line x1="16" y1="28" x2="316" y2="28" stroke="#cfc4b4"/>
+        <line x1="${x(-30)}" y1="16" x2="${x(-30)}" y2="40" stroke="#8d3419" stroke-dasharray="2 2"/>
+        <line x1="${x(0)}" y1="18" x2="${x(0)}" y2="38" stroke="#8d847a"/>
+        ${dots}
+        <text x="16" y="50" font-size="9" fill="#8d847a">−70%</text>
+        <text x="292" y="50" font-size="9" fill="#8d847a">+50%</text>
+      </svg>`;
+    }
+
+    function render() {
+      const calls = D.call_ids.map((id) => byId[id]).filter(inScope);
+      const watches = D.watch_ids.map((id) => byId[id]).filter(inScope);
+      const quiet = D.quiet_ids.map((id) => byId[id]).filter(inScope);
+      const scoped = D.stores.filter(inScope);
+      document.getElementById("app").innerHTML = `
+        <header class="top">
+          <div class="mark"><b>PULSE</b><span>Calls</span></div>
+          <div class="fresh"><div class="pill"><i></i> ${D.freshness}</div><small>${D.as_of_label}</small></div>
+        </header>
+        <button class="scope" id="open-scope"><span><span class="who">${scopeLabel()}</span><span class="sub">${scoped.length} stores · dollars and percent off pace</span></span><span class="chg">Scope</span></button>
+        <h1>Who is off pace?</h1>
+        <p class="lede">${calls.length} call${calls.length === 1 ? "" : "s"}. A typical store was ${pct(D.company_week.peer_median)} versus its own pace, after weather. The mark on the plot is about 30% off — far enough to call.</p>
+        <div class="zrow">${dotPlot(scoped)}</div>
+        <div class="legend"><span><i class="sw" style="background:#8d3419"></i>Call</span><span><i class="sw" style="background:#8a5a16"></i>Watch</span><span><i class="sw" style="background:#1d5c40"></i>On pace</span></div>
+        ${calls.map(card).join("")}
+        ${watches.length ? `<h3 class="sec">Watch — coach if you are already on the phone</h3>` + watches.map(slim).join("") : ""}
+        ${quiet.length ? `<h3 class="sec">Leave alone</h3>` + quiet.slice(0, 2).map((s) => `<button class="slim ok" data-open="${s.id}"><span><b>${s.name}</b><span>${s.climate} · ${pct(s.adj_pct)} after weather</span></span><em>${money(s.adj_gap)}</em></button>`).join("") : ""}
+        ${learnBlock()}
+        <p class="tie">Week net <b>${D.company_week.net.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b> · ${D.company_week.rows} rows. Ties to net sales. Weather is simulated for the climate. <a class="textbtn" href="notes.html">Definitions</a></p>`;
+      document.getElementById("open-scope").onclick = () => openSheet(scopeSheet());
+      document.querySelectorAll("[data-open]").forEach((b) => b.onclick = () => openSheet(evidence(b.dataset.open)));
+      const m = document.getElementById("open-method");
+      if (m) m.onclick = () => openSheet(methodSheet());
+    }
+
+    function card(s) {
+      const log = state.logs[s.id];
+      return `<button class="card" data-open="${s.id}">
+        <div class="topr"><span class="z">${pct(s.adj_pct)}<small>vs own pace</small></span><span class="meta">${money(s.adj_gap)} after weather<br>${money(s.raw_gap)} before weather</span></div>
+        <h2>${s.name}</h2>
+        <div class="meta">${s.format} · ${s.market} · ${s.climate}</div>
+        <p class="title">${s.title}</p>
+        ${weekSvg(s)}
+        <div class="chips"><span class="chip daily">Daily</span><span class="chip wx">${s.wx.inches} in vs ${s.wx.ly_inches} in last year</span>${log ? `<span class="logged">Logged · ${log.role || "entered"}</span>` : ""}</div>
+        <p class="note">${s.say}</p>
+      </button>`;
+    }
+    function slim(s) {
+      return `<button class="slim" data-open="${s.id}"><span><b>${s.name}</b><span>${s.title} · ${pct(s.adj_pct)}</span></span><em>${money(s.adj_gap)}</em></button>`;
+    }
+
+    function learnBlock() {
+      const rows = D.learning.by_driver.map((d) => {
+        const r = rateFor(d.driver);
+        return `<div class="barline"><span>${d.driver}</span><div class="track"><b style="width:${(r.rate || 0) * 100}%"></b></div><span>${r.recovered}/${r.n}</span></div>`;
+      }).join("");
+      const reviewed = Object.keys(state.reviews).length;
+      return `<section class="learn">
+        <h3 class="sec" style="margin-top:0">Did the coaching hold</h3>
+        <p class="note">${D.learning.note}</p>
+        ${rows}
+        <p class="note">${reviewed ? reviewed + " review tags on this phone are in the rates above." : "Tag a past flag in a store sheet and the rate moves."}</p>
+        <button class="textbtn" id="open-method">How the flag is earned</button>
+      </section>`;
+    }
+
+    function wxSvg(s) {
+      const days = s.days;
+      const max = Math.max(0.4, ...days.map((d) => Math.max(d.wx.inches, d.ly.inches)));
+      return `<svg viewBox="0 0 280 64" width="100%" height="64" aria-label="Rain this week versus last year">
+        ${days.map((d, i) => {
+          const x = i * 40;
+          const h1 = d.wx.inches / max * 36;
+          const h2 = d.ly.inches / max * 36;
+          return `<rect x="${x + 6}" y="${40 - h1}" width="8" height="${Math.max(h1, 1)}" fill="#31556a"/>
+                  <rect x="${x + 18}" y="${40 - h2}" width="8" height="${Math.max(h2, 1)}" fill="#c9dde6"/>
+                  <text x="${x + 16}" y="54" font-size="8" fill="#8d847a" text-anchor="middle">${d.wd}</text>`;
+        }).join("")}
+        <text x="0" y="62" font-size="8" fill="#31556a">This week</text>
+        <text x="70" y="62" font-size="8" fill="#8aa4b0">Last year</text>
+      </svg>`;
+    }
+
+    function evidence(id) {
       const s = byId[id];
-      const effects = [
-        ["Traffic", s.effects.traffic],
-        ["Ticket", s.effects.yield],
-        ["Extra cancels", -s.effects.cancels],
-        ["Sleep", s.effects.sleep],
-      ];
-      const maxE = Math.max(...effects.map((e) => Math.abs(e[1])), 1);
-      const split = effects.map(([label, v]) => `
-        <div class="line"><span>${label}</span><div class="track"><b style="width:${Math.abs(v) / maxE * 100}%"></b></div><span>${money(v)}</span></div>
-      `).join("");
-      const ticket = s.ticket
-        ? `<p class="note">Sleep-file returns this fortnight: ${pennies(s.ticket.total)} across ${s.ticket.lines} line${s.ticket.lines === 1 ? "" : "s"}. Largest, ${s.ticket.product}, ${pennies(s.ticket.sales)}. Order cancels can be larger than this file.</p>`
-        : "";
-      const d = state.decisions[s.id];
+      const log = state.logs[id];
+      const est = rateFor(s.driver);
+      const past = D.learning.weeks.flatMap((w) => w.items.filter((it) => it.id === id).map((it) => ({ ...it, label: w.label })));
+      const pastHtml = past.length ? past.map((it) => {
+        const key = id + "|" + it.label;
+        const tagged = state.reviews[key];
+        return `<p class="note">${it.label}: ${it.adj_pct}% off pace, next week ${it.next_pct}% after weather, ${it.recovered ? "back on pace" : "still off"}. Rain ${it.wx_inches} in, next week ${it.next_wx} in.
+          <button class="textbtn" data-review="${key}" data-driver="${s.driver}" data-rec="${it.recovered}">${tagged ? "Tagged" : "Tag this coaching"}</button></p>`;
+      }).join("") : `<p class="note">No earlier flag for this store in the review window. The estimate uses other stores with the same driver.</p>`;
       return `
         <button class="close-x" data-close>Close</button>
-        <p class="idx">${s.format} · ${s.market} · ${s.region}</p>
+        <p class="meta">${s.zone} · ${s.climate}</p>
         <h2>${s.name}</h2>
-        <p class="sub">${s.title} · ${money(s.gap)} vs own pace</p>
+        <p class="title">${s.title} · ${pct(s.adj_pct)} and ${money(s.adj_gap)} after weather</p>
         <p>${s.why}</p>
-        <p><strong>${s.action}</strong></p>
-        <p class="note">Sand is the same weekday’s prior 8-week mean. Ink is this week. Below the line is a negative day. Daily close, not intraday.</p>
-        ${dayChart(s)}
-        <div class="split">${split}</div>
-        <table class="facts">
-          <thead><tr><th></th><th class="n">This week</th><th class="n">Own pace</th></tr></thead>
-          <tbody>
-            <tr><td>Net sales</td><td class="n">${pennies(s.actual_net)}</td><td class="n">${pennies(s.expected_net)}</td></tr>
-            <tr><td>Margin</td><td class="n">${s.rates.mp == null ? "—" : s.rates.mp + "%"}</td><td class="n">${s.base_rates.mp == null ? "—" : s.base_rates.mp + "%"}</td></tr>
-            <tr><td>Traffic</td><td class="n">${Math.round(s.actual.traf)}</td><td class="n">${Math.round(s.expected.traf)}</td></tr>
-            <tr><td>Close rate</td><td class="n">${s.rates.close == null ? "—" : s.rates.close + "%"}</td><td class="n">${s.base_rates.close == null ? "—" : s.base_rates.close + "%"}</td></tr>
-            <tr><td>Sales / guest</td><td class="n">${s.rates.spg == null ? "—" : "$" + Math.round(s.rates.spg)}</td><td class="n">${s.base_rates.spg == null ? "—" : "$" + Math.round(s.base_rates.spg)}</td></tr>
-            <tr><td>Cancel rate</td><td class="n">${s.rates.cxl == null ? "—" : s.rates.cxl + "%"}</td><td class="n">${s.base_rates.cxl == null ? "—" : s.base_rates.cxl + "%"}</td></tr>
-            <tr><td>Sleep</td><td class="n">${pennies(s.actual.sleep)}</td><td class="n">${pennies(s.expected.sleep)}</td></tr>
-            <tr><td>Hours</td><td class="n">${Math.round(s.actual.hours)}</td><td class="n">${Math.round(s.expected.hours)}</td></tr>
-          </tbody>
-        </table>
-        ${ticket}
+        <p class="note">An inch of snow costs about ${s.snow_hit}% of a day here, versus about 6% on the New England coast and about 40% in Georgia. An inch of rain costs about ${s.rain_hit}%. Florida is used to a storm. Georgia is not used to snow.</p>
+        <p><strong>Say this:</strong> ${s.say}</p>
+        <ol class="try">${s.try.map((t) => `<li>${t}</li>`).join("")}</ol>
+        <label>Entered by</label>
+        <input id="who" placeholder="Name" value="${log ? log.who : ""}" style="width:100%;border:1px solid var(--line-strong);background:var(--card);border-radius:10px;padding:8px;font:inherit" />
+        <label>Role</label>
+        <select id="role">
+          <option ${log && log.role === "Regional manager" ? "selected" : ""}>Regional manager</option>
+          <option ${log && log.role === "Executive" ? "selected" : ""}>Executive</option>
+        </select>
+        <label>Corrective action</label>
+        <select id="act">${s.try.map((t) => `<option>${t}</option>`).join("")}<option>Other — note below</option></select>
+        <label>Note for the file</label>
+        <textarea id="note" rows="2" placeholder="What you told the manager">${log ? log.note : ""}</textarea>
         <div class="acts">
-          <button class="primary" data-decide="called" data-id="${s.id}">${d && d.kind === "called" ? "Called" : "Mark called"}</button>
-          <button data-decide="snooze" data-id="${s.id}">Snooze</button>
-          <button data-decide="dismiss" data-id="${s.id}">Not a miss</button>
+          <button class="primary" id="save-log" data-id="${id}">${log ? "Update log" : "Log action"}</button>
         </div>
-        <p class="note">Snooze and not-a-miss hide the store on this phone only. Reset lives under “How a call is earned”.</p>
-      `;
+        ${log ? `<p class="note">Logged ${log.at.slice(0, 10)} by ${log.who || "unknown"}, ${log.role || "role not set"}: ${log.action}</p>` : `<p class="note">The log records who entered it. It stays on this phone.</p>`}
+        <p class="note">Sand bars are own pace. Ink is this week. Below, rain versus the comparable days last year. Simulated for ${s.climate}, not a forecast feed.</p>
+        ${weekSvg(s)}
+        ${wxSvg(s)}
+        <p class="note">Weather explained ${Math.round(s.wx_share * 100)}% of the raw miss. Adjusted gap ${money(s.adj_gap)} (${pct(s.adj_pct)}). Raw gap ${money(s.raw_gap)}.</p>
+        <p><strong>If you coach ${s.driver}:</strong> ${est.recovered} of ${est.n} similar flags were back inside the pack the next week, after weather. ${est.rate == null ? "" : Math.round(est.rate * 100) + "%."}</p>
+        ${pastHtml}`;
     }
 
     function scopeSheet() {
-      const regions = D.regions.map((r) => {
-        const markets = r.markets.map((m) => `
-          <button data-scope="market:${m.name}" class="${state.scope === "market:" + m.name ? "on" : ""}">
-            <span>${m.name}</span><span>${m.stores.length}</span>
-          </button>`).join("");
-        return `
-          <button data-scope="region:${r.name}" class="${state.scope === "region:" + r.name ? "on" : ""}">
-            <span>${r.name}</span><span>${r.stores.length} stores</span>
-          </button>
-          ${markets}`;
-      }).join("");
-      return `
-        <button class="close-x" data-close>Close</button>
-        <h2>Scope</h2>
-        <p class="sub">An exec lands on the company. A regional leader lands on their region. This build stores that choice on the phone — there is no single sign-on in the practice file.</p>
-        <div class="scopes">
-          <button data-scope="company" class="${state.scope === "company" ? "on" : ""}"><span>Company</span><span>23</span></button>
-          ${regions}
-        </div>`;
+      const regions = D.regions.map((r) => `
+        <button data-scope="region:${r.name}" class="${state.scope === "region:" + r.name ? "on" : ""}"><span>${r.name}</span><span>${r.zone}</span></button>
+        ${r.markets.map((m) => `<button data-scope="market:${m.name}" class="${state.scope === "market:" + m.name ? "on" : ""}"><span>${m.name}</span><span>${m.climate}</span></button>`).join("")}
+      `).join("");
+      return `<button class="close-x" data-close>Close</button><h2>Scope</h2><p class="note">North is the Northeast. Central is the central East Coast. South is Florida, Georgia, Alabama. Weather is simulated for that climate.</p><div class="scopes"><button data-scope="company" class="${state.scope === "company" ? "on" : ""}"><span>Company</span><span>23</span></button>${regions}</div>`;
     }
-
     function methodSheet() {
-      return `
-        <button class="close-x" data-close>Close</button>
-        <h2>How a call is earned</h2>
-        <p>${D.learning.rule}</p>
-        <p>Pace is the store’s own same-weekday mean over the prior 8 weeks. It is not budget and not last year. Last-year rows are not in the file. Budget is not in the file.</p>
-        <p>Every rate is recomputed from dollars and counts. Stored margin % and close rate disagree with the dollars on about a third of rows. Stored discount % runs into the thousands and is not used.</p>
-        <p>Net sales is the number we tie. On 813 of 5,407 store-days, net is a cent off gross plus cancels, 421 high and 392 low. The file-level residual is 29 cents. That is separate rounding, not a sum error. Gross and cancels support the story. Net is the official figure.</p>
-        <p>The gap splits into traffic (fewer guests at the usual sales per guest) and ticket (the guests who came, spending less). Extra cancels are cancelled dollars above the store’s own cancel rate, applied to this week’s gross.</p>
-        <p>Thursday Sep 6 cancelled ${D.thursday.cancel_rate}% of company gross. A shared batch is noted, not blamed, unless the store was also worse than its peers.</p>
-        <p>Marking called, snooze, or not-a-miss stays on this phone. ${D.learning.confirmed} of ${D.learning.flagged} historical flags were still off the next week. That is the honesty check. It is not a model that retrains itself in the browser.</p>
-        <p><button class="textbtn" id="reset">Reset this phone’s marks</button></p>
-      `;
+      return `<button class="close-x" data-close>Close</button><h2>How a flag is earned</h2><p>${D.method}</p><p>Own pace is the same weekday over the prior 8 weeks. Weather then moves that pace. An inch of snow is a small hit on the New England coast, about 6% of the day, and a shutdown in Georgia, about 40%. Florida treats an inch of rain as a normal storm, about 5%. The same inch in New England costs about 10%.</p><p>The screen shows the dollar hole and the percent off pace. A store is a call when that percent is far below both its own habit and the typical store, after weather.</p><p>Logging an action stores it on this phone. Tagging a past flag folds that result into the rate for that kind of problem.</p><p><button class="textbtn" id="reset">Reset this phone</button></p>`;
     }
 
-    function aside() {
-      $("#aside").innerHTML = `
-        <p class="kicker">Page 2 of Pulse · practice build</p>
-        <h1>The next question is who to call.</h1>
-        <p>Page 1 already answers how the company did. A market manager standing in a doorway does not need a second scoreboard. They need the three stores that are off their own pace, the reason, and the sentence to open the call with.</p>
-        <h2>What the screen is for</h2>
-        <p>Five seconds: the dollar hole and the names. Thirty seconds: the action on the card. A tap: the seven days against that store’s own weekday habit, and whether the hole is the door, the ticket, or the cancel book.</p>
-        <p>Scope stands in for role. Company is the exec landing. North, Central, South, and each market are the regional and market landings. A clean market says so, and points at where the calls actually are.</p>
-        <h2>Data flow</h2>
-        <p>The practice file is one JSON: 23 stores, 865 sleep products, 5,407 store-days, 31,591 product rows, 17 Jan 2029 through 9 Sep 2029. The phone never loads that. A build step writes a 72kb call list. The app reads that file only.</p>
-        <p>Week net on screen is the sum of <em>net_sales</em> for 3–9 Sep, 161 rows, $1,878,375.72. That is the tie-out. Ratios are recomputed. The file’s own margin % and close rate are wrong often enough that using them would fail the penny test the moment someone audits a card.</p>
-        <h2>Where it breaks at real scale</h2>
-        <ul>
-          <li>Baselines belong in a nightly job. The phone should receive the call list, not eight months of ticks.</li>
-          <li>Peer set should be format and climate, not the whole company, once there are hundreds of stores.</li>
-          <li>There are no people in the file, so the call names a store, not a manager.</li>
-          <li>Order-level cancel reasons are missing. Harrow Point’s Thursday is −$18,821 cancelled; the sleep product file only explains about −$5k of returns. The action stops at “pull the tickets.”</li>
-          <li>A live 15-minute feed does not belong on this page. Mixing it with the daily close is how yesterday gets read as today.</li>
-          <li>Marks on this phone are not a learning system. A real one logs the call and the next week’s gap, for the region, not for one handset.</li>
-          <li>Promo weeks will false-flag if the baseline ignores the promo calendar.</li>
-        </ul>
-        <p>The rule’s own track record is on the phone: 17 of 30 prior flags were still off the following week. That is useful, and it is not magic.</p>
-      `;
-    }
-
-    $("#back").onclick = closeSheet;
-    render();
-    wireLearn();
-    aside();
-    const sheet = $("#sheet");
-    const obs = new MutationObserver(() => {
-      const reset = document.getElementById("reset");
-      if (reset) reset.onclick = () => {
-        state.decisions = {};
-        save();
-        closeSheet();
-        render();
-        wireLearn();
+    function openSheet(html) {
+      const sheet = document.getElementById("sheet");
+      sheet.innerHTML = html;
+      sheet.classList.add("open");
+      document.getElementById("back").classList.add("open");
+      sheet.querySelectorAll("[data-close]").forEach((b) => b.onclick = closeSheet);
+      sheet.querySelectorAll("[data-scope]").forEach((b) => b.onclick = () => { state.scope = b.dataset.scope; save(); closeSheet(); render(); });
+      sheet.querySelectorAll("[data-review]").forEach((b) => b.onclick = () => {
+        state.reviews[b.dataset.review] = { driver: b.dataset.driver, recovered: b.dataset.rec === "true" };
+        save(); openSheet(evidence(b.dataset.review.split("|")[0]));
+      });
+      const saveBtn = document.getElementById("save-log");
+      if (saveBtn) saveBtn.onclick = () => {
+        const id = saveBtn.dataset.id;
+        const who = document.getElementById("who").value.trim();
+        if (!who) { document.getElementById("who").focus(); return; }
+        state.logs[id] = {
+          action: document.getElementById("act").value,
+          note: document.getElementById("note").value,
+          who,
+          role: document.getElementById("role").value,
+          at: new Date().toISOString(),
+          driver: byId[id].driver
+        };
+        save(); closeSheet(); render();
       };
-    });
-    obs.observe(sheet, { childList: true });
-
-    if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-      navigator.serviceWorker.register("sw.js").catch(() => {});
+      const reset = document.getElementById("reset");
+      if (reset) reset.onclick = () => { state.logs = {}; state.reviews = {}; save(); closeSheet(); render(); };
+    }
+    function closeSheet() {
+      document.getElementById("sheet").classList.remove("open");
+      document.getElementById("back").classList.remove("open");
+    }
+    document.getElementById("back").onclick = closeSheet;
+    render();
+    const openId = (location.hash || "").replace("#", "").replace("-log", "");
+    if (byId[openId]) {
+      openSheet(evidence(openId));
+      if (location.hash.endsWith("-log")) {
+        setTimeout(() => {
+          const sheet = document.getElementById("sheet");
+          const act = document.getElementById("who");
+          if (sheet && act) sheet.scrollTop = act.offsetTop - 24;
+        }, 50);
+      }
     }
   </script>
 </body>

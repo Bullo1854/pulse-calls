@@ -2,55 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <title>Pulse · Calls — definitions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pulse · Calls — how to read it</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@380;460;560&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Outfit:wght@380;560&display=swap" rel="stylesheet" />
   <style>
-    :root { --ink: #1b1612; --muted: #5e564c; --paper: #e7e1d5; --line: #d4cbbd; }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: Outfit, "Avenir Next", sans-serif;
-      font-weight: 380;
-      line-height: 1.45;
-    }
-    main { max-width: 720px; margin: 0 auto; padding: 48px 40px 64px; }
-    .kicker { letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px; color: var(--muted); margin: 0; }
-    h1 { font-family: Fraunces, Palatino, serif; font-weight: 500; letter-spacing: -0.03em; font-size: 40px; line-height: 1.05; margin: 10px 0 16px; }
-    h2 { font-family: Fraunces, Palatino, serif; font-weight: 500; font-size: 26px; margin: 32px 0 8px; letter-spacing: -0.02em; }
+    body { margin: 0; background: #e7e1d5; color: #1b1612; font-family: Outfit, sans-serif; font-weight: 380; line-height: 1.45; }
+    main { max-width: 720px; margin: 0 auto; padding: 42px 36px 64px; }
+    .kicker { letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px; color: #6d645b; }
+    h1, h2 { font-family: Fraunces, Palatino, serif; font-weight: 500; letter-spacing: -0.03em; }
+    h1 { font-size: 38px; line-height: 1.05; margin: 8px 0 12px; }
+    h2 { font-size: 26px; margin: 28px 0 6px; }
     p, li { font-size: 17px; color: #3b342c; }
-    ul { padding-left: 20px; }
-    li { margin: 8px 0; }
-    .rule { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+    a { color: #8d3419; }
+    code { font-size: 0.92em; }
   </style>
 </head>
 <body>
   <main>
-    <p class="kicker">Page 2 of Pulse · practice build</p>
-    <h1>The next question is who to call.</h1>
-    <p>Page 1 already answers how the company did. A market manager standing in a doorway does not need a second scoreboard. They need the three stores that are off their own pace, the reason, and the sentence to open the call with.</p>
-    <h2>What the screen is for</h2>
-    <p>Five seconds: the dollar hole and the names. Thirty seconds: the action on the card. A tap: the seven days against that store’s own weekday habit, and whether the hole is the door, the ticket, or the cancel book.</p>
-    <p>Scope stands in for role. Company is the exec landing. North, Central, South, and each market are the regional and market landings. A clean market says so, and points at where the calls actually are.</p>
-    <h2>Data flow</h2>
-    <p>The practice file is one JSON: 23 stores, 865 sleep products, 5,407 store-days, 31,591 product rows, 17 Jan 2029 through 9 Sep 2029. The phone never loads that. A build step writes a 72kb call list. The app reads that file only.</p>
-    <p>Week net on screen is the sum of net sales for 3–9 Sep, 161 rows, $1,878,375.72. That is the tie-out. Ratios are recomputed. The file’s own margin percent and close rate are wrong often enough that using them would fail the penny test the moment someone audits a card.</p>
-    <h2>Where it breaks at real scale</h2>
+    <p class="kicker">Page 2 of Pulse · definitions</p>
+    <h1>Dollars and percent off pace.</h1>
+    <p>Page 1 answers how the company did. This page answers who is off their own pace, by how many dollars and what percent, what to say to the manager, and whether that kind of coaching has held after weather.</p>
+    <p><a href="index.html">Back to the call list</a></p>
+
+    <h2>The flag</h2>
+    <p>Own pace is the store’s same-weekday mean over the prior 8 weeks. Weather then moves that pace. The number on the card is the dollar hole and the percent off that pace, after weather. A store is a call when it is far below its own habit and far below a typical store. The ranking underneath uses a robust score so one wreck does not hide the next. That score is not on the screen.</p>
+    <p>A watch is off pace, but not far enough to drive for. Coach it if you are already on the phone.</p>
+
+    <h2>Weather</h2>
+    <p>Dates in the file are in 2029. There is no weather feed. Each store-day gets simulated weather for its market’s climate, including the comparable day last year. The same inch does not mean the same thing.</p>
     <ul>
-      <li>Baselines belong in a nightly job. The phone should receive the call list, not eight months of ticks.</li>
-      <li>Peer set should be format and climate, not the whole company, once there are hundreds of stores.</li>
-      <li>There are no people in the file, so the call names a store, not a manager.</li>
-      <li>Order-level cancel reasons are missing. Harrow Point’s Thursday is −$18,821 cancelled; the sleep product file only explains about −$5k of returns. The action stops at “pull the tickets.”</li>
-      <li>A live 15-minute feed does not belong on this page. Mixing it with the daily close is how yesterday gets read as today.</li>
-      <li>Marks on this phone are not a learning system. A real one logs the call and the next week’s gap, for the region, not for one handset.</li>
-      <li>Promo weeks will false-flag if the baseline ignores the promo calendar.</li>
+      <li>An inch of snow on the New England coast costs about 6% of the day. Stores and roads are built for it.</li>
+      <li>An inch of snow in Georgia or Alabama costs about 40% of the day. It shuts the roads.</li>
+      <li>An inch of rain on the Florida Gulf costs about 5%. Afternoon storms are normal.</li>
+      <li>An inch of rain in New England costs about 10%. A soaker is not the daily pattern.</li>
+      <li>A 95° day in Florida is priced in. The same day in New England is not.</li>
     </ul>
-    <hr class="rule" />
-    <p>The rule’s own track record is on the phone: 17 of 30 prior flags were still off the following week. That is useful, and it is not magic.</p>
+    <p>North, Lakes and Highlands, is the Northeast. Central, Valley and Prairie, is the Carolina piedmont and Tennessee. South, Harbor and Delta, is the Florida Gulf, Georgia, and Alabama. Rain can excuse a light door. It cannot excuse a cancel book.</p>
+
+    <h2>What to coach</h2>
+    <ul>
+      <li>Yield — guests came, tickets did not. One-up on Saturday, step the mattress, then the base, then the care plan.</li>
+      <li>Cancels — the desk gave it back. Pull the worst day’s tickets and split finance declines from delivery-window misses.</li>
+      <li>Sleep — the floor went quiet. Dress the hero beds and put the specialist on Saturday.</li>
+      <li>Traffic — the door slowed and the rain does not explain it. Hours posted versus hours worked, then the circular.</li>
+      <li>Margin — the deals. Discount authority and financing cost. The stored discount percent is not used.</li>
+      <li>Weather — do not cut hours off one washout.</li>
+    </ul>
+
+    <h2>Actions and whether they worked</h2>
+    <p>A market leader logs the corrective action on the store sheet. That stays on the phone. Past flags already have a next week in the file. Tagging one folds that weather-adjusted result into the driver rate. Recovery means the next week’s adjusted gap was −12% or better — back inside the pack, not merely less bad.</p>
+    <p>On this file, yield flags recovered 11 of 18 times. Sleep recovered 4 of 5. Traffic recovered 0 of 2. The current week cannot be scored until the next close. The estimate you see is the rate for that driver, moved when you tag a review.</p>
+
+    <h2>Tie-out</h2>
+    <p>Week net is the sum of net sales for 3–9 Sep 2029, 161 rows, $1,878,375.72. Rates are recomputed. On 813 store-days, net is a cent off gross plus cancels. The residual is 29 cents. Net is the official figure.</p>
   </main>
 </body>
 </html>

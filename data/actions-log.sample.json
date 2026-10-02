@@ -1,0 +1,44 @@
+{
+  "note": "Sample of what the phone stores under pulse2.z.v1.logs. Each entry names the regional manager or executive who entered it. Not observed actions.",
+  "logs": {
+    "S101": {
+      "store": "Northgate",
+      "region": "North",
+      "driver": "margin",
+      "action": "Review Saturday’s written tickets for unauthorized discount",
+      "note": "Asked the manager to pull Saturday’s written tickets before the Monday huddle.",
+      "who": "Elena Voss",
+      "role": "Regional manager",
+      "at": "2029-09-09T18:10:00Z"
+    },
+    "S120": {
+      "store": "Fairhaven",
+      "region": "Central",
+      "driver": "yield",
+      "action": "One up system on Saturday: no one works a guest alone past the first sit",
+      "note": "Saturday floor was one person on the ups. One-up starts this week.",
+      "who": "Marcus Hale",
+      "role": "Executive",
+      "at": "2029-09-09T18:22:00Z"
+    },
+    "S115": {
+      "store": "Upland Mills",
+      "region": "South",
+      "driver": "sleep",
+      "action": "Put the sleep specialist on Saturday, not on the weekday recovery shift",
+      "note": "Not a call. Logged because sleep missed and home held.",
+      "who": "Priya Nand",
+      "role": "Regional manager",
+      "at": "2029-09-09T18:30:00Z"
+    }
+  },
+  "reviews": {
+    "S120|Aug 26": {
+      "driver": "yield",
+      "recovered": true,
+      "who": "Marcus Hale",
+      "role": "Executive",
+      "note": "Tagged from the store sheet. Folds into the yield rate."
+    }
+  }
+}

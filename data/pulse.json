@@ -1,0 +1,6371 @@
+{
+  "page": "Calls",
+  "question": "Who is the outlier, and what do I coach?",
+  "as_of": "2029-09-09",
+  "as_of_label": "Sun, Sep 9",
+  "freshness": "Last close",
+  "week_label": "Mon Sep 3 \u2013 Sun Sep 9",
+  "method": "A store is a call when it is off its own pace and off the pack, after weather. The rank uses a robust score underneath. The screen shows dollars and percent, not that score.",
+  "company_week": {
+    "net": 1878375.72,
+    "rows": 161,
+    "peer_mean": -6.3,
+    "peer_median": -8.5,
+    "peer_sd": 29.0
+  },
+  "climates": {
+    "Lakes": {
+      "label": "New England coast",
+      "zone": "Northeast"
+    },
+    "Highlands": {
+      "label": "inland New England",
+      "zone": "Northeast"
+    },
+    "Valley": {
+      "label": "Carolina piedmont",
+      "zone": "central East Coast"
+    },
+    "Prairie": {
+      "label": "Tennessee",
+      "zone": "central East Coast"
+    },
+    "Harbor": {
+      "label": "Florida Gulf",
+      "zone": "South"
+    },
+    "Delta": {
+      "label": "Georgia and Alabama",
+      "zone": "South"
+    }
+  },
+  "regions": [
+    {
+      "id": "North",
+      "name": "North",
+      "zone": "Northeast",
+      "markets": [
+        {
+          "name": "Lakes",
+          "climate": "New England coast",
+          "stores": [
+            "S101",
+            "S107",
+            "S110",
+            "S113",
+            "S116",
+            "S119",
+            "S122"
+          ]
+        },
+        {
+          "name": "Highlands",
+          "climate": "inland New England",
+          "stores": [
+            "S104"
+          ]
+        }
+      ],
+      "stores": [
+        "S101",
+        "S104",
+        "S107",
+        "S110",
+        "S113",
+        "S116",
+        "S119",
+        "S122"
+      ]
+    },
+    {
+      "id": "Central",
+      "name": "Central",
+      "zone": "central East Coast",
+      "markets": [
+        {
+          "name": "Valley",
+          "climate": "Carolina piedmont",
+          "stores": [
+            "S102",
+            "S111",
+            "S117",
+            "S123"
+          ]
+        },
+        {
+          "name": "Prairie",
+          "climate": "Tennessee",
+          "stores": [
+            "S105",
+            "S108",
+            "S114",
+            "S120"
+          ]
+        }
+      ],
+      "stores": [
+        "S102",
+        "S105",
+        "S108",
+        "S111",
+        "S114",
+        "S117",
+        "S120",
+        "S123"
+      ]
+    },
+    {
+      "id": "South",
+      "name": "South",
+      "zone": "South",
+      "markets": [
+        {
+          "name": "Harbor",
+          "climate": "Florida Gulf",
+          "stores": [
+            "S103",
+            "S106",
+            "S112",
+            "S118",
+            "S121"
+          ]
+        },
+        {
+          "name": "Delta",
+          "climate": "Georgia and Alabama",
+          "stores": [
+            "S109",
+            "S115"
+          ]
+        }
+      ],
+      "stores": [
+        "S103",
+        "S106",
+        "S109",
+        "S112",
+        "S115",
+        "S118",
+        "S121"
+      ]
+    }
+  ],
+  "stores": [
+    {
+      "id": "S101",
+      "name": "Northgate",
+      "region": "North",
+      "market": "Lakes",
+      "format": "Showroom",
+      "climate": "New England coast",
+      "zone": "Northeast",
+      "snow_hit": 6,
+      "rain_hit": 10,
+      "z_peer": -1.16,
+      "z_own": -1.49,
+      "raw_gap": -24074.95,
+      "adj_gap": -25121.01,
+      "raw_pct": -43.6,
+      "adj_pct": -45.4,
+      "wx_share": 0,
+      "factor": 1.02,
+      "driver": "margin",
+      "title": "The deals, not the door",
+      "say": "Margin after financing cost broke versus this store\u2019s habit. Discount rate on the file is unusable, so coach the tickets you can read.",
+      "try": [
+        "Review Saturday\u2019s written tickets for unauthorized discount",
+        "Care-plan attach on the mattress sit, before the customer stands up",
+        "Financing cost is in the margin \u2014 a longer term is not a free close"
+      ],
+      "why": "Margin 34.1% versus 42.5% after financing cost. Margin dollars $10.7k versus $23.5k. New England coast: 1.0 in this week versus 0.3 in on the comparable days last year, high 76\u00b0 versus 74\u00b0.",
+      "wx_line": "New England coast: 1.0 in this week versus 0.3 in on the comparable days last year, high 76\u00b0 versus 74\u00b0.",
+      "actual_net": 31201.59,
+      "expected_net": 55276.54,
+      "weather_exp": 56322.6,
+      "effects": {
+        "traffic": -10345.88,
+        "yield": -13729.08,
+        "cancels": 2095.5,
+        "sleep": -1440.76,
+        "home": -18871.61
+      },
+      "rates": {
+        "mp": 34.1,
+        "close": 18.0,
+        "spg": 136.8,
+        "cxl": 13.7,
+        "sph": 93.3
+      },
+      "base_rates": {
+        "mp": 42.5,
+        "close": 22.0,
+        "spg": 197.1,
+        "cxl": 7.9,
+        "sph": 146.1
+      },
+      "actual": {
+        "net": 31201.59,
+        "traf": 228.0,
+        "tix": 41.0,
+        "sleep": 4494.05,
+        "care": 3842.28,
+        "canc": -4948.26,
+        "gross": 36149.84,
+        "hours": 334.5,
+        "margin": 10650.0,
+        "home": 22066.43
+      },
+      "expected": {
+        "net": 55276.54,
+        "traf": 280.5,
+        "tix": 61.75,
+        "sleep": 5934.81,
+        "care": 4802.34,
+        "canc": -4735.88,
+        "gross": 60012.42,
+        "hours": 378.26,
+        "margin": 23467.5,
+        "home": 40938.04
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 9046.18,
+          "exp": 3767.92,
+          "traf": 33,
+          "wx": {
+            "high": 75.1,
+            "low": 55.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 74.0,
+            "low": 61.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 3486.65,
+          "exp": 4573.3,
+          "traf": 16,
+          "wx": {
+            "high": 78.0,
+            "low": 61.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 72.1,
+            "low": 60.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 2401.68,
+          "exp": 4688.62,
+          "traf": 20,
+          "wx": {
+            "high": 76.0,
+            "low": 56.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 72.1,
+            "low": 55.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 5642.24,
+          "exp": 6771.64,
+          "traf": 18,
+          "wx": {
+            "high": 73.4,
+            "low": 61.2,
+            "inches": 0.74,
+            "rain": 0.74,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 77.2,
+            "low": 59.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 3036.09,
+          "exp": 6797.0,
+          "traf": 33,
+          "wx": {
+            "high": 75.0,
+            "low": 59.3,
+            "inches": 0.29,
+            "rain": 0.29,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 77.6,
+            "low": 55.9,
+            "inches": 0.25,
+            "rain": 0.25,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 5986.48,
+          "exp": 21110.72,
+          "traf": 53,
+          "wx": {
+            "high": 75.1,
+            "low": 57.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 76.1,
+            "low": 61.5,
+            "inches": 0.07,
+            "rain": 0.07,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 1602.27,
+          "exp": 7567.34,
+          "traf": 55,
+          "wx": {
+            "high": 76.1,
+            "low": 60.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 68.7,
+            "low": 58.2,
+            "inches": 0.03,
+            "rain": 0.03,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 1.03,
+        "ly_inches": 0.35,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 75.5,
+        "ly_high": 74.0,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.06,
+        "base_sev": 0.1,
+        "ly_sev": 0.02
+      },
+      "worst": {
+        "wd": "Sat",
+        "net": 5986.48,
+        "exp": 21110.72
+      }
+    },
+    {
+      "id": "S102",
+      "name": "Yarrow Point",
+      "region": "Central",
+      "market": "Valley",
+      "format": "Showroom",
+      "climate": "Carolina piedmont",
+      "zone": "central East Coast",
+      "snow_hit": 22,
+      "rain_hit": 11,
+      "z_peer": -1.55,
+      "z_own": -2.76,
+      "raw_gap": -41473.18,
+      "adj_gap": -43333.71,
+      "raw_pct": -55.4,
+      "adj_pct": -57.9,
+      "wx_share": 0,
+      "factor": 1.02,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $236 versus $449. Close rate 26.2% versus 32.7%. Tue was \u2212$2.3k against a $7.7k habit. Hours 203 versus 209. Carolina piedmont: 0.4 in this week versus 1.1 in on the comparable days last year, high 85\u00b0 versus 86\u00b0.",
+      "wx_line": "Carolina piedmont: 0.4 in this week versus 1.1 in on the comparable days last year, high 85\u00b0 versus 86\u00b0.",
+      "actual_net": 33328.13,
+      "expected_net": 74801.31,
+      "weather_exp": 76661.84,
+      "effects": {
+        "traffic": -11551.03,
+        "yield": -29922.15,
+        "cancels": 4259.75,
+        "sleep": -4464.75,
+        "home": -31237.43
+      },
+      "rates": {
+        "mp": 58.8,
+        "close": 26.2,
+        "spg": 236.4,
+        "cxl": 14.8,
+        "sph": 163.9
+      },
+      "base_rates": {
+        "mp": 53.3,
+        "close": 32.7,
+        "spg": 448.6,
+        "cxl": 3.9,
+        "sph": 357.9
+      },
+      "actual": {
+        "net": 33328.13,
+        "traf": 141.0,
+        "tix": 37.0,
+        "sleep": 3452.74,
+        "care": 2647.63,
+        "canc": -5772.35,
+        "gross": 39100.47,
+        "hours": 203.4,
+        "margin": 19611.9,
+        "home": 23821.43
+      },
+      "expected": {
+        "net": 74801.31,
+        "traf": 166.75,
+        "tix": 54.5,
+        "sleep": 7917.49,
+        "care": 5381.13,
+        "canc": -3010.13,
+        "gross": 77811.44,
+        "hours": 209.01,
+        "margin": 39904.87,
+        "home": 55058.86
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 5329.52,
+          "exp": 8132.63,
+          "traf": 15,
+          "wx": {
+            "high": 80.9,
+            "low": 66.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 81.4,
+            "low": 66.8,
+            "inches": 0.35,
+            "rain": 0.35,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": -2294.61,
+          "exp": 7718.76,
+          "traf": 15,
+          "wx": {
+            "high": 88.5,
+            "low": 66.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 86.1,
+            "low": 70.2,
+            "inches": 0.67,
+            "rain": 0.67,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 4104.63,
+          "exp": 9115.46,
+          "traf": 17,
+          "wx": {
+            "high": 83.5,
+            "low": 71.0,
+            "inches": 0.34,
+            "rain": 0.34,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 91.3,
+            "low": 69.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 8948.32,
+          "exp": 8919.76,
+          "traf": 12,
+          "wx": {
+            "high": 85.7,
+            "low": 71.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 87.9,
+            "low": 67.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 2568.52,
+          "exp": 11762.64,
+          "traf": 16,
+          "wx": {
+            "high": 85.8,
+            "low": 70.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 83.2,
+            "low": 67.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 8151.54,
+          "exp": 17131.45,
+          "traf": 38,
+          "wx": {
+            "high": 84.0,
+            "low": 69.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 85.8,
+            "low": 67.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 6520.21,
+          "exp": 12020.62,
+          "traf": 28,
+          "wx": {
+            "high": 88.3,
+            "low": 69.8,
+            "inches": 0.08,
+            "rain": 0.08,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 87.8,
+            "low": 67.9,
+            "inches": 0.03,
+            "rain": 0.03,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.42,
+        "ly_inches": 1.05,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 85.2,
+        "ly_high": 86.2,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.03,
+        "base_sev": 0.09,
+        "ly_sev": 0.08
+      },
+      "worst": {
+        "wd": "Tue",
+        "net": -2294.61,
+        "exp": 7718.76
+      }
+    },
+    {
+      "id": "S103",
+      "name": "Glen Arbor",
+      "region": "South",
+      "market": "Harbor",
+      "format": "Showroom",
+      "climate": "Florida Gulf",
+      "zone": "South",
+      "snow_hit": 45,
+      "rain_hit": 5,
+      "z_peer": 0.65,
+      "z_own": 0.41,
+      "raw_gap": 18627.49,
+      "adj_gap": 15152.94,
+      "raw_pct": 15.0,
+      "adj_pct": 12.2,
+      "wx_share": 0,
+      "factor": 1.03,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $392 versus $371. Close rate 22.7% versus 22.7%. Thu was $7.3k against a $17.6k habit. Hours 343 versus 311. Florida Gulf: 0.7 in this week versus 0.6 in on the comparable days last year, high 91\u00b0 versus 91\u00b0.",
+      "wx_line": "Florida Gulf: 0.7 in this week versus 0.6 in on the comparable days last year, high 91\u00b0 versus 91\u00b0.",
+      "actual_net": 143176.65,
+      "expected_net": 124549.16,
+      "weather_exp": 128023.71,
+      "effects": {
+        "traffic": 10800.13,
+        "yield": 7827.35,
+        "cancels": -452.87,
+        "sleep": 11183.32,
+        "home": 5154.82
+      },
+      "rates": {
+        "mp": 52.7,
+        "close": 22.7,
+        "spg": 392.3,
+        "cxl": 3.1,
+        "sph": 417.9
+      },
+      "base_rates": {
+        "mp": 53.9,
+        "close": 22.7,
+        "spg": 370.8,
+        "cxl": 3.4,
+        "sph": 401.1
+      },
+      "actual": {
+        "net": 143176.65,
+        "traf": 365.0,
+        "tix": 83.0,
+        "sleep": 30628.31,
+        "care": 11475.38,
+        "canc": -4543.06,
+        "gross": 147719.71,
+        "hours": 342.6,
+        "margin": 75464.43,
+        "home": 89686.99
+      },
+      "expected": {
+        "net": 124549.16,
+        "traf": 335.88,
+        "tix": 76.12,
+        "sleep": 19444.99,
+        "care": 10124.3,
+        "canc": -4359.74,
+        "gross": 128908.91,
+        "hours": 310.54,
+        "margin": 67157.99,
+        "home": 84532.17
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 22060.48,
+          "exp": 18652.28,
+          "traf": 42,
+          "wx": {
+            "high": 90.7,
+            "low": 76.0,
+            "inches": 0.36,
+            "rain": 0.36,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 90.2,
+            "low": 76.2,
+            "inches": 0.03,
+            "rain": 0.03,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 29017.9,
+          "exp": 11718.15,
+          "traf": 39,
+          "wx": {
+            "high": 93.3,
+            "low": 78.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 90.9,
+            "low": 78.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 6311.31,
+          "exp": 11455.55,
+          "traf": 35,
+          "wx": {
+            "high": 88.2,
+            "low": 75.9,
+            "inches": 0.16,
+            "rain": 0.16,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 90.4,
+            "low": 76.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 7314.32,
+          "exp": 17609.97,
+          "traf": 42,
+          "wx": {
+            "high": 91.1,
+            "low": 78.7,
+            "inches": 0.21,
+            "rain": 0.21,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 91.8,
+            "low": 77.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 18357.98,
+          "exp": 13660.49,
+          "traf": 54,
+          "wx": {
+            "high": 91.3,
+            "low": 78.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 90.7,
+            "low": 76.6,
+            "inches": 0.27,
+            "rain": 0.27,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 46391.81,
+          "exp": 31991.22,
+          "traf": 108,
+          "wx": {
+            "high": 93.0,
+            "low": 75.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 90.7,
+            "low": 78.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 13722.85,
+          "exp": 19461.51,
+          "traf": 45,
+          "wx": {
+            "high": 87.0,
+            "low": 75.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 90.5,
+            "low": 77.7,
+            "inches": 0.27,
+            "rain": 0.27,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.73,
+        "ly_inches": 0.57,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 90.7,
+        "ly_high": 90.7,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.03,
+        "base_sev": 0.09,
+        "ly_sev": 0.02
+      },
+      "worst": {
+        "wd": "Thu",
+        "net": 7314.32,
+        "exp": 17609.97
+      }
+    },
+    {
+      "id": "S104",
+      "name": "Juniper Flats",
+      "region": "North",
+      "market": "Highlands",
+      "format": "Showroom",
+      "climate": "inland New England",
+      "zone": "Northeast",
+      "snow_hit": 5,
+      "rain_hit": 9,
+      "z_peer": 1.02,
+      "z_own": 1.94,
+      "raw_gap": 18467.53,
+      "adj_gap": 15900.82,
+      "raw_pct": 28.0,
+      "adj_pct": 24.1,
+      "wx_share": 0,
+      "factor": 1.04,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $524 versus $377. Close rate 32.9% versus 25.7%. Wed was $213 against a $9.1k habit. Hours 225 versus 199. inland New England: 0.7 in this week versus 0.1 in on the comparable days last year, high 70\u00b0 versus 71\u00b0.",
+      "wx_line": "inland New England: 0.7 in this week versus 0.1 in on the comparable days last year, high 70\u00b0 versus 71\u00b0.",
+      "actual_net": 84382.02,
+      "expected_net": 65914.49,
+      "weather_exp": 68481.2,
+      "effects": {
+        "traffic": -5229.81,
+        "yield": 23697.34,
+        "cancels": -2491.05,
+        "sleep": 5019.49,
+        "home": 10175.75
+      },
+      "rates": {
+        "mp": 53.5,
+        "close": 32.9,
+        "spg": 524.1,
+        "cxl": 7.7,
+        "sph": 375.5
+      },
+      "base_rates": {
+        "mp": 52.0,
+        "close": 25.7,
+        "spg": 376.9,
+        "cxl": 10.5,
+        "sph": 330.6
+      },
+      "actual": {
+        "net": 84382.02,
+        "traf": 161.0,
+        "tix": 53.0,
+        "sleep": 19361.52,
+        "care": 6835.46,
+        "canc": -7077.01,
+        "gross": 91459.02,
+        "hours": 224.7,
+        "margin": 45109.59,
+        "home": 51779.73
+      },
+      "expected": {
+        "net": 65914.49,
+        "traf": 174.88,
+        "tix": 45.0,
+        "sleep": 14342.03,
+        "care": 5291.05,
+        "canc": -7701.38,
+        "gross": 73615.87,
+        "hours": 199.39,
+        "margin": 34277.48,
+        "home": 41603.98
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 16867.13,
+          "exp": 8232.58,
+          "traf": 18,
+          "wx": {
+            "high": 67.9,
+            "low": 50.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 69.3,
+            "low": 52.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 14069.76,
+          "exp": 7027.84,
+          "traf": 23,
+          "wx": {
+            "high": 68.7,
+            "low": 49.1,
+            "inches": 0.11,
+            "rain": 0.11,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 72.3,
+            "low": 49.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 212.7,
+          "exp": 9141.14,
+          "traf": 23,
+          "wx": {
+            "high": 65.1,
+            "low": 54.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 73.7,
+            "low": 56.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 15805.53,
+          "exp": 6804.32,
+          "traf": 18,
+          "wx": {
+            "high": 73.3,
+            "low": 55.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 69.5,
+            "low": 54.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 2286.92,
+          "exp": 5588.73,
+          "traf": 14,
+          "wx": {
+            "high": 71.6,
+            "low": 53.9,
+            "inches": 0.07,
+            "rain": 0.07,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 74.2,
+            "low": 51.2,
+            "inches": 0.04,
+            "rain": 0.04,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 25731.37,
+          "exp": 15206.04,
+          "traf": 44,
+          "wx": {
+            "high": 66.0,
+            "low": 50.4,
+            "inches": 0.33,
+            "rain": 0.33,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 67.3,
+            "low": 53.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 9408.61,
+          "exp": 13913.83,
+          "traf": 21,
+          "wx": {
+            "high": 74.1,
+            "low": 50.6,
+            "inches": 0.14,
+            "rain": 0.14,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 73.7,
+            "low": 50.9,
+            "inches": 0.1,
+            "rain": 0.1,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.65,
+        "ly_inches": 0.14,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 69.5,
+        "ly_high": 71.4,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.03,
+        "base_sev": 0.13,
+        "ly_sev": 0.01
+      },
+      "worst": {
+        "wd": "Wed",
+        "net": 212.7,
+        "exp": 9141.14
+      }
+    },
+    {
+      "id": "S105",
+      "name": "Stonebridge",
+      "region": "Central",
+      "market": "Prairie",
+      "format": "Showroom",
+      "climate": "Tennessee",
+      "zone": "central East Coast",
+      "snow_hit": 20,
+      "rain_hit": 10,
+      "z_peer": 0.53,
+      "z_own": 0.27,
+      "raw_gap": 11474.47,
+      "adj_gap": 8877.33,
+      "raw_pct": 11.0,
+      "adj_pct": 8.5,
+      "wx_share": 0,
+      "factor": 1.02,
+      "driver": "traffic",
+      "title": "The door slowed, and it was not the rain",
+      "say": "Traffic is light versus this store\u2019s own weekday habit, and the weather does not explain it. Coach the schedule and the ad before you coach the close.",
+      "try": [
+        "Match posted hours to who actually worked, especially Saturday open",
+        "Check the circular and the sign at the road \u2014 furniture traffic is local",
+        "Greet goal for the next dry afternoon; do not add a discount to buy the door"
+      ],
+      "why": "Traffic 288 versus 306. Sales per guest $402 versus $341. Hours 228 versus 309. Tennessee: 0.6 in this week versus 0.3 in on the comparable days last year, high 86\u00b0 versus 85\u00b0.",
+      "wx_line": "Tennessee: 0.6 in this week versus 0.3 in on the comparable days last year, high 86\u00b0 versus 85\u00b0.",
+      "actual_net": 115827.65,
+      "expected_net": 104353.18,
+      "weather_exp": 106950.32,
+      "effects": {
+        "traffic": -6218.6,
+        "yield": 17693.07,
+        "cancels": -1666.88,
+        "sleep": 7364.9,
+        "home": 5290.71
+      },
+      "rates": {
+        "mp": 53.6,
+        "close": 22.6,
+        "spg": 402.2,
+        "cxl": 5.7,
+        "sph": 507.6
+      },
+      "base_rates": {
+        "mp": 54.7,
+        "close": 23.1,
+        "spg": 340.7,
+        "cxl": 7.0,
+        "sph": 338.2
+      },
+      "actual": {
+        "net": 115827.65,
+        "traf": 288.0,
+        "tix": 65.0,
+        "sleep": 20095.97,
+        "care": 7474.41,
+        "canc": -6936.77,
+        "gross": 122764.42,
+        "hours": 228.2,
+        "margin": 62140.5,
+        "home": 79702.5
+      },
+      "expected": {
+        "net": 104353.18,
+        "traf": 306.25,
+        "tix": 70.62,
+        "sleep": 12731.07,
+        "care": 8354.82,
+        "canc": -7864.51,
+        "gross": 112217.68,
+        "hours": 308.6,
+        "margin": 57099.67,
+        "home": 74411.79
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 15872.14,
+          "exp": 7646.43,
+          "traf": 32,
+          "wx": {
+            "high": 86.5,
+            "low": 66.6,
+            "inches": 0.32,
+            "rain": 0.32,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 89.1,
+            "low": 67.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 24587.69,
+          "exp": 11334.64,
+          "traf": 27,
+          "wx": {
+            "high": 86.7,
+            "low": 65.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 87.1,
+            "low": 68.8,
+            "inches": 0.11,
+            "rain": 0.11,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 9141.12,
+          "exp": 7454.76,
+          "traf": 30,
+          "wx": {
+            "high": 85.5,
+            "low": 69.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 83.9,
+            "low": 68.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 8265.83,
+          "exp": 12514.31,
+          "traf": 27,
+          "wx": {
+            "high": 85.4,
+            "low": 69.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 81.8,
+            "low": 68.6,
+            "inches": 0.12,
+            "rain": 0.12,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 18759.81,
+          "exp": 16935.97,
+          "traf": 42,
+          "wx": {
+            "high": 81.6,
+            "low": 64.5,
+            "inches": 0.11,
+            "rain": 0.11,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 84.8,
+            "low": 68.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 24590.66,
+          "exp": 31260.08,
+          "traf": 80,
+          "wx": {
+            "high": 87.4,
+            "low": 64.5,
+            "inches": 0.19,
+            "rain": 0.19,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 85.5,
+            "low": 68.7,
+            "inches": 0.08,
+            "rain": 0.08,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 14610.4,
+          "exp": 17206.98,
+          "traf": 50,
+          "wx": {
+            "high": 88.1,
+            "low": 68.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 85.3,
+            "low": 69.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.62,
+        "ly_inches": 0.31,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 85.9,
+        "ly_high": 85.4,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.04,
+        "base_sev": 0.1,
+        "ly_sev": 0.02
+      },
+      "worst": {
+        "wd": "Sat",
+        "net": 24590.66,
+        "exp": 31260.08
+      }
+    },
+    {
+      "id": "S106",
+      "name": "Dunmore Park",
+      "region": "South",
+      "market": "Harbor",
+      "format": "Outlet",
+      "climate": "Florida Gulf",
+      "zone": "South",
+      "snow_hit": 45,
+      "rain_hit": 5,
+      "z_peer": 0.29,
+      "z_own": 0.21,
+      "raw_gap": 577.61,
+      "adj_gap": 543.7,
+      "raw_pct": 0.9,
+      "adj_pct": 0.9,
+      "wx_share": 0,
+      "factor": 1.0,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $548 versus $507. Close rate 30.8% versus 30.9%. Thu was $2.9k against a $7.9k habit. Hours 202 versus 209. Florida Gulf: 2.1 in this week versus 2.3 in on the comparable days last year, high 91\u00b0 versus 90\u00b0.",
+      "wx_line": "Florida Gulf: 2.1 in this week versus 2.3 in on the comparable days last year, high 91\u00b0 versus 90\u00b0.",
+      "actual_net": 64063.23,
+      "expected_net": 63485.62,
+      "weather_exp": 63519.53,
+      "effects": {
+        "traffic": -4181.69,
+        "yield": 4759.29,
+        "cancels": -4206.9,
+        "sleep": -3449.49,
+        "home": 3653.75
+      },
+      "rates": {
+        "mp": 51.4,
+        "close": 30.8,
+        "spg": 547.5,
+        "cxl": 0.0,
+        "sph": 316.7
+      },
+      "base_rates": {
+        "mp": 55.3,
+        "close": 30.9,
+        "spg": 506.9,
+        "cxl": 6.6,
+        "sph": 304.1
+      },
+      "actual": {
+        "net": 64063.23,
+        "traf": 117.0,
+        "tix": 36.0,
+        "sleep": 9683.56,
+        "care": 6905.08,
+        "canc": 0.0,
+        "gross": 64063.23,
+        "hours": 202.3,
+        "margin": 32949.59,
+        "home": 42999.0
+      },
+      "expected": {
+        "net": 63485.62,
+        "traf": 125.25,
+        "tix": 38.75,
+        "sleep": 13133.05,
+        "care": 6057.48,
+        "canc": -4461.98,
+        "gross": 67947.61,
+        "hours": 208.78,
+        "margin": 35097.14,
+        "home": 39345.25
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 8817.17,
+          "exp": 10725.86,
+          "traf": 12,
+          "wx": {
+            "high": 93.2,
+            "low": 77.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 90.9,
+            "low": 76.0,
+            "inches": 1.21,
+            "rain": 1.21,
+            "snow": 0.0,
+            "kind": "storm"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 3525.6,
+          "exp": 7353.69,
+          "traf": 7,
+          "wx": {
+            "high": 88.6,
+            "low": 76.3,
+            "inches": 0.03,
+            "rain": 0.03,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 89.1,
+            "low": 78.6,
+            "inches": 0.25,
+            "rain": 0.25,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 3879.8,
+          "exp": 7700.74,
+          "traf": 12,
+          "wx": {
+            "high": 90.1,
+            "low": 75.9,
+            "inches": 1.45,
+            "rain": 1.45,
+            "snow": 0.0,
+            "kind": "storm"
+          },
+          "ly": {
+            "high": 91.3,
+            "low": 75.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 2880.83,
+          "exp": 7938.46,
+          "traf": 11,
+          "wx": {
+            "high": 91.7,
+            "low": 75.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 89.7,
+            "low": 75.9,
+            "inches": 0.43,
+            "rain": 0.43,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 6984.34,
+          "exp": 9038.45,
+          "traf": 17,
+          "wx": {
+            "high": 92.5,
+            "low": 75.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 91.2,
+            "low": 76.6,
+            "inches": 0.35,
+            "rain": 0.35,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 29906.39,
+          "exp": 14464.3,
+          "traf": 39,
+          "wx": {
+            "high": 87.7,
+            "low": 77.4,
+            "inches": 0.43,
+            "rain": 0.43,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 86.1,
+            "low": 77.5,
+            "inches": 0.05,
+            "rain": 0.05,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 8069.1,
+          "exp": 6264.13,
+          "traf": 19,
+          "wx": {
+            "high": 90.9,
+            "low": 75.3,
+            "inches": 0.22,
+            "rain": 0.22,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 91.8,
+            "low": 78.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 2.13,
+        "ly_inches": 2.29,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 90.7,
+        "ly_high": 90.0,
+        "storms": 1,
+        "ly_storms": 1,
+        "sev": 0.07,
+        "base_sev": 0.07,
+        "ly_sev": 0.07
+      },
+      "worst": {
+        "wd": "Thu",
+        "net": 2880.83,
+        "exp": 7938.46
+      }
+    },
+    {
+      "id": "S107",
+      "name": "Quarry Hill",
+      "region": "North",
+      "market": "Lakes",
+      "format": "Outlet",
+      "climate": "New England coast",
+      "zone": "Northeast",
+      "snow_hit": 6,
+      "rain_hit": 10,
+      "z_peer": -0.3,
+      "z_own": -0.6,
+      "raw_gap": -11915.78,
+      "adj_gap": -15796.56,
+      "raw_pct": -13.6,
+      "adj_pct": -18.0,
+      "wx_share": 0,
+      "factor": 1.04,
+      "driver": "sleep",
+      "title": "Sleep floor went quiet",
+      "say": "The building was not empty. Sleep missed by more than home. That is a display and a specialist, not a door problem.",
+      "try": [
+        "Walk the hero beds before open \u2014 dressed, priced, adjustable base plugged in",
+        "Put the sleep specialist on Saturday, not on the weekday recovery shift",
+        "Attach the foundation and the care plan in the same sit; do not send them to the desk later"
+      ],
+      "why": "Sleep $5.1k versus $14.2k. Home $59.0k versus $60.1k. Traffic 187 versus 158. New England coast: 0.0 in this week versus 0.2 in on the comparable days last year, high 74\u00b0 versus 73\u00b0.",
+      "wx_line": "New England coast: 0.0 in this week versus 0.2 in on the comparable days last year, high 74\u00b0 versus 73\u00b0.",
+      "actual_net": 75613.22,
+      "expected_net": 87529.0,
+      "weather_exp": 91409.78,
+      "effects": {
+        "traffic": 16229.63,
+        "yield": -28145.41,
+        "cancels": 939.4,
+        "sleep": -9025.06,
+        "home": -1113.78
+      },
+      "rates": {
+        "mp": 52.3,
+        "close": 31.0,
+        "spg": 404.3,
+        "cxl": 6.8,
+        "sph": 345.6
+      },
+      "base_rates": {
+        "mp": 52.2,
+        "close": 33.6,
+        "spg": 554.9,
+        "cxl": 5.7,
+        "sph": 349.8
+      },
+      "actual": {
+        "net": 75613.22,
+        "traf": 187.0,
+        "tix": 58.0,
+        "sleep": 5135.23,
+        "care": 5130.98,
+        "canc": -5535.99,
+        "gross": 81149.21,
+        "hours": 218.8,
+        "margin": 39581.77,
+        "home": 58952.04
+      },
+      "expected": {
+        "net": 87529.0,
+        "traf": 157.75,
+        "tix": 53.0,
+        "sleep": 14160.28,
+        "care": 6697.23,
+        "canc": -5255.67,
+        "gross": 92784.67,
+        "hours": 250.23,
+        "margin": 45684.54,
+        "home": 60065.82
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 6526.5,
+          "exp": 9025.97,
+          "traf": 18,
+          "wx": {
+            "high": 75.9,
+            "low": 58.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 69.5,
+            "low": 60.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 13980.55,
+          "exp": 7315.2,
+          "traf": 24,
+          "wx": {
+            "high": 69.8,
+            "low": 55.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 71.2,
+            "low": 60.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 7734.96,
+          "exp": 12230.34,
+          "traf": 21,
+          "wx": {
+            "high": 71.2,
+            "low": 61.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 71.7,
+            "low": 60.0,
+            "inches": 0.22,
+            "rain": 0.22,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 1239.21,
+          "exp": 12802.38,
+          "traf": 22,
+          "wx": {
+            "high": 73.9,
+            "low": 56.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 70.1,
+            "low": 56.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 7650.17,
+          "exp": 7904.14,
+          "traf": 24,
+          "wx": {
+            "high": 73.1,
+            "low": 58.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 75.2,
+            "low": 60.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 18836.95,
+          "exp": 24011.42,
+          "traf": 47,
+          "wx": {
+            "high": 76.7,
+            "low": 57.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 73.7,
+            "low": 57.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 19644.88,
+          "exp": 14239.55,
+          "traf": 31,
+          "wx": {
+            "high": 76.4,
+            "low": 58.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 78.0,
+            "low": 56.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.0,
+        "ly_inches": 0.22,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 73.9,
+        "ly_high": 72.8,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.0,
+        "base_sev": 0.11,
+        "ly_sev": 0.01
+      },
+      "worst": {
+        "wd": "Thu",
+        "net": 1239.21,
+        "exp": 12802.38
+      }
+    },
+    {
+      "id": "S108",
+      "name": "Oak Terrace",
+      "region": "Central",
+      "market": "Prairie",
+      "format": "Outlet",
+      "climate": "Tennessee",
+      "zone": "central East Coast",
+      "snow_hit": 20,
+      "rain_hit": 10,
+      "z_peer": 0.0,
+      "z_own": -0.48,
+      "raw_gap": -8545.11,
+      "adj_gap": -9284.31,
+      "raw_pct": -7.9,
+      "adj_pct": -8.5,
+      "wx_share": 0,
+      "factor": 1.01,
+      "driver": "traffic",
+      "title": "The door slowed, and it was not the rain",
+      "say": "Traffic is light versus this store\u2019s own weekday habit, and the weather does not explain it. Coach the schedule and the ad before you coach the close.",
+      "try": [
+        "Match posted hours to who actually worked, especially Saturday open",
+        "Check the circular and the sign at the road \u2014 furniture traffic is local",
+        "Greet goal for the next dry afternoon; do not add a discount to buy the door"
+      ],
+      "why": "Traffic 186 versus 219. Sales per guest $539 versus $497. Hours 325 versus 249. Tennessee: 0.8 in this week versus 0.1 in on the comparable days last year, high 86\u00b0 versus 84\u00b0.",
+      "wx_line": "Tennessee: 0.8 in this week versus 0.1 in on the comparable days last year, high 86\u00b0 versus 84\u00b0.",
+      "actual_net": 100194.02,
+      "expected_net": 108739.13,
+      "weather_exp": 109478.33,
+      "effects": {
+        "traffic": -16332.6,
+        "yield": 7787.5,
+        "cancels": -2286.97,
+        "sleep": 2834.49,
+        "home": -10260.86
+      },
+      "rates": {
+        "mp": 51.2,
+        "close": 33.3,
+        "spg": 538.7,
+        "cxl": 3.0,
+        "sph": 308.0
+      },
+      "base_rates": {
+        "mp": 52.6,
+        "close": 32.5,
+        "spg": 496.8,
+        "cxl": 5.2,
+        "sph": 436.4
+      },
+      "actual": {
+        "net": 100194.02,
+        "traf": 186.0,
+        "tix": 62.0,
+        "sleep": 24049.16,
+        "care": 6740.58,
+        "canc": -3083.31,
+        "gross": 103277.32,
+        "hours": 325.3,
+        "margin": 51334.94,
+        "home": 61746.9
+      },
+      "expected": {
+        "net": 108739.13,
+        "traf": 218.88,
+        "tix": 71.12,
+        "sleep": 21214.67,
+        "care": 6999.29,
+        "canc": -5964.43,
+        "gross": 114703.56,
+        "hours": 249.15,
+        "margin": 57153.51,
+        "home": 72007.76
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 17932.03,
+          "exp": 13525.33,
+          "traf": 31,
+          "wx": {
+            "high": 88.1,
+            "low": 68.2,
+            "inches": 0.66,
+            "rain": 0.66,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 86.2,
+            "low": 66.9,
+            "inches": 0.02,
+            "rain": 0.02,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 9178.7,
+          "exp": 10274.49,
+          "traf": 21,
+          "wx": {
+            "high": 88.0,
+            "low": 64.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 82.2,
+            "low": 67.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 10040.74,
+          "exp": 13109.8,
+          "traf": 22,
+          "wx": {
+            "high": 85.3,
+            "low": 68.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 84.7,
+            "low": 64.3,
+            "inches": 0.08,
+            "rain": 0.08,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 10267.8,
+          "exp": 15425.81,
+          "traf": 22,
+          "wx": {
+            "high": 86.7,
+            "low": 69.1,
+            "inches": 0.19,
+            "rain": 0.19,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 84.0,
+            "low": 69.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 9508.62,
+          "exp": 15681.56,
+          "traf": 24,
+          "wx": {
+            "high": 87.9,
+            "low": 67.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 86.1,
+            "low": 69.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 23078.09,
+          "exp": 24362.22,
+          "traf": 48,
+          "wx": {
+            "high": 82.3,
+            "low": 64.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 84.5,
+            "low": 64.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 20188.04,
+          "exp": 16359.91,
+          "traf": 18,
+          "wx": {
+            "high": 84.6,
+            "low": 67.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 79.9,
+            "low": 66.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.85,
+        "ly_inches": 0.1,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 86.1,
+        "ly_high": 83.9,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.06,
+        "base_sev": 0.07,
+        "ly_sev": 0.01
+      },
+      "worst": {
+        "wd": "Fri",
+        "net": 9508.62,
+        "exp": 15681.56
+      }
+    },
+    {
+      "id": "S109",
+      "name": "Thornfield",
+      "region": "South",
+      "market": "Delta",
+      "format": "Showroom",
+      "climate": "Georgia and Alabama",
+      "zone": "South",
+      "snow_hit": 40,
+      "rain_hit": 7,
+      "z_peer": 0.95,
+      "z_own": 0.98,
+      "raw_gap": 18540.99,
+      "adj_gap": 19305.3,
+      "raw_pct": 20.8,
+      "adj_pct": 21.7,
+      "wx_share": 0,
+      "factor": 0.99,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $517 versus $446. Close rate 31.2% versus 30.7%. Tue was $4.5k against a $7.6k habit. Hours 208 versus 230. Georgia and Alabama: 1.8 in this week versus 1.8 in on the comparable days last year, high 88\u00b0 versus 88\u00b0.",
+      "wx_line": "Georgia and Alabama: 1.8 in this week versus 1.8 in on the comparable days last year, high 88\u00b0 versus 88\u00b0.",
+      "actual_net": 107481.76,
+      "expected_net": 88940.77,
+      "weather_exp": 88176.46,
+      "effects": {
+        "traffic": 3847.59,
+        "yield": 14693.4,
+        "cancels": 104.56,
+        "sleep": 8209.38,
+        "home": 8372.96
+      },
+      "rates": {
+        "mp": 54.8,
+        "close": 31.2,
+        "spg": 516.7,
+        "cxl": 3.8,
+        "sph": 518.0
+      },
+      "base_rates": {
+        "mp": 54.8,
+        "close": 30.7,
+        "spg": 446.1,
+        "cxl": 3.7,
+        "sph": 387.0
+      },
+      "actual": {
+        "net": 107481.76,
+        "traf": 208.0,
+        "tix": 65.0,
+        "sleep": 20143.34,
+        "care": 8590.57,
+        "canc": -4240.87,
+        "gross": 111722.61,
+        "hours": 207.5,
+        "margin": 58924.35,
+        "home": 71089.75
+      },
+      "expected": {
+        "net": 88940.77,
+        "traf": 199.38,
+        "tix": 61.25,
+        "sleep": 11933.96,
+        "care": 7210.08,
+        "canc": -3419.45,
+        "gross": 92360.23,
+        "hours": 229.84,
+        "margin": 48756.19,
+        "home": 62716.79
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 11129.96,
+          "exp": 10536.94,
+          "traf": 22,
+          "wx": {
+            "high": 92.5,
+            "low": 73.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 87.2,
+            "low": 73.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 4544.18,
+          "exp": 7583.34,
+          "traf": 17,
+          "wx": {
+            "high": 84.7,
+            "low": 71.6,
+            "inches": 0.48,
+            "rain": 0.48,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 90.3,
+            "low": 71.7,
+            "inches": 0.24,
+            "rain": 0.24,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 7269.02,
+          "exp": 9387.65,
+          "traf": 14,
+          "wx": {
+            "high": 85.4,
+            "low": 71.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 88.5,
+            "low": 70.5,
+            "inches": 0.07,
+            "rain": 0.07,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 9663.71,
+          "exp": 8265.64,
+          "traf": 19,
+          "wx": {
+            "high": 90.7,
+            "low": 73.4,
+            "inches": 0.26,
+            "rain": 0.26,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 90.5,
+            "low": 74.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 23365.76,
+          "exp": 10569.66,
+          "traf": 26,
+          "wx": {
+            "high": 86.6,
+            "low": 73.9,
+            "inches": 0.37,
+            "rain": 0.37,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 90.0,
+            "low": 73.8,
+            "inches": 0.36,
+            "rain": 0.36,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 30174.9,
+          "exp": 25829.65,
+          "traf": 62,
+          "wx": {
+            "high": 92.0,
+            "low": 75.0,
+            "inches": 0.7,
+            "rain": 0.7,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 86.9,
+            "low": 70.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 21334.23,
+          "exp": 16767.9,
+          "traf": 48,
+          "wx": {
+            "high": 87.0,
+            "low": 71.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 85.8,
+            "low": 72.0,
+            "inches": 1.08,
+            "rain": 1.08,
+            "snow": 0.0,
+            "kind": "storm"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 1.81,
+        "ly_inches": 1.75,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 88.4,
+        "ly_high": 88.5,
+        "storms": 0,
+        "ly_storms": 1,
+        "sev": 0.08,
+        "base_sev": 0.06,
+        "ly_sev": 0.08
+      },
+      "worst": {
+        "wd": "Tue",
+        "net": 4544.18,
+        "exp": 7583.34
+      }
+    },
+    {
+      "id": "S110",
+      "name": "Kestrel Bay",
+      "region": "North",
+      "market": "Lakes",
+      "format": "Showroom",
+      "climate": "New England coast",
+      "zone": "Northeast",
+      "snow_hit": 6,
+      "rain_hit": 10,
+      "z_peer": -0.79,
+      "z_own": -1.83,
+      "raw_gap": -21326.82,
+      "adj_gap": -22579.11,
+      "raw_pct": -31.8,
+      "adj_pct": -33.6,
+      "wx_share": 0,
+      "factor": 1.02,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $160 versus $204. Close rate 18.5% versus 20.1%. Mon was $109 against a $8.2k habit. Hours 287 versus 344. New England coast: 0.6 in this week versus 0.7 in on the comparable days last year, high 73\u00b0 versus 74\u00b0.",
+      "wx_line": "New England coast: 0.6 in this week versus 0.7 in on the comparable days last year, high 73\u00b0 versus 74\u00b0.",
+      "actual_net": 45794.91,
+      "expected_net": 67121.73,
+      "weather_exp": 68374.02,
+      "effects": {
+        "traffic": -8706.17,
+        "yield": -12620.66,
+        "cancels": 4903.3,
+        "sleep": -7693.19,
+        "home": -11075.86
+      },
+      "rates": {
+        "mp": 48.0,
+        "close": 18.5,
+        "spg": 160.1,
+        "cxl": 16.7,
+        "sph": 159.6
+      },
+      "base_rates": {
+        "mp": 46.3,
+        "close": 20.1,
+        "spg": 204.3,
+        "cxl": 7.8,
+        "sph": 194.9
+      },
+      "actual": {
+        "net": 45794.91,
+        "traf": 286.0,
+        "tix": 53.0,
+        "sleep": 1782.22,
+        "care": 2927.79,
+        "canc": -9175.7,
+        "gross": 54970.6,
+        "hours": 286.9,
+        "margin": 21986.11,
+        "home": 37449.69
+      },
+      "expected": {
+        "net": 67121.73,
+        "traf": 328.62,
+        "tix": 66.0,
+        "sleep": 9475.41,
+        "care": 4383.49,
+        "canc": -5656.43,
+        "gross": 72778.17,
+        "hours": 344.44,
+        "margin": 31059.81,
+        "home": 48525.55
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 109.38,
+          "exp": 8187.61,
+          "traf": 30,
+          "wx": {
+            "high": 69.4,
+            "low": 57.1,
+            "inches": 0.36,
+            "rain": 0.36,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 74.4,
+            "low": 57.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": -135.13,
+          "exp": 3235.68,
+          "traf": 26,
+          "wx": {
+            "high": 74.4,
+            "low": 58.1,
+            "inches": 0.08,
+            "rain": 0.08,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 75.0,
+            "low": 61.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 8765.56,
+          "exp": 4239.93,
+          "traf": 23,
+          "wx": {
+            "high": 76.2,
+            "low": 59.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 74.0,
+            "low": 55.1,
+            "inches": 0.3,
+            "rain": 0.3,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 541.74,
+          "exp": 8434.71,
+          "traf": 35,
+          "wx": {
+            "high": 74.2,
+            "low": 56.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 70.7,
+            "low": 55.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 3658.51,
+          "exp": 9533.24,
+          "traf": 37,
+          "wx": {
+            "high": 72.4,
+            "low": 56.0,
+            "inches": 0.1,
+            "rain": 0.1,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 75.7,
+            "low": 60.4,
+            "inches": 0.38,
+            "rain": 0.38,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 21056.5,
+          "exp": 18418.59,
+          "traf": 87,
+          "wx": {
+            "high": 73.8,
+            "low": 60.7,
+            "inches": 0.02,
+            "rain": 0.02,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 73.2,
+            "low": 59.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 11798.35,
+          "exp": 15071.96,
+          "traf": 48,
+          "wx": {
+            "high": 68.2,
+            "low": 56.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 72.6,
+            "low": 60.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.56,
+        "ly_inches": 0.68,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 72.7,
+        "ly_high": 73.7,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.03,
+        "base_sev": 0.08,
+        "ly_sev": 0.04
+      },
+      "worst": {
+        "wd": "Mon",
+        "net": 109.38,
+        "exp": 8187.61
+      }
+    },
+    {
+      "id": "S111",
+      "name": "Harrow Point",
+      "region": "Central",
+      "market": "Valley",
+      "format": "Showroom",
+      "climate": "Carolina piedmont",
+      "zone": "central East Coast",
+      "snow_hit": 22,
+      "rain_hit": 11,
+      "z_peer": -0.57,
+      "z_own": -0.88,
+      "raw_gap": -39954.67,
+      "adj_gap": -39443.93,
+      "raw_pct": -27.2,
+      "adj_pct": -26.9,
+      "wx_share": 0.01,
+      "factor": 1.0,
+      "driver": "cancels",
+      "title": "The desk gave it back",
+      "say": "Guests came and tickets were written. Cancels above this store\u2019s own rate are the hole. Open on the cancel book, not on traffic.",
+      "try": [
+        "Pull cancelled tickets from the worst day and call them within 24 hours",
+        "Split finance declines from delivery-window misses \u2014 they need different fixes",
+        "Have the manager sit the desk for the next Saturday close, not the floor"
+      ],
+      "why": "Close rate 23.9% versus a 23.4% habit. Cancelled sales \u2212$25.3k versus \u2212$8.7k. Thu was \u2212$14.9k against a $17.1k habit. Carolina piedmont: 1.9 in this week versus 0.2 in on the comparable days last year, high 86\u00b0 versus 84\u00b0.",
+      "wx_line": "Carolina piedmont: 1.9 in this week versus 0.2 in on the comparable days last year, high 86\u00b0 versus 84\u00b0.",
+      "actual_net": 106809.85,
+      "expected_net": 146764.52,
+      "weather_exp": 146253.78,
+      "effects": {
+        "traffic": -4809.65,
+        "yield": -35145.01,
+        "cancels": 17966.7,
+        "sleep": -4542.73,
+        "home": -30232.99
+      },
+      "rates": {
+        "mp": 52.0,
+        "close": 23.9,
+        "spg": 281.1,
+        "cxl": 19.2,
+        "sph": 225.0
+      },
+      "base_rates": {
+        "mp": 55.3,
+        "close": 23.4,
+        "spg": 373.6,
+        "cxl": 5.6,
+        "sph": 349.1
+      },
+      "actual": {
+        "net": 106809.85,
+        "traf": 380.0,
+        "tix": 91.0,
+        "sleep": 10618.72,
+        "care": 7899.91,
+        "canc": -25337.47,
+        "gross": 132147.31,
+        "hours": 474.8,
+        "margin": 55584.46,
+        "home": 78607.2
+      },
+      "expected": {
+        "net": 146764.52,
+        "traf": 392.88,
+        "tix": 92.12,
+        "sleep": 15161.45,
+        "care": 10877.57,
+        "canc": -8669.63,
+        "gross": 155434.15,
+        "hours": 420.36,
+        "margin": 81150.18,
+        "home": 108840.19
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 24480.7,
+          "exp": 18158.88,
+          "traf": 36,
+          "wx": {
+            "high": 85.7,
+            "low": 69.9,
+            "inches": 0.35,
+            "rain": 0.35,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 81.4,
+            "low": 66.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 16841.33,
+          "exp": 11442.79,
+          "traf": 42,
+          "wx": {
+            "high": 88.9,
+            "low": 67.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 88.2,
+            "low": 67.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 10715.77,
+          "exp": 8147.65,
+          "traf": 30,
+          "wx": {
+            "high": 86.7,
+            "low": 71.6,
+            "inches": 0.11,
+            "rain": 0.11,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 83.5,
+            "low": 70.4,
+            "inches": 0.22,
+            "rain": 0.22,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": -14858.16,
+          "exp": 17136.89,
+          "traf": 29,
+          "wx": {
+            "high": 88.3,
+            "low": 68.7,
+            "inches": 0.86,
+            "rain": 0.86,
+            "snow": 0.0,
+            "kind": "storm"
+          },
+          "ly": {
+            "high": 83.6,
+            "low": 69.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 12379.5,
+          "exp": 24764.19,
+          "traf": 46,
+          "wx": {
+            "high": 85.8,
+            "low": 66.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 82.1,
+            "low": 66.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 39814.22,
+          "exp": 43880.45,
+          "traf": 135,
+          "wx": {
+            "high": 81.6,
+            "low": 71.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 83.7,
+            "low": 67.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 17436.49,
+          "exp": 23233.67,
+          "traf": 62,
+          "wx": {
+            "high": 85.2,
+            "low": 70.0,
+            "inches": 0.53,
+            "rain": 0.53,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 88.7,
+            "low": 70.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 1.85,
+        "ly_inches": 0.22,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 86.0,
+        "ly_high": 84.5,
+        "storms": 1,
+        "ly_storms": 0,
+        "sev": 0.12,
+        "base_sev": 0.11,
+        "ly_sev": 0.02
+      },
+      "worst": {
+        "wd": "Thu",
+        "net": -14858.16,
+        "exp": 17136.89
+      }
+    },
+    {
+      "id": "S112",
+      "name": "Alder Crossing",
+      "region": "South",
+      "market": "Harbor",
+      "format": "Showroom",
+      "climate": "Florida Gulf",
+      "zone": "South",
+      "snow_hit": 45,
+      "rain_hit": 5,
+      "z_peer": 0.67,
+      "z_own": 0.29,
+      "raw_gap": 8995.0,
+      "adj_gap": 9031.31,
+      "raw_pct": 12.9,
+      "adj_pct": 13.0,
+      "wx_share": 0,
+      "factor": 1.0,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $639 versus $656. Close rate 41.5% versus 41.3%. Fri was $2.7k against a $11.2k habit. Hours 198 versus 188. Florida Gulf: 1.9 in this week versus 0.3 in on the comparable days last year, high 91\u00b0 versus 91\u00b0.",
+      "wx_line": "Florida Gulf: 1.9 in this week versus 0.3 in on the comparable days last year, high 91\u00b0 versus 91\u00b0.",
+      "actual_net": 78559.71,
+      "expected_net": 69564.71,
+      "weather_exp": 69528.4,
+      "effects": {
+        "traffic": 11061.53,
+        "yield": -2066.52,
+        "cancels": -1392.22,
+        "sleep": 2684.48,
+        "home": 5472.4
+      },
+      "rates": {
+        "mp": 56.6,
+        "close": 41.5,
+        "spg": 638.7,
+        "cxl": 3.3,
+        "sph": 396.2
+      },
+      "base_rates": {
+        "mp": 54.1,
+        "close": 41.3,
+        "spg": 655.5,
+        "cxl": 5.1,
+        "sph": 369.8
+      },
+      "actual": {
+        "net": 78559.71,
+        "traf": 123.0,
+        "tix": 51.0,
+        "sleep": 16776.72,
+        "care": 5534.35,
+        "canc": -2714.16,
+        "gross": 81273.87,
+        "hours": 198.3,
+        "margin": 44502.32,
+        "home": 50097.98
+      },
+      "expected": {
+        "net": 69564.71,
+        "traf": 106.12,
+        "tix": 43.88,
+        "sleep": 14092.24,
+        "care": 5573.0,
+        "canc": -3701.8,
+        "gross": 73266.51,
+        "hours": 188.11,
+        "margin": 37631.98,
+        "home": 44625.58
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 14548.71,
+          "exp": 7531.78,
+          "traf": 17,
+          "wx": {
+            "high": 93.7,
+            "low": 77.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 89.0,
+            "low": 76.1,
+            "inches": 0.03,
+            "rain": 0.03,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 5672.53,
+          "exp": 8880.74,
+          "traf": 14,
+          "wx": {
+            "high": 88.4,
+            "low": 75.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 91.9,
+            "low": 78.2,
+            "inches": 0.16,
+            "rain": 0.16,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 21604.61,
+          "exp": 7165.11,
+          "traf": 11,
+          "wx": {
+            "high": 89.8,
+            "low": 78.9,
+            "inches": 0.19,
+            "rain": 0.19,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 91.4,
+            "low": 77.8,
+            "inches": 0.05,
+            "rain": 0.05,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 4312.36,
+          "exp": 6224.6,
+          "traf": 8,
+          "wx": {
+            "high": 89.7,
+            "low": 78.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 92.2,
+            "low": 78.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 2743.44,
+          "exp": 11178.68,
+          "traf": 19,
+          "wx": {
+            "high": 95.9,
+            "low": 78.3,
+            "inches": 0.04,
+            "rain": 0.04,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 89.4,
+            "low": 78.5,
+            "inches": 0.06,
+            "rain": 0.06,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 15179.59,
+          "exp": 17324.05,
+          "traf": 33,
+          "wx": {
+            "high": 86.2,
+            "low": 76.6,
+            "inches": 0.49,
+            "rain": 0.49,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 89.6,
+            "low": 77.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 14498.47,
+          "exp": 11259.75,
+          "traf": 21,
+          "wx": {
+            "high": 91.4,
+            "low": 76.8,
+            "inches": 1.19,
+            "rain": 1.19,
+            "snow": 0.0,
+            "kind": "storm"
+          },
+          "ly": {
+            "high": 91.6,
+            "low": 75.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 1.91,
+        "ly_inches": 0.3,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 90.7,
+        "ly_high": 90.7,
+        "storms": 1,
+        "ly_storms": 0,
+        "sev": 0.06,
+        "base_sev": 0.06,
+        "ly_sev": 0.01
+      },
+      "worst": {
+        "wd": "Fri",
+        "net": 2743.44,
+        "exp": 11178.68
+      }
+    },
+    {
+      "id": "S113",
+      "name": "Valewood",
+      "region": "North",
+      "market": "Lakes",
+      "format": "Showroom",
+      "climate": "New England coast",
+      "zone": "Northeast",
+      "snow_hit": 6,
+      "rain_hit": 10,
+      "z_peer": -0.92,
+      "z_own": -1.09,
+      "raw_gap": -24558.55,
+      "adj_gap": -25037.95,
+      "raw_pct": -37.3,
+      "adj_pct": -38.0,
+      "wx_share": 0,
+      "factor": 1.01,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $214 versus $350. Close rate 20.2% versus 23.9%. Sat was $7.1k against a $17.2k habit. Hours 285 versus 212. New England coast: 1.5 in this week versus 0.9 in on the comparable days last year, high 74\u00b0 versus 73\u00b0.",
+      "wx_line": "New England coast: 1.5 in this week versus 0.9 in on the comparable days last year, high 74\u00b0 versus 73\u00b0.",
+      "actual_net": 41283.81,
+      "expected_net": 65842.36,
+      "weather_exp": 66321.76,
+      "effects": {
+        "traffic": 1751.13,
+        "yield": -26309.68,
+        "cancels": 2957.53,
+        "sleep": -2101.04,
+        "home": -19406.85
+      },
+      "rates": {
+        "mp": 50.6,
+        "close": 20.2,
+        "spg": 213.9,
+        "cxl": 15.6,
+        "sph": 144.7
+      },
+      "base_rates": {
+        "mp": 52.4,
+        "close": 23.9,
+        "spg": 350.2,
+        "cxl": 9.6,
+        "sph": 310.7
+      },
+      "actual": {
+        "net": 41283.81,
+        "traf": 193.0,
+        "tix": 39.0,
+        "sleep": 8868.04,
+        "care": 3336.73,
+        "canc": -7653.43,
+        "gross": 48937.23,
+        "hours": 285.4,
+        "margin": 20879.11,
+        "home": 25483.28
+      },
+      "expected": {
+        "net": 65842.36,
+        "traf": 188.0,
+        "tix": 44.88,
+        "sleep": 10969.08,
+        "care": 5089.04,
+        "canc": -6988.69,
+        "gross": 72831.05,
+        "hours": 211.9,
+        "margin": 34527.92,
+        "home": 44890.13
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 5025.57,
+          "exp": 9902.96,
+          "traf": 15,
+          "wx": {
+            "high": 77.6,
+            "low": 59.2,
+            "inches": 1.45,
+            "rain": 1.45,
+            "snow": 0.0,
+            "kind": "storm"
+          },
+          "ly": {
+            "high": 75.3,
+            "low": 60.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 881.29,
+          "exp": 8317.2,
+          "traf": 22,
+          "wx": {
+            "high": 71.7,
+            "low": 59.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 77.6,
+            "low": 59.2,
+            "inches": 0.1,
+            "rain": 0.1,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 7662.82,
+          "exp": 5400.68,
+          "traf": 26,
+          "wx": {
+            "high": 71.3,
+            "low": 56.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 68.8,
+            "low": 59.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 3530.21,
+          "exp": 8759.18,
+          "traf": 11,
+          "wx": {
+            "high": 76.4,
+            "low": 57.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 75.7,
+            "low": 56.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 7049.41,
+          "exp": 8193.23,
+          "traf": 26,
+          "wx": {
+            "high": 80.8,
+            "low": 60.4,
+            "inches": 0.07,
+            "rain": 0.07,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 71.2,
+            "low": 59.1,
+            "inches": 0.34,
+            "rain": 0.34,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 7065.14,
+          "exp": 17204.66,
+          "traf": 59,
+          "wx": {
+            "high": 72.0,
+            "low": 59.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 74.2,
+            "low": 59.5,
+            "inches": 0.39,
+            "rain": 0.39,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 10069.37,
+          "exp": 8064.45,
+          "traf": 34,
+          "wx": {
+            "high": 69.0,
+            "low": 55.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 71.1,
+            "low": 59.8,
+            "inches": 0.03,
+            "rain": 0.03,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 1.52,
+        "ly_inches": 0.86,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 74.1,
+        "ly_high": 73.4,
+        "storms": 1,
+        "ly_storms": 0,
+        "sev": 0.09,
+        "base_sev": 0.11,
+        "ly_sev": 0.05
+      },
+      "worst": {
+        "wd": "Sat",
+        "net": 7065.14,
+        "exp": 17204.66
+      }
+    },
+    {
+      "id": "S114",
+      "name": "Riverbend",
+      "region": "Central",
+      "market": "Prairie",
+      "format": "Outlet",
+      "climate": "Tennessee",
+      "zone": "central East Coast",
+      "snow_hit": 20,
+      "rain_hit": 10,
+      "z_peer": 1.5,
+      "z_own": 0.75,
+      "raw_gap": 24144.06,
+      "adj_gap": 23927.81,
+      "raw_pct": 39.7,
+      "adj_pct": 39.4,
+      "wx_share": 0,
+      "factor": 1.0,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $867 versus $654. Close rate 41.8% versus 59.4%. Thu was $1.6k against a $9.0k habit. Hours 245 versus 182. Tennessee: 1.2 in this week versus 2.2 in on the comparable days last year, high 84\u00b0 versus 84\u00b0.",
+      "wx_line": "Tennessee: 1.2 in this week versus 2.2 in on the comparable days last year, high 84\u00b0 versus 84\u00b0.",
+      "actual_net": 84922.82,
+      "expected_net": 60778.76,
+      "weather_exp": 60995.01,
+      "effects": {
+        "traffic": 3267.68,
+        "yield": 20876.39,
+        "cancels": -1742.99,
+        "sleep": 12986.64,
+        "home": 7481.99
+      },
+      "rates": {
+        "mp": 51.0,
+        "close": 41.8,
+        "spg": 866.6,
+        "cxl": 5.0,
+        "sph": 346.9
+      },
+      "base_rates": {
+        "mp": 46.4,
+        "close": 59.4,
+        "spg": 653.5,
+        "cxl": 6.9,
+        "sph": 334.0
+      },
+      "actual": {
+        "net": 84922.82,
+        "traf": 98.0,
+        "tix": 41.0,
+        "sleep": 26221.16,
+        "care": 6940.41,
+        "canc": -4445.88,
+        "gross": 89368.7,
+        "hours": 244.8,
+        "margin": 43333.47,
+        "home": 46697.13
+      },
+      "expected": {
+        "net": 60778.76,
+        "traf": 93.0,
+        "tix": 55.25,
+        "sleep": 13234.52,
+        "care": 4504.42,
+        "canc": -4522.15,
+        "gross": 65300.91,
+        "hours": 181.95,
+        "margin": 28213.23,
+        "home": 39215.14
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 12334.67,
+          "exp": 8331.85,
+          "traf": 16,
+          "wx": {
+            "high": 80.5,
+            "low": 67.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 88.6,
+            "low": 67.4,
+            "inches": 0.93,
+            "rain": 0.93,
+            "snow": 0.0,
+            "kind": "storm"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 14063.49,
+          "exp": 5357.62,
+          "traf": 11,
+          "wx": {
+            "high": 84.9,
+            "low": 66.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 83.6,
+            "low": 64.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 10512.53,
+          "exp": 3625.31,
+          "traf": 10,
+          "wx": {
+            "high": 86.5,
+            "low": 67.9,
+            "inches": 0.05,
+            "rain": 0.05,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 83.7,
+            "low": 68.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 1631.22,
+          "exp": 8965.54,
+          "traf": 9,
+          "wx": {
+            "high": 79.3,
+            "low": 69.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 82.2,
+            "low": 67.9,
+            "inches": 0.88,
+            "rain": 0.88,
+            "snow": 0.0,
+            "kind": "storm"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 8459.53,
+          "exp": 5800.66,
+          "traf": 12,
+          "wx": {
+            "high": 84.5,
+            "low": 64.6,
+            "inches": 1.14,
+            "rain": 1.14,
+            "snow": 0.0,
+            "kind": "storm"
+          },
+          "ly": {
+            "high": 84.2,
+            "low": 66.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 18585.07,
+          "exp": 23235.03,
+          "traf": 24,
+          "wx": {
+            "high": 85.5,
+            "low": 69.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 86.5,
+            "low": 68.6,
+            "inches": 0.35,
+            "rain": 0.35,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 19336.31,
+          "exp": 5462.75,
+          "traf": 16,
+          "wx": {
+            "high": 83.7,
+            "low": 65.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 81.9,
+            "low": 67.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 1.19,
+        "ly_inches": 2.16,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 83.6,
+        "ly_high": 84.4,
+        "storms": 1,
+        "ly_storms": 2,
+        "sev": 0.07,
+        "base_sev": 0.08,
+        "ly_sev": 0.13
+      },
+      "worst": {
+        "wd": "Thu",
+        "net": 1631.22,
+        "exp": 8965.54
+      }
+    },
+    {
+      "id": "S115",
+      "name": "Upland Mills",
+      "region": "South",
+      "market": "Delta",
+      "format": "Showroom",
+      "climate": "Georgia and Alabama",
+      "zone": "South",
+      "snow_hit": 40,
+      "rain_hit": 7,
+      "z_peer": -0.02,
+      "z_own": -0.34,
+      "raw_gap": -11221.89,
+      "adj_gap": -10938.23,
+      "raw_pct": -9.6,
+      "adj_pct": -9.3,
+      "wx_share": 0.03,
+      "factor": 1.0,
+      "driver": "sleep",
+      "title": "Sleep floor went quiet",
+      "say": "The building was not empty. Sleep missed by more than home. That is a display and a specialist, not a door problem.",
+      "try": [
+        "Walk the hero beds before open \u2014 dressed, priced, adjustable base plugged in",
+        "Put the sleep specialist on Saturday, not on the weekday recovery shift",
+        "Attach the foundation and the care plan in the same sit; do not send them to the desk later"
+      ],
+      "why": "Sleep $5.7k versus $15.5k. Home $84.2k versus $83.6k. Traffic 307 versus 283. Georgia and Alabama: 1.3 in this week versus 1.4 in on the comparable days last year, high 88\u00b0 versus 89\u00b0.",
+      "wx_line": "Georgia and Alabama: 1.3 in this week versus 1.4 in on the comparable days last year, high 88\u00b0 versus 89\u00b0.",
+      "actual_net": 106165.46,
+      "expected_net": 117387.35,
+      "weather_exp": 117103.69,
+      "effects": {
+        "traffic": 10124.08,
+        "yield": -21345.97,
+        "cancels": 3478.41,
+        "sleep": -9750.17,
+        "home": 532.17
+      },
+      "rates": {
+        "mp": 53.1,
+        "close": 26.1,
+        "spg": 345.8,
+        "cxl": 8.4,
+        "sph": 309.1
+      },
+      "base_rates": {
+        "mp": 54.4,
+        "close": 28.6,
+        "spg": 415.3,
+        "cxl": 5.4,
+        "sph": 403.6
+      },
+      "actual": {
+        "net": 106165.46,
+        "traf": 307.0,
+        "tix": 80.0,
+        "sleep": 5727.75,
+        "care": 6302.12,
+        "canc": -9714.27,
+        "gross": 115879.72,
+        "hours": 343.5,
+        "margin": 56380.68,
+        "home": 84171.48
+      },
+      "expected": {
+        "net": 117387.35,
+        "traf": 282.62,
+        "tix": 80.88,
+        "sleep": 15477.92,
+        "care": 8528.22,
+        "canc": -6676.26,
+        "gross": 124063.62,
+        "hours": 290.88,
+        "margin": 63915.69,
+        "home": 83639.31
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 4694.21,
+          "exp": 15750.69,
+          "traf": 30,
+          "wx": {
+            "high": 83.7,
+            "low": 71.1,
+            "inches": 0.68,
+            "rain": 0.68,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 86.4,
+            "low": 72.3,
+            "inches": 0.5,
+            "rain": 0.5,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 12219.76,
+          "exp": 13505.97,
+          "traf": 43,
+          "wx": {
+            "high": 91.8,
+            "low": 73.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 89.7,
+            "low": 70.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 5822.94,
+          "exp": 12940.64,
+          "traf": 27,
+          "wx": {
+            "high": 87.4,
+            "low": 72.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 94.8,
+            "low": 73.5,
+            "inches": 0.52,
+            "rain": 0.52,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 6155.44,
+          "exp": 13685.13,
+          "traf": 31,
+          "wx": {
+            "high": 88.1,
+            "low": 75.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 86.3,
+            "low": 71.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 30020.64,
+          "exp": 10172.45,
+          "traf": 49,
+          "wx": {
+            "high": 88.0,
+            "low": 72.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 91.0,
+            "low": 73.6,
+            "inches": 0.4,
+            "rain": 0.4,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 38533.89,
+          "exp": 33336.33,
+          "traf": 82,
+          "wx": {
+            "high": 87.8,
+            "low": 72.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 88.6,
+            "low": 71.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 8718.58,
+          "exp": 17996.14,
+          "traf": 45,
+          "wx": {
+            "high": 92.3,
+            "low": 73.5,
+            "inches": 0.59,
+            "rain": 0.59,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 84.7,
+            "low": 70.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 1.27,
+        "ly_inches": 1.42,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 88.4,
+        "ly_high": 88.8,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.06,
+        "base_sev": 0.05,
+        "ly_sev": 0.07
+      },
+      "worst": {
+        "wd": "Mon",
+        "net": 4694.21,
+        "exp": 15750.69
+      }
+    },
+    {
+      "id": "S116",
+      "name": "Elm Ridge",
+      "region": "North",
+      "market": "Lakes",
+      "format": "Outlet",
+      "climate": "New England coast",
+      "zone": "Northeast",
+      "snow_hit": 6,
+      "rain_hit": 10,
+      "z_peer": -0.33,
+      "z_own": -0.65,
+      "raw_gap": -11747.74,
+      "adj_gap": -15077.85,
+      "raw_pct": -14.8,
+      "adj_pct": -19.0,
+      "wx_share": 0,
+      "factor": 1.04,
+      "driver": "traffic",
+      "title": "The door slowed, and it was not the rain",
+      "say": "Traffic is light versus this store\u2019s own weekday habit, and the weather does not explain it. Coach the schedule and the ad before you coach the close.",
+      "try": [
+        "Match posted hours to who actually worked, especially Saturday open",
+        "Check the circular and the sign at the road \u2014 furniture traffic is local",
+        "Greet goal for the next dry afternoon; do not add a discount to buy the door"
+      ],
+      "why": "Traffic 151 versus 166. Sales per guest $448 versus $476. Hours 168 versus 230. New England coast: 0.2 in this week versus 0.1 in on the comparable days last year, high 73\u00b0 versus 75\u00b0.",
+      "wx_line": "New England coast: 0.2 in this week versus 0.1 in on the comparable days last year, high 73\u00b0 versus 75\u00b0.",
+      "actual_net": 67568.93,
+      "expected_net": 79316.67,
+      "weather_exp": 82646.78,
+      "effects": {
+        "traffic": -7383.83,
+        "yield": -4363.91,
+        "cancels": -544.79,
+        "sleep": -1947.51,
+        "home": -8163.31
+      },
+      "rates": {
+        "mp": 52.8,
+        "close": 35.1,
+        "spg": 447.5,
+        "cxl": 6.2,
+        "sph": 402.2
+      },
+      "base_rates": {
+        "mp": 53.8,
+        "close": 31.2,
+        "spg": 476.4,
+        "cxl": 7.0,
+        "sph": 345.0
+      },
+      "actual": {
+        "net": 67568.93,
+        "traf": 151.0,
+        "tix": 53.0,
+        "sleep": 13379.81,
+        "care": 5422.97,
+        "canc": -4469.84,
+        "gross": 72038.77,
+        "hours": 168.0,
+        "margin": 35663.46,
+        "home": 43166.87
+      },
+      "expected": {
+        "net": 79316.67,
+        "traf": 166.5,
+        "tix": 52.0,
+        "sleep": 15327.32,
+        "care": 6764.15,
+        "canc": -5934.34,
+        "gross": 85251.01,
+        "hours": 229.89,
+        "margin": 42690.04,
+        "home": 51330.18
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 7408.12,
+          "exp": 7949.15,
+          "traf": 18,
+          "wx": {
+            "high": 75.7,
+            "low": 57.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 78.1,
+            "low": 56.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 4596.29,
+          "exp": 5697.36,
+          "traf": 14,
+          "wx": {
+            "high": 76.1,
+            "low": 58.6,
+            "inches": 0.16,
+            "rain": 0.16,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 73.4,
+            "low": 60.7,
+            "inches": 0.12,
+            "rain": 0.12,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 2758.66,
+          "exp": 10228.83,
+          "traf": 14,
+          "wx": {
+            "high": 71.8,
+            "low": 55.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 78.6,
+            "low": 60.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 3013.8,
+          "exp": 7022.18,
+          "traf": 18,
+          "wx": {
+            "high": 75.9,
+            "low": 57.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 77.9,
+            "low": 55.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 6535.32,
+          "exp": 11891.11,
+          "traf": 15,
+          "wx": {
+            "high": 70.0,
+            "low": 56.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 71.8,
+            "low": 55.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 25495.38,
+          "exp": 21520.34,
+          "traf": 42,
+          "wx": {
+            "high": 68.8,
+            "low": 59.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 70.5,
+            "low": 60.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 17761.36,
+          "exp": 15007.71,
+          "traf": 30,
+          "wx": {
+            "high": 71.7,
+            "low": 55.8,
+            "inches": 0.02,
+            "rain": 0.02,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 76.2,
+            "low": 58.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.18,
+        "ly_inches": 0.12,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 72.9,
+        "ly_high": 75.2,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.01,
+        "base_sev": 0.11,
+        "ly_sev": 0.01
+      },
+      "worst": {
+        "wd": "Wed",
+        "net": 2758.66,
+        "exp": 10228.83
+      }
+    },
+    {
+      "id": "S117",
+      "name": "Pine Landing",
+      "region": "Central",
+      "market": "Valley",
+      "format": "Showroom",
+      "climate": "Carolina piedmont",
+      "zone": "central East Coast",
+      "snow_hit": 22,
+      "rain_hit": 11,
+      "z_peer": -0.58,
+      "z_own": -1.2,
+      "raw_gap": -17071.71,
+      "adj_gap": -21772.53,
+      "raw_pct": -21.2,
+      "adj_pct": -27.0,
+      "wx_share": 0,
+      "factor": 1.06,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $176 versus $211. Close rate 19.1% versus 22.5%. Mon was $3.3k against a $10.9k habit. Hours 212 versus 165. Carolina piedmont: 0.2 in this week versus 3.7 in on the comparable days last year, high 85\u00b0 versus 88\u00b0.",
+      "wx_line": "Carolina piedmont: 0.2 in this week versus 3.7 in on the comparable days last year, high 85\u00b0 versus 88\u00b0.",
+      "actual_net": 63424.66,
+      "expected_net": 80496.37,
+      "weather_exp": 85197.19,
+      "effects": {
+        "traffic": -4250.55,
+        "yield": -12821.16,
+        "cancels": -9.36,
+        "sleep": -2605.64,
+        "home": -11007.84
+      },
+      "rates": {
+        "mp": 45.4,
+        "close": 19.1,
+        "spg": 175.7,
+        "cxl": 3.7,
+        "sph": 298.8
+      },
+      "base_rates": {
+        "mp": 44.7,
+        "close": 22.5,
+        "spg": 211.2,
+        "cxl": 3.7,
+        "sph": 488.3
+      },
+      "actual": {
+        "net": 63424.66,
+        "traf": 361.0,
+        "tix": 69.0,
+        "sleep": 4878.83,
+        "care": 2874.3,
+        "canc": -2453.4,
+        "gross": 65878.06,
+        "hours": 212.3,
+        "margin": 28765.81,
+        "home": 51499.88
+      },
+      "expected": {
+        "net": 80496.37,
+        "traf": 381.12,
+        "tix": 85.88,
+        "sleep": 7484.47,
+        "care": 5673.68,
+        "canc": -3126.11,
+        "gross": 83622.47,
+        "hours": 164.86,
+        "margin": 35971.4,
+        "home": 62507.72
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 3326.97,
+          "exp": 10897.46,
+          "traf": 35,
+          "wx": {
+            "high": 84.2,
+            "low": 70.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 87.6,
+            "low": 70.9,
+            "inches": 1.13,
+            "rain": 1.13,
+            "snow": 0.0,
+            "kind": "storm"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 4759.52,
+          "exp": 8247.49,
+          "traf": 45,
+          "wx": {
+            "high": 86.7,
+            "low": 70.6,
+            "inches": 0.01,
+            "rain": 0.01,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 90.7,
+            "low": 68.2,
+            "inches": 0.45,
+            "rain": 0.45,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 3121.81,
+          "exp": 6319.9,
+          "traf": 29,
+          "wx": {
+            "high": 83.4,
+            "low": 70.7,
+            "inches": 0.15,
+            "rain": 0.15,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 86.2,
+            "low": 69.7,
+            "inches": 1.5,
+            "rain": 1.5,
+            "snow": 0.0,
+            "kind": "storm"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 4470.78,
+          "exp": 7190.47,
+          "traf": 39,
+          "wx": {
+            "high": 81.4,
+            "low": 71.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 84.0,
+            "low": 66.1,
+            "inches": 0.01,
+            "rain": 0.01,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 12893.17,
+          "exp": 7575.04,
+          "traf": 46,
+          "wx": {
+            "high": 86.8,
+            "low": 69.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 86.1,
+            "low": 68.7,
+            "inches": 0.54,
+            "rain": 0.54,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 23929.82,
+          "exp": 24386.97,
+          "traf": 106,
+          "wx": {
+            "high": 82.9,
+            "low": 70.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 86.5,
+            "low": 71.7,
+            "inches": 0.06,
+            "rain": 0.06,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 10922.59,
+          "exp": 15879.03,
+          "traf": 61,
+          "wx": {
+            "high": 87.5,
+            "low": 66.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 91.6,
+            "low": 66.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.16,
+        "ly_inches": 3.69,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 84.7,
+        "ly_high": 87.5,
+        "storms": 0,
+        "ly_storms": 2,
+        "sev": 0.01,
+        "base_sev": 0.15,
+        "ly_sev": 0.25
+      },
+      "worst": {
+        "wd": "Mon",
+        "net": 3326.97,
+        "exp": 10897.46
+      }
+    },
+    {
+      "id": "S118",
+      "name": "Ivy Station",
+      "region": "South",
+      "market": "Harbor",
+      "format": "Showroom",
+      "climate": "Florida Gulf",
+      "zone": "South",
+      "snow_hit": 45,
+      "rain_hit": 5,
+      "z_peer": 0.07,
+      "z_own": -0.28,
+      "raw_gap": -7203.99,
+      "adj_gap": -5895.12,
+      "raw_pct": -7.9,
+      "adj_pct": -6.4,
+      "wx_share": 0.18,
+      "factor": 0.99,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $537 versus $682. Close rate 31.8% versus 39.8%. Sat was $18.6k against a $25.5k habit. Hours 229 versus 185. Florida Gulf: 3.5 in this week versus 3.0 in on the comparable days last year, high 91\u00b0 versus 90\u00b0.",
+      "wx_line": "Florida Gulf: 3.5 in this week versus 3.0 in on the comparable days last year, high 91\u00b0 versus 90\u00b0.",
+      "actual_net": 84280.8,
+      "expected_net": 91484.79,
+      "weather_exp": 90175.92,
+      "effects": {
+        "traffic": 15503.01,
+        "yield": -22707.0,
+        "cancels": 2640.47,
+        "sleep": 5321.97,
+        "home": -10371.39
+      },
+      "rates": {
+        "mp": 54.9,
+        "close": 31.8,
+        "spg": 536.8,
+        "cxl": 6.8,
+        "sph": 367.7
+      },
+      "base_rates": {
+        "mp": 56.3,
+        "close": 39.8,
+        "spg": 681.5,
+        "cxl": 3.9,
+        "sph": 494.6
+      },
+      "actual": {
+        "net": 84280.8,
+        "traf": 157.0,
+        "tix": 50.0,
+        "sleep": 16185.68,
+        "care": 7070.99,
+        "canc": -6197.28,
+        "gross": 90478.08,
+        "hours": 229.2,
+        "margin": 46239.99,
+        "home": 54849.07
+      },
+      "expected": {
+        "net": 91484.79,
+        "traf": 134.25,
+        "tix": 53.38,
+        "sleep": 10863.71,
+        "care": 7358.25,
+        "canc": -3743.55,
+        "gross": 95228.33,
+        "hours": 184.97,
+        "margin": 51513.18,
+        "home": 65220.46
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 9677.7,
+          "exp": 13288.65,
+          "traf": 18,
+          "wx": {
+            "high": 92.5,
+            "low": 77.6,
+            "inches": 0.67,
+            "rain": 0.67,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 87.0,
+            "low": 78.0,
+            "inches": 0.59,
+            "rain": 0.59,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 8310.67,
+          "exp": 7275.64,
+          "traf": 18,
+          "wx": {
+            "high": 92.0,
+            "low": 76.6,
+            "inches": 0.38,
+            "rain": 0.38,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 92.1,
+            "low": 78.2,
+            "inches": 1.19,
+            "rain": 1.19,
+            "snow": 0.0,
+            "kind": "storm"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 11018.29,
+          "exp": 10943.43,
+          "traf": 20,
+          "wx": {
+            "high": 91.0,
+            "low": 77.5,
+            "inches": 0.35,
+            "rain": 0.35,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 91.5,
+            "low": 78.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 10189.77,
+          "exp": 12903.56,
+          "traf": 22,
+          "wx": {
+            "high": 90.6,
+            "low": 78.0,
+            "inches": 0.46,
+            "rain": 0.46,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 90.0,
+            "low": 75.2,
+            "inches": 0.3,
+            "rain": 0.3,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 14285.59,
+          "exp": 9431.2,
+          "traf": 17,
+          "wx": {
+            "high": 93.3,
+            "low": 78.5,
+            "inches": 1.59,
+            "rain": 1.59,
+            "snow": 0.0,
+            "kind": "storm"
+          },
+          "ly": {
+            "high": 89.1,
+            "low": 76.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 18642.23,
+          "exp": 25511.08,
+          "traf": 40,
+          "wx": {
+            "high": 89.0,
+            "low": 76.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 92.9,
+            "low": 78.4,
+            "inches": 0.77,
+            "rain": 0.77,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 12156.55,
+          "exp": 12131.23,
+          "traf": 22,
+          "wx": {
+            "high": 90.5,
+            "low": 76.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 88.8,
+            "low": 75.1,
+            "inches": 0.17,
+            "rain": 0.17,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 3.45,
+        "ly_inches": 3.02,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 91.3,
+        "ly_high": 90.2,
+        "storms": 1,
+        "ly_storms": 1,
+        "sev": 0.1,
+        "base_sev": 0.07,
+        "ly_sev": 0.09
+      },
+      "worst": {
+        "wd": "Sat",
+        "net": 18642.23,
+        "exp": 25511.08
+      }
+    },
+    {
+      "id": "S119",
+      "name": "Willow Park",
+      "region": "North",
+      "market": "Lakes",
+      "format": "Showroom",
+      "climate": "New England coast",
+      "zone": "Northeast",
+      "snow_hit": 6,
+      "rain_hit": 10,
+      "z_peer": 1.66,
+      "z_own": 2.06,
+      "raw_gap": 31041.7,
+      "adj_gap": 30199.36,
+      "raw_pct": 45.5,
+      "adj_pct": 44.3,
+      "wx_share": 0,
+      "factor": 1.01,
+      "driver": "traffic",
+      "title": "The door slowed, and it was not the rain",
+      "say": "Traffic is light versus this store\u2019s own weekday habit, and the weather does not explain it. Coach the schedule and the ad before you coach the close.",
+      "try": [
+        "Match posted hours to who actually worked, especially Saturday open",
+        "Check the circular and the sign at the road \u2014 furniture traffic is local",
+        "Greet goal for the next dry afternoon; do not add a discount to buy the door"
+      ],
+      "why": "Traffic 124 versus 167. Sales per guest $800 versus $408. Hours 141 versus 195. New England coast: 1.1 in this week versus 0.0 in on the comparable days last year, high 72\u00b0 versus 74\u00b0.",
+      "wx_line": "New England coast: 1.1 in this week versus 0.0 in on the comparable days last year, high 72\u00b0 versus 74\u00b0.",
+      "actual_net": 99225.5,
+      "expected_net": 68183.8,
+      "weather_exp": 69026.14,
+      "effects": {
+        "traffic": -17594.17,
+        "yield": 48635.88,
+        "cancels": 2325.56,
+        "sleep": 5198.36,
+        "home": 21955.1
+      },
+      "rates": {
+        "mp": 52.8,
+        "close": 39.5,
+        "spg": 800.2,
+        "cxl": 10.6,
+        "sph": 704.2
+      },
+      "base_rates": {
+        "mp": 53.2,
+        "close": 28.9,
+        "spg": 408.0,
+        "cxl": 8.5,
+        "sph": 350.2
+      },
+      "actual": {
+        "net": 99225.5,
+        "traf": 124.0,
+        "tix": 49.0,
+        "sleep": 13013.87,
+        "care": 7956.78,
+        "canc": -11707.89,
+        "gross": 110933.38,
+        "hours": 140.9,
+        "margin": 52365.12,
+        "home": 70695.06
+      },
+      "expected": {
+        "net": 68183.8,
+        "traf": 167.12,
+        "tix": 48.25,
+        "sleep": 7815.51,
+        "care": 6010.99,
+        "canc": -6299.52,
+        "gross": 74483.32,
+        "hours": 194.71,
+        "margin": 36255.94,
+        "home": 48739.96
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 19958.83,
+          "exp": 9752.97,
+          "traf": 14,
+          "wx": {
+            "high": 73.3,
+            "low": 55.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 73.8,
+            "low": 59.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": -2122.35,
+          "exp": 6623.45,
+          "traf": 14,
+          "wx": {
+            "high": 74.4,
+            "low": 55.5,
+            "inches": 0.49,
+            "rain": 0.49,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 75.6,
+            "low": 56.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 22838.75,
+          "exp": 4016.19,
+          "traf": 14,
+          "wx": {
+            "high": 76.1,
+            "low": 60.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 72.7,
+            "low": 57.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 1934.04,
+          "exp": 10033.96,
+          "traf": 11,
+          "wx": {
+            "high": 70.9,
+            "low": 58.7,
+            "inches": 0.03,
+            "rain": 0.03,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 76.0,
+            "low": 59.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 11019.13,
+          "exp": 12034.62,
+          "traf": 17,
+          "wx": {
+            "high": 72.1,
+            "low": 58.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 77.6,
+            "low": 58.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 40632.95,
+          "exp": 17215.4,
+          "traf": 38,
+          "wx": {
+            "high": 70.5,
+            "low": 61.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 74.6,
+            "low": 56.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 4964.15,
+          "exp": 8507.21,
+          "traf": 16,
+          "wx": {
+            "high": 70.0,
+            "low": 56.5,
+            "inches": 0.63,
+            "rain": 0.63,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 70.0,
+            "low": 56.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 1.15,
+        "ly_inches": 0.0,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 72.5,
+        "ly_high": 74.3,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.07,
+        "base_sev": 0.1,
+        "ly_sev": 0.0
+      },
+      "worst": {
+        "wd": "Tue",
+        "net": -2122.35,
+        "exp": 6623.45
+      }
+    },
+    {
+      "id": "S120",
+      "name": "Fairhaven",
+      "region": "Central",
+      "market": "Prairie",
+      "format": "Outlet",
+      "climate": "Tennessee",
+      "zone": "central East Coast",
+      "snow_hit": 20,
+      "rain_hit": 10,
+      "z_peer": -1.56,
+      "z_own": -1.47,
+      "raw_gap": -44328.44,
+      "adj_gap": -45256.77,
+      "raw_pct": -57.0,
+      "adj_pct": -58.2,
+      "wx_share": 0,
+      "factor": 1.01,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $257 versus $447. Close rate 26.9% versus 28.9%. Sat was $6.1k against a $23.6k habit. Hours 265 versus 252. Tennessee: 1.3 in this week versus 0.9 in on the comparable days last year, high 83\u00b0 versus 86\u00b0.",
+      "wx_line": "Tennessee: 1.3 in this week versus 0.9 in on the comparable days last year, high 83\u00b0 versus 86\u00b0.",
+      "actual_net": 33459.92,
+      "expected_net": 77788.36,
+      "weather_exp": 78716.69,
+      "effects": {
+        "traffic": -19712.34,
+        "yield": -24616.1,
+        "cancels": 2406.84,
+        "sleep": -4996.52,
+        "home": -32471.93
+      },
+      "rates": {
+        "mp": 53.8,
+        "close": 26.9,
+        "spg": 257.4,
+        "cxl": 12.4,
+        "sph": 126.2
+      },
+      "base_rates": {
+        "mp": 53.6,
+        "close": 28.9,
+        "spg": 446.7,
+        "cxl": 6.1,
+        "sph": 308.1
+      },
+      "actual": {
+        "net": 33459.92,
+        "traf": 130.0,
+        "tix": 35.0,
+        "sleep": 3141.55,
+        "care": 2460.06,
+        "canc": -4721.35,
+        "gross": 38181.26,
+        "hours": 265.2,
+        "margin": 17999.58,
+        "home": 24418.53
+      },
+      "expected": {
+        "net": 77788.36,
+        "traf": 174.12,
+        "tix": 50.25,
+        "sleep": 8138.07,
+        "care": 5816.39,
+        "canc": -5019.76,
+        "gross": 82808.12,
+        "hours": 252.5,
+        "margin": 41722.02,
+        "home": 56890.46
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": -664.05,
+          "exp": 6910.47,
+          "traf": 12,
+          "wx": {
+            "high": 79.8,
+            "low": 66.2,
+            "inches": 1.22,
+            "rain": 1.22,
+            "snow": 0.0,
+            "kind": "storm"
+          },
+          "ly": {
+            "high": 85.3,
+            "low": 68.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 6549.33,
+          "exp": 6149.37,
+          "traf": 15,
+          "wx": {
+            "high": 83.1,
+            "low": 69.8,
+            "inches": 0.09,
+            "rain": 0.09,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 85.5,
+            "low": 64.1,
+            "inches": 0.89,
+            "rain": 0.89,
+            "snow": 0.0,
+            "kind": "storm"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 5917.74,
+          "exp": 6573.47,
+          "traf": 22,
+          "wx": {
+            "high": 84.1,
+            "low": 66.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 87.4,
+            "low": 65.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 1198.18,
+          "exp": 11697.48,
+          "traf": 15,
+          "wx": {
+            "high": 85.7,
+            "low": 69.4,
+            "inches": 0.02,
+            "rain": 0.02,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 86.9,
+            "low": 65.2,
+            "inches": 0.02,
+            "rain": 0.02,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 7009.58,
+          "exp": 10400.11,
+          "traf": 21,
+          "wx": {
+            "high": 81.5,
+            "low": 68.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 84.6,
+            "low": 66.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 6145.26,
+          "exp": 23624.52,
+          "traf": 22,
+          "wx": {
+            "high": 84.1,
+            "low": 64.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 83.8,
+            "low": 64.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 7303.88,
+          "exp": 12432.94,
+          "traf": 23,
+          "wx": {
+            "high": 81.1,
+            "low": 67.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 87.4,
+            "low": 66.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 1.33,
+        "ly_inches": 0.91,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 82.8,
+        "ly_high": 85.8,
+        "storms": 1,
+        "ly_storms": 1,
+        "sev": 0.08,
+        "base_sev": 0.1,
+        "ly_sev": 0.06
+      },
+      "worst": {
+        "wd": "Sat",
+        "net": 6145.26,
+        "exp": 23624.52
+      }
+    },
+    {
+      "id": "S121",
+      "name": "Cedar Bluff",
+      "region": "South",
+      "market": "Harbor",
+      "format": "Showroom",
+      "climate": "Florida Gulf",
+      "zone": "South",
+      "snow_hit": 45,
+      "rain_hit": 5,
+      "z_peer": 1.37,
+      "z_own": 1.54,
+      "raw_gap": 29903.57,
+      "adj_gap": 32017.57,
+      "raw_pct": 32.8,
+      "adj_pct": 35.1,
+      "wx_share": 0,
+      "factor": 0.98,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $410 versus $357. Close rate 22.0% versus 21.6%. Wed was $7.1k against a $12.5k habit. Hours 317 versus 333. Florida Gulf: 4.3 in this week versus 1.2 in on the comparable days last year, high 90\u00b0 versus 89\u00b0.",
+      "wx_line": "Florida Gulf: 4.3 in this week versus 1.2 in on the comparable days last year, high 90\u00b0 versus 89\u00b0.",
+      "actual_net": 121075.09,
+      "expected_net": 91171.51,
+      "weather_exp": 89057.52,
+      "effects": {
+        "traffic": 14198.11,
+        "yield": 15705.46,
+        "cancels": 1991.38,
+        "sleep": 2694.95,
+        "home": 24042.58
+      },
+      "rates": {
+        "mp": 56.5,
+        "close": 22.0,
+        "spg": 410.4,
+        "cxl": 5.9,
+        "sph": 381.5
+      },
+      "base_rates": {
+        "mp": 55.2,
+        "close": 21.6,
+        "spg": 357.2,
+        "cxl": 4.4,
+        "sph": 274.1
+      },
+      "actual": {
+        "net": 121075.09,
+        "traf": 295.0,
+        "tix": 65.0,
+        "sleep": 15290.99,
+        "care": 8264.58,
+        "canc": -7589.0,
+        "gross": 128664.09,
+        "hours": 317.4,
+        "margin": 68357.27,
+        "home": 87221.73
+      },
+      "expected": {
+        "net": 91171.51,
+        "traf": 255.25,
+        "tix": 55.12,
+        "sleep": 12596.04,
+        "care": 7285.52,
+        "canc": -4146.89,
+        "gross": 95318.4,
+        "hours": 332.68,
+        "margin": 50288.95,
+        "home": 63179.15
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 20471.1,
+          "exp": 14454.27,
+          "traf": 39,
+          "wx": {
+            "high": 92.3,
+            "low": 77.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 89.6,
+            "low": 76.8,
+            "inches": 0.35,
+            "rain": 0.35,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 12536.79,
+          "exp": 10149.61,
+          "traf": 37,
+          "wx": {
+            "high": 86.3,
+            "low": 76.8,
+            "inches": 1.65,
+            "rain": 1.65,
+            "snow": 0.0,
+            "kind": "storm"
+          },
+          "ly": {
+            "high": 91.5,
+            "low": 77.8,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 7073.89,
+          "exp": 12542.3,
+          "traf": 27,
+          "wx": {
+            "high": 88.0,
+            "low": 76.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 85.8,
+            "low": 75.9,
+            "inches": 0.11,
+            "rain": 0.11,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 13983.44,
+          "exp": 5596.81,
+          "traf": 28,
+          "wx": {
+            "high": 86.1,
+            "low": 77.7,
+            "inches": 0.07,
+            "rain": 0.07,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 88.2,
+            "low": 75.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 15126.66,
+          "exp": 12568.39,
+          "traf": 35,
+          "wx": {
+            "high": 89.3,
+            "low": 75.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 93.5,
+            "low": 76.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 27372.56,
+          "exp": 20231.63,
+          "traf": 78,
+          "wx": {
+            "high": 90.7,
+            "low": 78.5,
+            "inches": 0.21,
+            "rain": 0.21,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 85.5,
+            "low": 77.6,
+            "inches": 0.16,
+            "rain": 0.16,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 24510.65,
+          "exp": 15628.49,
+          "traf": 51,
+          "wx": {
+            "high": 93.6,
+            "low": 78.8,
+            "inches": 2.38,
+            "rain": 2.38,
+            "snow": 0.0,
+            "kind": "storm"
+          },
+          "ly": {
+            "high": 89.5,
+            "low": 78.3,
+            "inches": 0.56,
+            "rain": 0.56,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 4.31,
+        "ly_inches": 1.18,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 89.5,
+        "ly_high": 89.1,
+        "storms": 2,
+        "ly_storms": 0,
+        "sev": 0.13,
+        "base_sev": 0.07,
+        "ly_sev": 0.04
+      },
+      "worst": {
+        "wd": "Wed",
+        "net": 7073.89,
+        "exp": 12542.3
+      }
+    },
+    {
+      "id": "S122",
+      "name": "Linden Square",
+      "region": "North",
+      "market": "Lakes",
+      "format": "Showroom",
+      "climate": "New England coast",
+      "zone": "Northeast",
+      "snow_hit": 6,
+      "rain_hit": 10,
+      "z_peer": 0.72,
+      "z_own": 0.66,
+      "raw_gap": 19693.72,
+      "adj_gap": 15472.18,
+      "raw_pct": 18.4,
+      "adj_pct": 14.4,
+      "wx_share": 0,
+      "factor": 1.04,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $504 versus $426. Close rate 23.8% versus 23.3%. Sun was $18.9k against a $24.4k habit. Hours 292 versus 314. New England coast: 0.0 in this week versus 1.3 in on the comparable days last year, high 73\u00b0 versus 73\u00b0.",
+      "wx_line": "New England coast: 0.0 in this week versus 1.3 in on the comparable days last year, high 73\u00b0 versus 73\u00b0.",
+      "actual_net": 126981.12,
+      "expected_net": 107287.4,
+      "weather_exp": 111508.94,
+      "effects": {
+        "traffic": 0.0,
+        "yield": 19693.72,
+        "cancels": -6323.86,
+        "sleep": 13024.1,
+        "home": 6889.61
+      },
+      "rates": {
+        "mp": 55.0,
+        "close": 23.8,
+        "spg": 503.9,
+        "cxl": 4.2,
+        "sph": 435.2
+      },
+      "base_rates": {
+        "mp": 54.2,
+        "close": 23.3,
+        "spg": 425.7,
+        "cxl": 9.0,
+        "sph": 341.3
+      },
+      "actual": {
+        "net": 126981.12,
+        "traf": 252.0,
+        "tix": 60.0,
+        "sleep": 28467.91,
+        "care": 6967.43,
+        "canc": -5605.41,
+        "gross": 132586.53,
+        "hours": 291.8,
+        "margin": 69873.76,
+        "home": 81630.42
+      },
+      "expected": {
+        "net": 107287.4,
+        "traf": 252.0,
+        "tix": 58.75,
+        "sleep": 15443.81,
+        "care": 8144.75,
+        "canc": -10607.41,
+        "gross": 117894.82,
+        "hours": 314.31,
+        "margin": 58128.01,
+        "home": 74740.81
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 15227.13,
+          "exp": 10755.24,
+          "traf": 29,
+          "wx": {
+            "high": 71.0,
+            "low": 59.1,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 71.9,
+            "low": 59.4,
+            "inches": 0.56,
+            "rain": 0.56,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 7094.09,
+          "exp": 5646.87,
+          "traf": 27,
+          "wx": {
+            "high": 71.9,
+            "low": 60.1,
+            "inches": 0.04,
+            "rain": 0.04,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 73.1,
+            "low": 57.7,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 29133.59,
+          "exp": 12248.04,
+          "traf": 39,
+          "wx": {
+            "high": 72.3,
+            "low": 61.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 73.2,
+            "low": 58.2,
+            "inches": 0.33,
+            "rain": 0.33,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 7379.12,
+          "exp": 9602.12,
+          "traf": 13,
+          "wx": {
+            "high": 75.2,
+            "low": 59.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 71.3,
+            "low": 62.0,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 19498.29,
+          "exp": 15795.9,
+          "traf": 27,
+          "wx": {
+            "high": 73.3,
+            "low": 60.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 73.5,
+            "low": 62.0,
+            "inches": 0.02,
+            "rain": 0.02,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 29704.41,
+          "exp": 28843.89,
+          "traf": 67,
+          "wx": {
+            "high": 75.9,
+            "low": 59.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 75.9,
+            "low": 57.1,
+            "inches": 0.38,
+            "rain": 0.38,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 18944.49,
+          "exp": 24395.33,
+          "traf": 50,
+          "wx": {
+            "high": 72.5,
+            "low": 61.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 75.0,
+            "low": 61.5,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.04,
+        "ly_inches": 1.29,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 73.2,
+        "ly_high": 73.4,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.0,
+        "base_sev": 0.1,
+        "ly_sev": 0.07
+      },
+      "worst": {
+        "wd": "Sun",
+        "net": 18944.49,
+        "exp": 24395.33
+      }
+    },
+    {
+      "id": "S123",
+      "name": "Maple Commons",
+      "region": "Central",
+      "market": "Valley",
+      "format": "Showroom",
+      "climate": "Carolina piedmont",
+      "zone": "central East Coast",
+      "snow_hit": 22,
+      "rain_hit": 11,
+      "z_peer": -0.06,
+      "z_own": -0.46,
+      "raw_gap": -4211.47,
+      "adj_gap": -7007.03,
+      "raw_pct": -6.2,
+      "adj_pct": -10.3,
+      "wx_share": 0,
+      "factor": 1.04,
+      "driver": "yield",
+      "title": "Guests came. Tickets did not.",
+      "say": "Door count held up better than the ticket. This is floor coverage and the second sit, not an empty parking lot.",
+      "try": [
+        "Ask who had the floor on the worst day and how many ups they took alone",
+        "One up system on Saturday: no one works a guest alone past the first sit",
+        "Step the mattress, then the base, then the care plan \u2014 in that order"
+      ],
+      "why": "Sales per guest $349 versus $365. Close rate 22.5% versus 25.4%. Thu was $2.6k against a $5.4k habit. Hours 335 versus 300. Carolina piedmont: 0.3 in this week versus 1.5 in on the comparable days last year, high 86\u00b0 versus 87\u00b0.",
+      "wx_line": "Carolina piedmont: 0.3 in this week versus 1.5 in on the comparable days last year, high 86\u00b0 versus 87\u00b0.",
+      "actual_net": 63554.87,
+      "expected_net": 67766.34,
+      "weather_exp": 70561.9,
+      "effects": {
+        "traffic": -1368.1,
+        "yield": -2843.37,
+        "cancels": 1168.62,
+        "sleep": -4442.31,
+        "home": 438.85
+      },
+      "rates": {
+        "mp": 51.5,
+        "close": 22.5,
+        "spg": 349.2,
+        "cxl": 7.0,
+        "sph": 189.7
+      },
+      "base_rates": {
+        "mp": 53.3,
+        "close": 25.4,
+        "spg": 364.8,
+        "cxl": 5.3,
+        "sph": 225.7
+      },
+      "actual": {
+        "net": 63554.87,
+        "traf": 182.0,
+        "tix": 41.0,
+        "sleep": 7881.82,
+        "care": 5236.53,
+        "canc": -4801.27,
+        "gross": 68356.15,
+        "hours": 335.0,
+        "margin": 32701.5,
+        "home": 45466.7
+      },
+      "expected": {
+        "net": 67766.34,
+        "traf": 185.75,
+        "tix": 47.12,
+        "sleep": 12324.13,
+        "care": 5360.28,
+        "canc": -3803.44,
+        "gross": 71569.76,
+        "hours": 300.26,
+        "margin": 36144.29,
+        "home": 45027.85
+      },
+      "days": [
+        {
+          "date": "2029-09-03",
+          "wd": "Mon",
+          "net": 5942.17,
+          "exp": 7143.41,
+          "traf": 14,
+          "wx": {
+            "high": 85.9,
+            "low": 66.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 84.2,
+            "low": 66.9,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-04",
+          "wd": "Tue",
+          "net": 1589.84,
+          "exp": 4251.03,
+          "traf": 18,
+          "wx": {
+            "high": 88.4,
+            "low": 67.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 85.9,
+            "low": 69.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-05",
+          "wd": "Wed",
+          "net": 4152.4,
+          "exp": 5542.22,
+          "traf": 24,
+          "wx": {
+            "high": 89.4,
+            "low": 66.4,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 89.9,
+            "low": 71.7,
+            "inches": 0.23,
+            "rain": 0.23,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-06",
+          "wd": "Thu",
+          "net": 2577.09,
+          "exp": 5378.32,
+          "traf": 22,
+          "wx": {
+            "high": 86.7,
+            "low": 67.2,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 84.8,
+            "low": 66.3,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-07",
+          "wd": "Fri",
+          "net": 11636.73,
+          "exp": 12823.26,
+          "traf": 27,
+          "wx": {
+            "high": 86.7,
+            "low": 71.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 86.6,
+            "low": 66.1,
+            "inches": 0.32,
+            "rain": 0.32,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        },
+        {
+          "date": "2029-09-08",
+          "wd": "Sat",
+          "net": 25500.03,
+          "exp": 21276.06,
+          "traf": 46,
+          "wx": {
+            "high": 85.6,
+            "low": 69.2,
+            "inches": 0.35,
+            "rain": 0.35,
+            "snow": 0.0,
+            "kind": "rain"
+          },
+          "ly": {
+            "high": 85.4,
+            "low": 68.1,
+            "inches": 0.14,
+            "rain": 0.14,
+            "snow": 0.0,
+            "kind": "clear"
+          }
+        },
+        {
+          "date": "2029-09-09",
+          "wd": "Sun",
+          "net": 12156.61,
+          "exp": 11352.02,
+          "traf": 31,
+          "wx": {
+            "high": 81.8,
+            "low": 69.6,
+            "inches": 0.0,
+            "rain": 0.0,
+            "snow": 0.0,
+            "kind": "clear"
+          },
+          "ly": {
+            "high": 89.6,
+            "low": 66.0,
+            "inches": 0.77,
+            "rain": 0.77,
+            "snow": 0.0,
+            "kind": "rain"
+          }
+        }
+      ],
+      "wx": {
+        "inches": 0.35,
+        "ly_inches": 1.46,
+        "snow": 0.0,
+        "ly_snow": 0.0,
+        "high": 86.4,
+        "ly_high": 86.6,
+        "storms": 0,
+        "ly_storms": 0,
+        "sev": 0.03,
+        "base_sev": 0.13,
+        "ly_sev": 0.1
+      },
+      "worst": {
+        "wd": "Thu",
+        "net": 2577.09,
+        "exp": 5378.32
+      }
+    }
+  ],
+  "call_ids": [
+    "S120",
+    "S102",
+    "S101"
+  ],
+  "watch_ids": [
+    "S113",
+    "S110",
+    "S117",
+    "S111"
+  ],
+  "quiet_ids": [
+    "S119",
+    "S114",
+    "S121"
+  ],
+  "learning": {
+    "by_driver": [
+      {
+        "driver": "yield",
+        "n": 18,
+        "recovered": 12,
+        "rate": 0.67
+      },
+      {
+        "driver": "sleep",
+        "n": 4,
+        "recovered": 3,
+        "rate": 0.75
+      },
+      {
+        "driver": "traffic",
+        "n": 3,
+        "recovered": 2,
+        "rate": 0.67
+      },
+      {
+        "driver": "cancels",
+        "n": 2,
+        "recovered": 2,
+        "rate": 1.0
+      },
+      {
+        "driver": "margin",
+        "n": 1,
+        "recovered": 1,
+        "rate": 1.0
+      }
+    ],
+    "weeks": [
+      {
+        "end": "2029-07-15",
+        "label": "Jul 15",
+        "flags": 2,
+        "recovered": 2,
+        "items": [
+          {
+            "id": "S112",
+            "name": "Alder Crossing",
+            "driver": "sleep",
+            "z": -1.92,
+            "adj_pct": -27.7,
+            "next_pct": -8.1,
+            "recovered": true,
+            "wx_inches": 2.77,
+            "next_wx": 3.67
+          },
+          {
+            "id": "S119",
+            "name": "Willow Park",
+            "driver": "yield",
+            "z": -1.69,
+            "adj_pct": -23.0,
+            "next_pct": 21.2,
+            "recovered": true,
+            "wx_inches": 0.12,
+            "next_wx": 0.61
+          }
+        ]
+      },
+      {
+        "end": "2029-07-22",
+        "label": "Jul 22",
+        "flags": 1,
+        "recovered": 1,
+        "items": [
+          {
+            "id": "S108",
+            "name": "Oak Terrace",
+            "driver": "yield",
+            "z": -1.92,
+            "adj_pct": -2.0,
+            "next_pct": -4.7,
+            "recovered": true,
+            "wx_inches": 0.2,
+            "next_wx": 0.05
+          }
+        ]
+      },
+      {
+        "end": "2029-07-29",
+        "label": "Jul 29",
+        "flags": 2,
+        "recovered": 0,
+        "items": [
+          {
+            "id": "S101",
+            "name": "Northgate",
+            "driver": "yield",
+            "z": -2.58,
+            "adj_pct": -53.8,
+            "next_pct": -15.6,
+            "recovered": false,
+            "wx_inches": 0.87,
+            "next_wx": 0.96
+          },
+          {
+            "id": "S109",
+            "name": "Thornfield",
+            "driver": "yield",
+            "z": -1.79,
+            "adj_pct": -38.8,
+            "next_pct": -12.1,
+            "recovered": false,
+            "wx_inches": 0.54,
+            "next_wx": 2.25
+          }
+        ]
+      },
+      {
+        "end": "2029-08-05",
+        "label": "Aug 5",
+        "flags": 1,
+        "recovered": 1,
+        "items": [
+          {
+            "id": "S111",
+            "name": "Harrow Point",
+            "driver": "yield",
+            "z": -1.38,
+            "adj_pct": -46.5,
+            "next_pct": -5.1,
+            "recovered": true,
+            "wx_inches": 1.45,
+            "next_wx": 0.0
+          }
+        ]
+      },
+      {
+        "end": "2029-08-12",
+        "label": "Aug 12",
+        "flags": 1,
+        "recovered": 1,
+        "items": [
+          {
+            "id": "S106",
+            "name": "Dunmore Park",
+            "driver": "margin",
+            "z": -1.57,
+            "adj_pct": -56.7,
+            "next_pct": -5.9,
+            "recovered": true,
+            "wx_inches": 2.86,
+            "next_wx": 0.77
+          }
+        ]
+      },
+      {
+        "end": "2029-08-19",
+        "label": "Aug 19",
+        "flags": 3,
+        "recovered": 3,
+        "items": [
+          {
+            "id": "S104",
+            "name": "Juniper Flats",
+            "driver": "sleep",
+            "z": -1.46,
+            "adj_pct": -21.8,
+            "next_pct": 22.7,
+            "recovered": true,
+            "wx_inches": 0.0,
+            "next_wx": 0.34
+          },
+          {
+            "id": "S109",
+            "name": "Thornfield",
+            "driver": "yield",
+            "z": -3.03,
+            "adj_pct": -43.3,
+            "next_pct": -9.8,
+            "recovered": true,
+            "wx_inches": 0.64,
+            "next_wx": 0.15
+          },
+          {
+            "id": "S123",
+            "name": "Maple Commons",
+            "driver": "sleep",
+            "z": -2.81,
+            "adj_pct": -40.3,
+            "next_pct": -2.4,
+            "recovered": true,
+            "wx_inches": 2.95,
+            "next_wx": 0.0
+          }
+        ]
+      },
+      {
+        "end": "2029-08-26",
+        "label": "Aug 26",
+        "flags": 2,
+        "recovered": 1,
+        "items": [
+          {
+            "id": "S103",
+            "name": "Glen Arbor",
+            "driver": "yield",
+            "z": -1.36,
+            "adj_pct": -25.9,
+            "next_pct": -15.2,
+            "recovered": false,
+            "wx_inches": 4.48,
+            "next_wx": 5.27
+          },
+          {
+            "id": "S105",
+            "name": "Stonebridge",
+            "driver": "yield",
+            "z": -1.35,
+            "adj_pct": -25.8,
+            "next_pct": -1.8,
+            "recovered": true,
+            "wx_inches": 0.56,
+            "next_wx": 2.35
+          }
+        ]
+      },
+      {
+        "end": "2029-09-02",
+        "label": "Sep 2",
+        "flags": 3,
+        "recovered": 1,
+        "items": [
+          {
+            "id": "S107",
+            "name": "Quarry Hill",
+            "driver": "yield",
+            "z": -1.51,
+            "adj_pct": -42.5,
+            "next_pct": -18.0,
+            "recovered": false,
+            "wx_inches": 1.67,
+            "next_wx": 0.0
+          },
+          {
+            "id": "S116",
+            "name": "Elm Ridge",
+            "driver": "yield",
+            "z": -1.22,
+            "adj_pct": -35.7,
+            "next_pct": -19.0,
+            "recovered": false,
+            "wx_inches": 0.14,
+            "next_wx": 0.18
+          },
+          {
+            "id": "S119",
+            "name": "Willow Park",
+            "driver": "traffic",
+            "z": -1.17,
+            "adj_pct": -34.5,
+            "next_pct": 44.3,
+            "recovered": true,
+            "wx_inches": 1.86,
+            "next_wx": 1.15
+          }
+        ]
+      }
+    ],
+    "note": "A flag counts as recovered if the next week\u2019s weather-adjusted gap is \u221212% or better \u2014 back inside the pack, not merely less bad. Weather is simulated for the climate, not observed."
+  }
+}
