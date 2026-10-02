@@ -282,6 +282,7 @@
     }
 
     function render() {
+      byId = Object.fromEntries(D.stores.map((s) => [s.id, s]));
       const scoped = D.stores.filter(inScope);
       const dayMode = state.mode !== "week";
       const idx = dayMode ? allDays.indexOf(state.day) : weeks.findIndex((w) => w.as_of === D.as_of);
@@ -402,7 +403,7 @@
       const marginPace = s.base_rates.mp;
       const marginPts = margin - marginPace;
       const cards = [
-        ["Net sales", money(v.gap), `${pct(v.pacePct)} versus 8-week pace · ${money(v.net)} vs ${money(v.exp)}`, tone(v.pacePct), "Same gap as the call list: " + money(v.gap) + ", " + pct(v.pacePct) + ". Pace is the 8-week same-weekday average."],
+        ["Net sales", money(v.gap), `${pct(v.pacePct)} · ${v.dayMode ? dayLabel(state.day) : weekLabel(D)} · $${Math.round(v.net).toLocaleString("en-US")} minus $${Math.round(v.exp).toLocaleString("en-US")} pace`, tone(v.pacePct), "This is the same pace gap as the call list. " + money(v.gap) + " is $" + Math.round(v.net).toLocaleString("en-US") + " minus $" + Math.round(v.exp).toLocaleString("en-US") + " 8-week pace."],
         ["Margin", margin + "%", `${marginPts >= 0 ? "+" : "−"}${Math.abs(marginPts).toFixed(1)} pts vs ${marginPace}% 8-week habit`, marginPts <= -3 ? "bad" : marginPts >= 2 ? "good" : "", "Margin rate versus the 8-week habit. Dollars " + money(s.actual.margin) + " versus " + money(s.expected.margin) + "."],
         ["SPG", pct(v.spgPct), `$${Math.round(v.spg)} vs $${Math.round(v.spgPace)} 8-week pace`, tone(v.spgPct), "SPG from the same 8-week weekday pace as the call list."],
         ["SPH", pct(v.sphPct), `$${Math.round(v.sph)} vs $${Math.round(v.sphPace)} 8-week pace`, tone(v.sphPct), "SPH from the same 8-week weekday pace as the call list."],
@@ -550,7 +551,7 @@
     }
 
     function evidence(id) {
-      const s = byId[id];
+      const s = D.stores.find((x) => x.id === id);
       const log = state.logs[id];
       const est = rateFor(s.driver);
       const past = D.learning.weeks.flatMap((w) => w.items.filter((it) => it.id === id).map((it) => ({ ...it, label: w.label })));
