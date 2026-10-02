@@ -293,14 +293,19 @@
       const spg = (s.metrics || []).find((x) => x.label === "Sales per guest") || { actual: 0, pace: 0, pct: 0 };
       const sph = (s.metrics || []).find((x) => x.label === "Sales per hour") || { actual: 0, pace: 0, pct: 0 };
       const trafPct = s.expected.traf ? (s.actual.traf - s.expected.traf) / s.expected.traf * 100 : 0;
+      const close = s.rates.close;
+      const closePace = s.base_rates.close;
+      const closePts = close != null && closePace != null ? close - closePace : 0;
+      const tempGap = s.wx.high - s.wx.ly_high;
       const cards = [
         ["SPG", pct(spg.pct), `$${Math.round(spg.actual)} vs $${Math.round(spg.pace)} pace`, metricTip(spg)],
         ["SPH", pct(sph.pct), `$${Math.round(sph.actual)} vs $${Math.round(sph.pace)} pace`, metricTip(sph)],
         ["Ticket", pct(ticket.pct), `$${Math.round(ticket.actual)} vs $${Math.round(ticket.pace)} pace`, "Average ticket $" + Math.round(ticket.actual) + " versus $" + Math.round(ticket.pace) + " own pace, " + pct(ticket.pct) + ". Flagged at 15% under."],
         ["Traffic", pct(trafPct), `${Math.round(s.actual.traf)} vs ${Math.round(s.expected.traf)} pace`, "Traffic " + Math.round(s.actual.traf) + " guests versus a " + Math.round(s.expected.traf) + " habit, " + pct(trafPct) + "."],
-        ["Weather", s.wx.high + "°", `${s.wx.inches} in vs ${s.wx.ly_inches} in last year`, "High " + s.wx.high + "° versus " + s.wx.ly_high + "° last year. " + s.wx.inches + " inches versus " + s.wx.ly_inches + " on the comparable days."]
+        ["Close", (close == null ? "—" : close + "%"), `${closePts >= 0 ? "+" : "−"}${Math.abs(closePts).toFixed(1)} pts vs ${closePace}% habit`, "Close rate " + close + "% versus a " + closePace + "% habit. Tickets divided by traffic."],
+        ["Weather", s.wx.high + "°", `${tempGap >= 0 ? "+" : "−"}${Math.abs(tempGap).toFixed(0)}° vs last year · ${s.wx.inches} in vs ${s.wx.ly_inches} in`, "High " + s.wx.high + "° versus " + s.wx.ly_high + "° last year, " + (tempGap >= 0 ? "+" : "") + tempGap.toFixed(0) + "°. " + s.wx.inches + " inches versus " + s.wx.ly_inches + " on the comparable days."]
       ];
-      return `<div class="mcards">${cards.map(([name, big, sub, title]) => `<div class="mcard${name === "Weather" ? " wide" : ""}" title="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
+      return `<div class="mcards">${cards.map(([name, big, sub, title]) => `<div class="mcard" title="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
     }
     function positive(s) {
       if (s.adj_pct < 0) return { title: s.title, say: s.say };
