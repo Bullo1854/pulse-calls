@@ -419,7 +419,11 @@
         Traffic: "The door slowed and the weather does not explain it. Check the circular and the road sign.",
         Close: "Traffic did not turn into tickets. Watch the first sit. No one works a guest alone."
       };
-      return w.label + " is the worst shift, " + pct(w.pct) + ". " + lines[w.label];
+      if (state.mode === "week") return s.why + " " + s.say;
+      const v = daySnap(s);
+      const wx = v.d.wx;
+      const ly = v.d.ly;
+      return dayLabel(state.day) + " was " + money(v.d.net) + " versus a " + money(v.d.exp) + " same-" + v.d.wd + " habit, " + money(v.gap) + ". " + w.label + " is the break, " + pct(w.pct) + ". Traffic " + Math.round(v.d.traf) + " versus " + Math.round(v.d.exp_traf) + ". High " + wx.high + "° versus " + ly.high + "° last year, " + wx.inches + " in versus " + ly.inches + " in. " + lines[w.label];
     }
     function metricFlags(s) {
       return (s.metrics || []).filter((m) => m.pct <= -15);
