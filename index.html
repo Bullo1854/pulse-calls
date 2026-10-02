@@ -293,7 +293,7 @@
       const companyPace = dayMode ? scoped.reduce((n, s) => n + dayOf(s).exp, 0) : null;
       const companyPct = dayMode && companyPace ? (companyNet - companyPace) / companyPace * 100 : D.company_week.peer_median;
       const rest = rows.filter((r) => r.pct > -30);
-      const row = (r) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span class="line"><b>${r.s.name}</b><span class="nums">${r.why} · <span class="hot">${r.shift}</span></span></span><em>${money(r.gap)}<small>${r.rev} rev pace</small></em></button>`;
+      const row = (r) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span class="line"><b>${r.s.name}</b><span class="nums">${r.why} · <span class="hot">${r.shift}</span></span></span><em>${money(r.gap)}<small>${r.rev}</small></em></button>`;
       document.getElementById("app").innerHTML = `
         <header class="top">
           <div class="mark"><b>PULSE</b><span>Page 2</span></div>
