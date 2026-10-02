@@ -404,7 +404,7 @@
       const marginPace = s.base_rates.mp;
       const marginPts = margin - marginPace;
       const cards = [
-        ["Net sales", money(netAct), `${money(netPace)} pace`, tone(netPct), "Net sales " + money(netAct) + " versus " + money(netPace) + " pace, " + pct(netPct) + ". Weather is not taken out."],
+        ["Net sales", money(netAct - netPace), `${pct(netPct)} versus pace · ${money(netAct)} vs ${money(netPace)}`, tone(netPct), "Same pace difference as the list: " + money(netAct - netPace) + ", " + pct(netPct) + ". " + money(netAct) + " versus " + money(netPace) + " pace. Weather is not taken out."],
         ["Margin", margin + "%", `${marginPts >= 0 ? "+" : "−"}${Math.abs(marginPts).toFixed(1)} pts vs ${marginPace}% habit`, marginPts <= -3 ? "bad" : marginPts >= 2 ? "good" : "", "Margin " + margin + "% versus a " + marginPace + "% habit. Week rate, after financing cost."],
         ["SPG", pct(spg.pct), `$${Math.round(spg.actual)} vs $${Math.round(spg.pace)} pace`, tone(spg.pct), "SPG $" + Math.round(spg.actual) + " versus $" + Math.round(spg.pace) + " pace, " + pct(spg.pct)],
         ["SPH", pct(sph.pct), `$${Math.round(sph.actual)} vs $${Math.round(sph.pace)} pace`, tone(sph.pct), "SPH $" + Math.round(sph.actual) + " versus $" + Math.round(sph.pace) + " pace, " + pct(sph.pct)],
