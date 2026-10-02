@@ -421,21 +421,6 @@
         ["Traffic", s.expected.traf ? (s.actual.traf - s.expected.traf) / s.expected.traf * 100 : 0],
         ["Close", (s.rates.close || 0) - (s.base_rates.close || 0)]
       ]).filter((x) => x[0] !== skip);
-      const dayMode = state.mode !== "week";
-      const v = dayMode ? daySnap(s) : null;
-      const shifts = dayMode ? [
-        ["SPG", v.spgPace ? (v.spg - v.spgPace) / v.spgPace * 100 : 0],
-        ["SPH", v.sphPace ? (v.sph - v.sphPace) / v.sphPace * 100 : 0],
-        ["Ticket", v.ticketPace ? (v.ticket - v.ticketPace) / v.ticketPace * 100 : 0],
-        ["Traffic", v.trafPct],
-        ["Close", v.close - v.closePace]
-      ] : [
-        ["SPG", ((s.metrics || []).find((m) => m.label === "Sales per guest") || {}).pct || 0],
-        ["SPH", ((s.metrics || []).find((m) => m.label === "Sales per hour") || {}).pct || 0],
-        ["Ticket", ((s.metrics || []).find((m) => m.label === "Average ticket") || {}).pct || 0],
-        ["Traffic", s.expected.traf ? (s.actual.traf - s.expected.traf) / s.expected.traf * 100 : 0],
-        ["Close", (s.rates.close || 0) - (s.base_rates.close || 0)]
-      ];
       shifts.sort((a, b) => a[1] - b[1]);
       return { label: shifts[0][0], pct: shifts[0][1] };
     }
