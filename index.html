@@ -640,7 +640,8 @@
       document.getElementById("back").classList.remove("open");
     }
     document.getElementById("back").onclick = closeSheet;
-    render();
+    try { render(); }
+    catch (err) { document.getElementById("app").innerHTML = `<p class="note">Page 2 failed to draw. ${err.message}. Hard-refresh this page.</p>`; }
     const openId = (location.hash || "").replace("#", "").replace("-log", "");
     if (byId[openId]) {
       openSheet(evidence(openId));
