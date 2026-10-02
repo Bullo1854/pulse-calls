@@ -36,8 +36,12 @@
     .scope .chg { color: var(--call); letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; }
     .navline { display: flex; gap: 14px; margin: 10px 0 0; font-size: 14px; }
     .navline a { color: var(--call); text-decoration: none; font-weight: 560; }
-    .weekpick { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 12px 0 0; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-    .weekpick select { flex: 1; text-transform: none; letter-spacing: 0; font: inherit; font-size: 15px; color: var(--ink); background: var(--card); border: 1px solid var(--line-strong); border-radius: 10px; padding: 10px; }
+    .weekbar { display: grid; grid-template-columns: 48px 1fr 48px; gap: 8px; align-items: center; margin: 12px 0 0; }
+    .weekbar button { height: 48px; border: 1px solid var(--line-strong); background: var(--card); border-radius: 12px; font-size: 22px; color: var(--ink); }
+    .weekbar button:disabled { opacity: 0.35; }
+    .weeknow { text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; }
+    .weeknow b { display: block; font-size: 16px; font-weight: 560; }
+    .weeknow span { color: var(--muted); font-size: 12px; }
     h1 { font-family: var(--serif); font-weight: 500; font-size: 30px; letter-spacing: -0.03em; margin: 14px 0 4px; }
     .lede { margin: 0; font-size: 14.5px; }
     .zrow { margin: 12px 0 4px; }
@@ -113,7 +117,24 @@
       const a = Math.abs(n);
       return a >= 1000 ? sign + "$" + (a / 1000).toFixed(1) + "k" : sign + "$" + Math.round(a);
     };
-    const pct = (n) => (n < 0 ? "−" : "+") + Math.abs(n).toFixed(0) + "%";
+    function weekLabel(w) {
+      const end = new Date(w.as_of + "T12:00:00");
+      const start = new Date(end);
+      start.setDate(end.getDate() - 6);
+      const year = end.getFullYear();
+      const left = start.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      if (start.getMonth() === end.getMonth()) return left + " – " + end.getDate() + ", " + year;
+      const right = end.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      return left + " – " + right + ", " + year;
+    }
+    function setWeek(asOf) {
+      const next = weeks.find((w) => w.as_of === asOf);
+      if (!next) return;
+      localStorage.setItem("pulse2.z.v1.week", asOf);
+      D = next;
+      byId = Object.fromEntries(D.stores.map((s) => [s.id, s]));
+      render();
+    }
 
     function rateFor(driver) {
       const stat = D.learning.by_driver.find((d) => d.driver === driver) || { n: 0, recovered: 0, rate: null };
@@ -160,15 +181,19 @@
     function render() {
       const calls = D.call_ids.map((id) => byId[id]).filter(inScope);
       const watches = D.watch_ids.map((id) => byId[id]).filter(inScope);
-      const quiet = D.quiet_ids.map((id) => byId[id]).filter(inScope);
       const scoped = D.stores.filter(inScope);
+      const idx = weeks.findIndex((w) => w.as_of === D.as_of);
       document.getElementById("app").innerHTML = `
         <header class="top">
           <div class="mark"><b>PULSE</b><span>Calls</span></div>
           <div class="fresh"><div class="pill"><i></i> ${D.freshness}</div><small>${D.as_of_label}</small></div>
         </header>
         <p class="navline"><a href="log.html">Action log</a><a href="notes.html">Definitions</a></p>
-        <label class="weekpick">Week<select id="week">${weeks.slice().reverse().map((w) => `<option value="${w.as_of}"${w.as_of === D.as_of ? " selected" : ""}>${w.week_label}</option>`).join("")}</select></label>
+        <div class="weekbar">
+          <button id="week-prev" aria-label="Previous week" ${idx === 0 ? "disabled" : ""}>‹</button>
+          <div class="weeknow"><b>${weekLabel(D)}</b><span>${idx === weeks.length - 1 ? "Latest close" : "Week " + (idx + 1) + " of " + weeks.length}${idx < weeks.length - 1 ? " · tap › for newer" : ""}</span></div>
+          <button id="week-next" aria-label="Next week" ${idx === weeks.length - 1 ? "disabled" : ""}>›</button>
+        </div>
         <button class="scope" id="open-scope"><span><span class="who">${scopeLabel()}</span><span class="sub">${scoped.length} stores · dollars and percent off pace</span></span><span class="chg">Scope</span></button>
         <h1>Who is off pace?</h1>
         <p class="lede">${calls.length} call${calls.length === 1 ? "" : "s"}. A typical store was ${pct(D.company_week.peer_median)} versus its own pace, after weather. The mark on the plot is about 30% off — far enough to call.</p>
@@ -181,12 +206,8 @@
         ${learnBlock()}
         <p class="tie">Week net <b>${D.company_week.net.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b> · ${D.company_week.rows} rows. Ties to net sales. Weather is simulated for the climate. <a class="textbtn" href="notes.html">Definitions</a></p>`;
       document.getElementById("open-scope").onclick = () => openSheet(scopeSheet());
-      document.getElementById("week").onchange = (e) => {
-        localStorage.setItem("pulse2.z.v1.week", e.target.value);
-        D = weeks.find((w) => w.as_of === e.target.value) || D;
-        byId = Object.fromEntries(D.stores.map((s) => [s.id, s]));
-        render();
-      };
+      document.getElementById("week-prev").onclick = () => idx > 0 && setWeek(weeks[idx - 1].as_of);
+      document.getElementById("week-next").onclick = () => idx < weeks.length - 1 && setWeek(weeks[idx + 1].as_of);
       document.querySelectorAll("[data-open]").forEach((b) => b.onclick = () => openSheet(evidence(b.dataset.open)));
       const m = document.getElementById("open-method");
       if (m) m.onclick = () => openSheet(methodSheet());
