@@ -190,21 +190,33 @@
     function dayOf(s) {
       return s.days.find((d) => d.date === state.day) || s.days[s.days.length - 1];
     }
-    function daySnap(s) {
-      const d = dayOf(s);
-      const gap = d.net - d.exp;
-      const pacePct = d.exp ? gap / d.exp * 100 : 0;
-      const spg = d.traf ? d.net / d.traf : 0;
-      const spgPace = d.exp_traf ? d.exp / d.exp_traf : 0;
-      const ticket = d.tix ? d.net / d.tix : 0;
-      const ticketPace = d.exp_tix ? d.exp / d.exp_tix : 0;
-      const sph = d.hours ? d.net / d.hours : 0;
-      const sphPace = d.exp_hours ? d.exp / d.exp_hours : 0;
-      const close = d.traf ? d.tix / d.traf * 100 : 0;
-      const closePace = d.exp_traf ? d.exp_tix / d.exp_traf * 100 : 0;
-      const trafPct = d.exp_traf ? (d.traf - d.exp_traf) / d.exp_traf * 100 : 0;
-      return { d, gap, pacePct, spg, spgPace, ticket, ticketPace, sph, sphPace, close, closePace, trafPct };
+    function paceView(s) {
+      const dayMode = state.mode !== "week";
+      const days = dayMode ? [dayOf(s)] : s.days;
+      const sum = (k) => days.reduce((n, d) => n + (Number(d[k]) || 0), 0);
+      const net = sum("net"), exp = sum("exp");
+      const traf = sum("traf"), expTraf = sum("exp_traf");
+      const tix = sum("tix"), expTix = sum("exp_tix");
+      const hours = sum("hours"), expHours = sum("exp_hours");
+      const pctOf = (act, pace) => pace ? (act - pace) / pace * 100 : 0;
+      const spg = traf ? net / traf : 0;
+      const spgPace = expTraf ? exp / expTraf : 0;
+      const ticket = tix ? net / tix : 0;
+      const ticketPace = expTix ? exp / expTix : 0;
+      const sph = hours ? net / hours : 0;
+      const sphPace = expHours ? exp / expHours : 0;
+      const close = traf ? tix / traf * 100 : 0;
+      const closePace = expTraf ? expTix / expTraf * 100 : 0;
+      return {
+        dayMode, days, net, exp, gap: net - exp, pacePct: pctOf(net, exp),
+        traf, expTraf, trafPct: pctOf(traf, expTraf),
+        spg, spgPace, spgPct: pctOf(spg, spgPace),
+        ticket, ticketPace, ticketPct: pctOf(ticket, ticketPace),
+        sph, sphPace, sphPct: pctOf(sph, sphPace),
+        close, closePace, closePts: close - closePace
+      };
     }
+    function daySnap(s) { return paceView(s); }
     function dayLabel(date) {
       return new Date(date + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", year: "numeric" });
     }
@@ -284,9 +296,8 @@
         }[w.label];
         const why = words;
         const shift = `${w.label} ${pct(w.pct)}`;
-        const rev = pct(dayMode ? daySnap(s).pacePct : s.raw_pct);
-        if (!dayMode) return { s, pct: s.raw_pct, gap: s.raw_gap, why, shift, rev };
-        const v = daySnap(s);
+        const v = paceView(s);
+        const rev = pct(v.pacePct);
         return { s, pct: v.pacePct, gap: v.gap, why, shift, rev };
       }).sort((a, b) => a.pct - b.pct);
       const calls = rows.filter((r) => r.pct <= -30);
@@ -324,7 +335,7 @@
         <h3 class="sec">The rest</h3>
         ${rest.map(row).join("")}
         ${learnBlock()}
-        <p class="tie">${dayMode ? "Day" : "Week"} net <b>${companyNet.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b>. Pace is the same weekday over the prior 8 weeks. <a class="textbtn" href="notes.html">Definitions</a></p>`;
+        <p class="tie">${dayMode ? "Day" : "Week"} net <b>${companyNet.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b>. Pace is the 8-week same-weekday average. Weather is not taken out. <a class="textbtn" href="notes.html">Definitions</a></p>`;
       document.getElementById("mode-day").onclick = () => { state.mode = "day"; D = weekFor(state.day); byId = Object.fromEntries(D.stores.map((s) => [s.id, s])); save(); render(); };
       document.getElementById("mode-week").onclick = () => { state.mode = "week"; save(); render(); };
       document.getElementById("step-prev").onclick = () => dayMode ? idx > 0 && setDay(allDays[idx - 1]) : idx > 0 && setWeek(weeks[idx - 1].as_of);
@@ -379,58 +390,38 @@
       return shortMetric(m.label) + " $" + Math.round(m.actual) + " versus $" + Math.round(m.pace) + " own pace, " + pct(m.pct) + ". Flagged at 15% under.";
     }
     function metricCards(s) {
-      const dayMode = state.mode !== "week";
-      const v = dayMode ? daySnap(s) : null;
-      const ticket = dayMode ? { actual: v.ticket, pace: v.ticketPace, pct: v.ticketPace ? (v.ticket - v.ticketPace) / v.ticketPace * 100 : 0 } : ((s.metrics || []).find((x) => x.label === "Average ticket") || { actual: 0, pace: 0, pct: 0 });
-      const spg = dayMode ? { actual: v.spg, pace: v.spgPace, pct: v.spgPace ? (v.spg - v.spgPace) / v.spgPace * 100 : 0 } : ((s.metrics || []).find((x) => x.label === "Sales per guest") || { actual: 0, pace: 0, pct: 0 });
-      const sph = dayMode ? { actual: v.sph, pace: v.sphPace, pct: v.sphPace ? (v.sph - v.sphPace) / v.sphPace * 100 : 0 } : ((s.metrics || []).find((x) => x.label === "Sales per hour") || { actual: 0, pace: 0, pct: 0 });
-      const trafPct = dayMode ? v.trafPct : (s.expected.traf ? (s.actual.traf - s.expected.traf) / s.expected.traf * 100 : 0);
-      const trafAct = dayMode ? v.d.traf : s.actual.traf;
-      const trafPace = dayMode ? v.d.exp_traf : s.expected.traf;
-      const close = dayMode ? v.close : s.rates.close;
-      const closePace = dayMode ? v.closePace : s.base_rates.close;
-      const closePts = close != null && closePace != null ? close - closePace : 0;
-      const wx = dayMode ? v.d.wx : s.wx;
-      const ly = dayMode ? v.d.ly : { high: s.wx.ly_high, inches: s.wx.ly_inches };
+      const v = paceView(s);
+      const tone = (n) => n <= -15 ? "bad" : n >= 5 ? "good" : "";
+      const wx = v.dayMode ? v.days[0].wx : s.wx;
+      const ly = v.dayMode ? v.days[0].ly : { high: s.wx.ly_high, inches: s.wx.ly_inches };
       const tempGap = wx.high - (ly.high || 0);
       const inches = wx.inches;
       const lyIn = ly.inches == null ? s.wx.ly_inches : ly.inches;
-      const tone = (n) => n <= -15 ? "bad" : n >= 5 ? "good" : "";
       const wxTone = inches > lyIn + 0.1 ? "bad" : lyIn > inches + 0.1 ? "good" : "";
-      const netAct = dayMode ? v.d.net : s.actual.net;
-      const netPace = dayMode ? v.d.exp : s.expected.net;
-      const netPct = netPace ? (netAct - netPace) / netPace * 100 : 0;
       const margin = s.rates.mp;
       const marginPace = s.base_rates.mp;
       const marginPts = margin - marginPace;
       const cards = [
-        ["Net sales", money(netAct - netPace), `${pct(netPct)} versus pace · ${money(netAct)} vs ${money(netPace)}`, tone(netPct), "Same pace difference as the list: " + money(netAct - netPace) + ", " + pct(netPct) + ". " + money(netAct) + " versus " + money(netPace) + " pace. Weather is not taken out."],
-        ["Margin", margin + "%", `${marginPts >= 0 ? "+" : "−"}${Math.abs(marginPts).toFixed(1)} pts vs ${marginPace}% habit`, marginPts <= -3 ? "bad" : marginPts >= 2 ? "good" : "", "Margin " + margin + "% versus a " + marginPace + "% habit. Week rate, after financing cost."],
-        ["SPG", pct(spg.pct), `$${Math.round(spg.actual)} vs $${Math.round(spg.pace)} pace`, tone(spg.pct), "SPG $" + Math.round(spg.actual) + " versus $" + Math.round(spg.pace) + " pace, " + pct(spg.pct)],
-        ["SPH", pct(sph.pct), `$${Math.round(sph.actual)} vs $${Math.round(sph.pace)} pace`, tone(sph.pct), "SPH $" + Math.round(sph.actual) + " versus $" + Math.round(sph.pace) + " pace, " + pct(sph.pct)],
-        ["Ticket", pct(ticket.pct), `$${Math.round(ticket.actual)} vs $${Math.round(ticket.pace)} pace`, tone(ticket.pct), "Average ticket $" + Math.round(ticket.actual) + " versus $" + Math.round(ticket.pace) + " pace, " + pct(ticket.pct)],
-        ["Traffic", pct(trafPct), `${Math.round(trafAct)} vs ${Math.round(trafPace)} pace`, tone(trafPct), "Traffic " + Math.round(trafAct) + " versus " + Math.round(trafPace) + " pace, " + pct(trafPct)],
-        ["Close", close == null ? "—" : close.toFixed(0) + "%", `${closePts >= 0 ? "+" : "−"}${Math.abs(closePts).toFixed(1)} pts vs ${closePace == null ? "—" : closePace.toFixed(0)}% habit`, closePts <= -3 ? "bad" : closePts >= 2 ? "good" : "", "Close rate versus habit."],
-        ["Weather", wx.high + "°", `${tempGap >= 0 ? "+" : "−"}${Math.abs(tempGap).toFixed(0)}° vs last year · ${inches} in vs ${lyIn} in`, wxTone, "Weather versus last year. Red is wetter. Green is drier. Not taken out of sales."]
+        ["Net sales", money(v.gap), `${pct(v.pacePct)} versus 8-week pace · ${money(v.net)} vs ${money(v.exp)}`, tone(v.pacePct), "Same gap as the call list: " + money(v.gap) + ", " + pct(v.pacePct) + ". Pace is the 8-week same-weekday average."],
+        ["Margin", margin + "%", `${marginPts >= 0 ? "+" : "−"}${Math.abs(marginPts).toFixed(1)} pts vs ${marginPace}% 8-week habit`, marginPts <= -3 ? "bad" : marginPts >= 2 ? "good" : "", "Margin rate versus the 8-week habit. Dollars " + money(s.actual.margin) + " versus " + money(s.expected.margin) + "."],
+        ["SPG", pct(v.spgPct), `$${Math.round(v.spg)} vs $${Math.round(v.spgPace)} 8-week pace`, tone(v.spgPct), "SPG from the same 8-week weekday pace as the call list."],
+        ["SPH", pct(v.sphPct), `$${Math.round(v.sph)} vs $${Math.round(v.sphPace)} 8-week pace`, tone(v.sphPct), "SPH from the same 8-week weekday pace as the call list."],
+        ["Ticket", pct(v.ticketPct), `$${Math.round(v.ticket)} vs $${Math.round(v.ticketPace)} 8-week pace`, tone(v.ticketPct), "Average ticket from the same 8-week weekday pace as the call list."],
+        ["Traffic", pct(v.trafPct), `${Math.round(v.traf)} vs ${Math.round(v.expTraf)} 8-week pace`, tone(v.trafPct), "Traffic versus the 8-week same-weekday pace."],
+        ["Close", v.close.toFixed(0) + "%", `${v.closePts >= 0 ? "+" : "−"}${Math.abs(v.closePts).toFixed(1)} pts vs ${v.closePace.toFixed(0)}% 8-week habit`, v.closePts <= -3 ? "bad" : v.closePts >= 2 ? "good" : "", "Close is tickets divided by traffic, versus the 8-week same-weekday pace."],
+        ["Weather", wx.high + "°", `${tempGap >= 0 ? "+" : "−"}${Math.abs(tempGap).toFixed(0)}° vs last year · ${inches} in vs ${lyIn} in`, wxTone, "Weather versus last year. Not in the pace math."]
       ];
-      return `<div class="mcards">${cards.map(([name, big, sub, tone, title]) => `<div class="mcard ${tone}" data-tip="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
+      return `<div class="mcards">${cards.map(([name, big, sub, toneName, title]) => `<div class="mcard ${toneName}" data-tip="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
     }
     function worstShift(s, skip) {
-      const dayMode = state.mode !== "week";
-      const v = dayMode ? daySnap(s) : null;
-      const shifts = (dayMode ? [
-        ["SPG", v.spgPace ? (v.spg - v.spgPace) / v.spgPace * 100 : 0],
-        ["SPH", v.sphPace ? (v.sph - v.sphPace) / v.sphPace * 100 : 0],
-        ["Ticket", v.ticketPace ? (v.ticket - v.ticketPace) / v.ticketPace * 100 : 0],
+      const v = paceView(s);
+      const shifts = [
+        ["SPG", v.spgPct],
+        ["SPH", v.sphPct],
+        ["Ticket", v.ticketPct],
         ["Traffic", v.trafPct],
-        ["Close", v.close - v.closePace]
-      ] : [
-        ["SPG", ((s.metrics || []).find((m) => m.label === "Sales per guest") || {}).pct || 0],
-        ["SPH", ((s.metrics || []).find((m) => m.label === "Sales per hour") || {}).pct || 0],
-        ["Ticket", ((s.metrics || []).find((m) => m.label === "Average ticket") || {}).pct || 0],
-        ["Traffic", s.expected.traf ? (s.actual.traf - s.expected.traf) / s.expected.traf * 100 : 0],
-        ["Close", (s.rates.close || 0) - (s.base_rates.close || 0)]
-      ]).filter((x) => x[0] !== skip);
+        ["Close", v.closePts]
+      ].filter((x) => x[0] !== skip);
       shifts.sort((a, b) => a[1] - b[1]);
       return { label: shifts[0][0], pct: shifts[0][1] };
     }
@@ -443,8 +434,8 @@
         Traffic: "The door slowed and the weather does not explain it. Check the circular and the road sign.",
         Close: "Traffic did not turn into tickets. Watch the first sit. No one works a guest alone."
       };
-      if (state.mode === "week") return s.say;
-      const v = daySnap(s);
+      const v = paceView(s);
+      return (v.dayMode ? dayLabel(state.day) : "The week") + " was " + money(v.net) + " versus an " + money(v.exp) + " 8-week pace, " + money(v.gap) + ". " + w.label + " is the break, " + pct(w.pct) + ". Traffic " + Math.round(v.traf) + " versus " + Math.round(v.expTraf) + ". " + lines[w.label];
       return dayLabel(state.day) + " was " + money(v.d.net) + " versus a " + money(v.d.exp) + " same-" + v.d.wd + " habit, " + money(v.gap) + ". " + w.label + " is the break, " + pct(w.pct) + ". Traffic " + Math.round(v.d.traf) + " versus " + Math.round(v.d.exp_traf) + ". " + lines[w.label];
     }
     function weatherSection(s) {
@@ -506,7 +497,7 @@
     function metricCharts(s) {
       const flagged = new Set(metricFlags(s).map((m) => m.label));
       const specs = [
-        { label: "Net sales", week: `${money(s.adj_gap)} after weather`, money: true, act: (d) => d.net, exp: (d) => d.exp, show: true },
+        { label: "Net sales", week: `${money(paceView(s).gap)} versus 8-week pace`, money: true, act: (d) => d.net, exp: (d) => d.exp, show: true },
         { label: "SPG", week: weekMetric(s, "Sales per guest"), act: (d) => d.traf ? d.net / d.traf : 0, exp: (d) => d.exp_traf ? d.exp / d.exp_traf : 0, show: true },
         { label: "Average ticket", week: weekMetric(s, "Average ticket"), act: (d) => d.tix ? d.net / d.tix : 0, exp: (d) => d.exp_tix ? d.exp / d.exp_tix : 0, show: flagged.has("Average ticket") },
         { label: "SPH", week: weekMetric(s, "Sales per hour"), act: (d) => d.hours ? d.net / d.hours : 0, exp: (d) => d.exp_hours ? d.exp / d.exp_hours : 0, show: true },
