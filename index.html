@@ -61,11 +61,16 @@
     .chip.daily { color: var(--watch); background: #f6edd9; border-color: #e4d3b0; }
     .chip.wx { color: #31556a; background: #e7f0f4; border-color: #c9dde6; }
     h3.sec { margin: 18px 0 4px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); }
-    .slim { background: transparent; border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 9px 0; margin: 0; }
+    .slim { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; background: transparent; border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 9px 0; margin: 0; }
+    .slim > span { flex: 1; min-width: 0; }
     .slim b { font-weight: 560; }
-    .slim span { display: block; color: var(--muted); font-size: 12px; }
-    .slim em { font-style: normal; font-family: var(--serif); color: var(--watch); }
+    .slim > span span { display: block; color: var(--muted); font-size: 12px; }
+    .slim em { flex: none; white-space: nowrap; font-style: normal; font-family: var(--serif); color: var(--watch); }
     .slim.ok em { color: var(--ok); }
+    .mcards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+    .mcard { background: var(--sheet); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; text-align: left; }
+    .mcard b { display: block; font-size: 13px; }
+    .mcard span { color: var(--muted); font-size: 12px; }
     .learn { background: var(--sheet); border: 1px solid var(--line); border-radius: 16px; padding: 12px; margin-top: 14px; }
     .barline { display: grid; grid-template-columns: 78px 1fr 52px; gap: 8px; align-items: center; font-size: 12.5px; margin-top: 6px; }
     .track { height: 8px; background: #efe7dc; border-radius: 99px; overflow: hidden; }
@@ -259,10 +264,11 @@
         <div class="topr"><span class="z">${pct(s.adj_pct)}<small>vs own pace</small></span><span class="meta">${money(s.adj_gap)} after weather<br>${money(s.raw_gap)} before weather</span></div>
         <h2>${s.name}</h2>
         <div class="meta">${s.format} · ${s.market} · ${s.climate}</div>
-        <p class="title">${s.title}</p>
+        <p class="title">${positive(s).title}</p>
         ${weekSvg(s)}
+        ${metricCards(s)}
         <div class="chips"><span class="chip daily">Daily</span><span class="chip wx">${s.wx.inches} in vs ${s.wx.ly_inches} in last year</span>${metricChips(s)}${productFlags(s).length ? `<span class="chip">Product mix</span>` : ""}${log ? `<span class="logged">Logged · ${log.how || "call"} · ${log.role || "entered"}</span>` : ""}</div>
-        <p class="note">${s.say}</p>
+        <p class="note">${positive(s).say}</p>
       </button>`;
     }
     function productFlags(s) {
@@ -276,11 +282,43 @@
         ? `${f.label} is ${f.share}% of the written file this week, versus a ${f.habit}% habit. One product is carrying the week.`
         : `${f.label} is ${f.share}% of the written file this week, versus a ${f.habit}% habit (${f.pts} pts).`).join(" ");
     }
+    function shortMetric(label) {
+      return { "Sales per guest": "SPG", "Average ticket": "Ticket", "Sales per hour": "SPH" }[label] || label;
+    }
+    function metricTip(m) {
+      return shortMetric(m.label) + " $" + Math.round(m.actual) + " versus $" + Math.round(m.pace) + " own pace, " + pct(m.pct) + ". Flagged at 15% under.";
+    }
+    function metricCards(s) {
+      return `<div class="mcards">${["Sales per guest", "Sales per hour"].map((label) => {
+        const m = (s.metrics || []).find((x) => x.label === label) || { label, actual: 0, pace: 0, pct: 0 };
+        return `<div class="mcard" title="${tip(metricTip(m))}"><b>${shortMetric(label)} ${pct(m.pct)}</b><span>$${Math.round(m.actual)} vs $${Math.round(m.pace)} pace</span></div>`;
+      }).join("")}</div>`;
+    }
+    function positive(s) {
+      if (s.adj_pct < 0) return { title: s.title, say: s.say };
+      const soft = (s.metrics || []).filter((m) => m.pct <= -10).sort((a, b) => a.pct - b.pct)[0];
+      const title = s.adj_pct >= 15 ? "Ahead of its own pace" : "Holding its pace";
+      const say = soft
+        ? `The week is ${pct(s.adj_pct)} after weather. Keep what is working, and still look at ${shortMetric(soft.label)} — ${pct(soft.pct)} versus this store’s habit.`
+        : `The week is ${pct(s.adj_pct)} after weather, and SPG, ticket, and SPH are inside the habit. Protect the Saturday crew. Do not add a discount to a week that is already ahead.`;
+      return { title, say };
+    }
     function metricFlags(s) {
       return (s.metrics || []).filter((m) => m.pct <= -15);
     }
+    function peopleOptions() {
+      const leaders = window.PULSE_ORG.regions.map((r) => `<option value="${r.leader}">${r.leader} · Regional leader · ${r.id}</option>`);
+      const managers = window.PULSE_ORG.managers.map((m) => `<option value="${m.name}">${m.name} · Market manager · ${m.region}</option>`);
+      return leaders.concat(managers).join("");
+    }
+    function roleFor(name) {
+      const leader = window.PULSE_ORG.regions.find((r) => r.leader === name);
+      if (leader) return "Regional leader";
+      const mgr = window.PULSE_ORG.managers.find((m) => m.name === name);
+      return mgr ? "Market manager" : "";
+    }
     function metricChips(s) {
-      return metricFlags(s).map((m) => `<span class="chip">${m.label.split(" ").slice(-1)} ${pct(m.pct)}</span>`).join("");
+      return (s.metrics || []).filter((m) => m.pct <= -15).map((m) => `<span class="chip" title="${tip(metricTip(m))}">${shortMetric(m.label)} ${pct(m.pct)}</span>`).join("");
     }
     function tip(text) {
       return String(text).replace(/"/g, "");
@@ -314,9 +352,9 @@
       const flagged = new Set(metricFlags(s).map((m) => m.label));
       const specs = [
         { label: "Net sales", week: `${money(s.adj_gap)} after weather`, money: true, act: (d) => d.net, exp: (d) => d.exp, show: true },
-        { label: "Sales per guest", week: weekMetric(s, "Sales per guest"), act: (d) => d.traf ? d.net / d.traf : 0, exp: (d) => d.exp_traf ? d.exp / d.exp_traf : 0, show: flagged.has("Sales per guest") },
+        { label: "SPG", week: weekMetric(s, "Sales per guest"), act: (d) => d.traf ? d.net / d.traf : 0, exp: (d) => d.exp_traf ? d.exp / d.exp_traf : 0, show: true },
         { label: "Average ticket", week: weekMetric(s, "Average ticket"), act: (d) => d.tix ? d.net / d.tix : 0, exp: (d) => d.exp_tix ? d.exp / d.exp_tix : 0, show: flagged.has("Average ticket") },
-        { label: "Sales per hour", week: weekMetric(s, "Sales per hour"), act: (d) => d.hours ? d.net / d.hours : 0, exp: (d) => d.exp_hours ? d.exp / d.exp_hours : 0, show: flagged.has("Sales per hour") },
+        { label: "SPH", week: weekMetric(s, "Sales per hour"), act: (d) => d.hours ? d.net / d.hours : 0, exp: (d) => d.exp_hours ? d.exp / d.exp_hours : 0, show: true },
       ];
       return specs.filter((sp) => sp.show).map((sp) => paceChart(s, sp)).join("");
     }
@@ -327,8 +365,9 @@
     }
     function slim(s) {
       const ahead = s.adj_pct >= 0;
-      const extra = metricFlags(s).map((m) => m.label.split(" ").slice(-1) + " " + pct(m.pct)).join(" · ");
-      return `<button class="slim${ahead ? " ok" : ""}" data-open="${s.id}"><span><b>${s.name}</b><span>${s.climate} · ${s.title} · ${pct(s.adj_pct)}${extra ? " · " + extra : ""}</span></span><em>${money(s.adj_gap)}</em></button>`;
+      const extra = metricFlags(s).map((m) => shortMetric(m.label) + " " + pct(m.pct)).join(" · ");
+      const good = positive(s);
+      return `<button class="slim${ahead ? " ok" : ""}" data-open="${s.id}"><span><b>${s.name}</b><span>${s.climate} · ${good.title} · ${pct(s.adj_pct)}${extra ? " · " + extra : ""}</span></span><em>${money(s.adj_gap)}</em></button>`;
     }
 
     function learnBlock() {
@@ -388,10 +427,12 @@
         <p><strong>Say this:</strong> ${s.say}</p>
         <ol class="try">${s.try.map((t) => `<li>${t}</li>`).join("")}</ol>
         <label>Entered by</label>
-        <input id="who" placeholder="Name" value="${log ? log.who : ""}" style="width:100%;border:1px solid var(--line-strong);background:var(--card);border-radius:10px;padding:8px;font:inherit" />
+        <input id="who" list="who-list" placeholder="Search a manager" value="${log ? log.who : ""}" style="width:100%;border:1px solid var(--line-strong);background:var(--card);border-radius:10px;padding:8px;font:inherit" />
+        <datalist id="who-list">${peopleOptions()}</datalist>
         <label>Role</label>
         <select id="role">
-          <option ${log && log.role === "Regional manager" ? "selected" : ""}>Regional manager</option>
+          <option ${log && log.role === "Market manager" ? "selected" : ""}>Market manager</option>
+          <option ${log && log.role === "Regional leader" ? "selected" : ""}>Regional leader</option>
           <option ${log && log.role === "Executive" ? "selected" : ""}>Executive</option>
         </select>
         <label>How</label>
@@ -446,7 +487,7 @@
           action: document.getElementById("act").value,
           note: document.getElementById("note").value,
           who,
-          role: document.getElementById("role").value,
+          role: roleFor(who) || document.getElementById("role").value,
           how: document.getElementById("how").value,
           at: new Date().toISOString(),
           driver: byId[id].driver
