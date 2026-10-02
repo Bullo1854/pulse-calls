@@ -177,7 +177,7 @@
       if (sunday) {
         const hole = sunday.net - sunday.exp;
         const rest = s.adj_gap - hole;
-        return `<p class="note">Easter Sunday was ${money(sunday.net)} against a ${money(sunday.exp)} Sunday habit, ${money(hole)}. Take that holiday Sunday out and the week is ${money(rest)} after weather. Last year this Sunday was Apr 16, not the file’s Apr 2.</p>`;
+        return `<p class="note">Easter Sunday was ${money(sunday.net)} against a ${money(sunday.exp)} Sunday habit, ${money(hole)}. Take that holiday Sunday out and the week is ${money(rest)}. Last year this Sunday was Apr 16, not the file’s Apr 2.</p>`;
       }
       return `<p class="note">Calendar YoY would use the week of ${D.as_of === "2029-04-15" ? "Apr 16, 2028, which was Easter" : "Apr 9, 2028, still before Easter"}. The shifted comparable is 14 days later, so this week is not scored as if it were Easter week last year.</p>`;
     }
@@ -336,7 +336,7 @@
         <h3 class="sec">The rest</h3>
         ${rest.map(row).join("")}
         ${learnBlock()}
-        <p class="tie">${dayMode ? "Day" : "Week"} net <b>${companyNet.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b>. Pace is the 8-week same-weekday average. Weather is not taken out. <a class="textbtn" href="notes.html">Definitions</a></p>`;
+        <p class="tie">${dayMode ? "Day" : "Week"} net <b>${companyNet.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b>. Pace is the 8-week same-weekday average. <a class="textbtn" href="notes.html">Definitions</a></p>`;
       document.getElementById("mode-day").onclick = () => { state.mode = "day"; D = weekFor(state.day); byId = Object.fromEntries(D.stores.map((s) => [s.id, s])); save(); render(); };
       document.getElementById("mode-week").onclick = () => { state.mode = "week"; save(); render(); };
       document.getElementById("step-prev").onclick = () => dayMode ? idx > 0 && setDay(allDays[idx - 1]) : idx > 0 && setWeek(weeks[idx - 1].as_of);
@@ -409,8 +409,7 @@
         ["SPH", pct(v.sphPct), `$${Math.round(v.sph)} vs $${Math.round(v.sphPace)} 8-week pace`, tone(v.sphPct), "SPH from the same 8-week weekday pace as the call list."],
         ["Ticket", pct(v.ticketPct), `$${Math.round(v.ticket)} vs $${Math.round(v.ticketPace)} 8-week pace`, tone(v.ticketPct), "Average ticket from the same 8-week weekday pace as the call list."],
         ["Traffic", pct(v.trafPct), `${Math.round(v.traf)} vs ${Math.round(v.expTraf)} 8-week pace`, tone(v.trafPct), "Traffic versus the 8-week same-weekday pace."],
-        ["Close", v.close.toFixed(0) + "%", `${v.closePts >= 0 ? "+" : "−"}${Math.abs(v.closePts).toFixed(1)} pts vs ${v.closePace.toFixed(0)}% 8-week habit`, v.closePts <= -3 ? "bad" : v.closePts >= 2 ? "good" : "", "Close is tickets divided by traffic, versus the 8-week same-weekday pace."],
-        ["Weather", "Could move", `About ${Math.max(s.rain_hit, s.snow_hit)}% of a coming day if this pattern holds`, wxTone, "Potential only. Not an actual, and not taken out of sales or traffic."]
+        ["Close", v.close.toFixed(0) + "%", `${v.closePts >= 0 ? "+" : "−"}${Math.abs(v.closePts).toFixed(1)} pts vs ${v.closePace.toFixed(0)}% 8-week habit`, v.closePts <= -3 ? "bad" : v.closePts >= 2 ? "good" : "", "Close is tickets divided by traffic, versus the 8-week same-weekday pace."]
       ];
       return `<div class="mcards">${cards.map(([name, big, sub, toneName, title]) => `<div class="mcard ${toneName}" data-tip="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
     }
@@ -432,7 +431,7 @@
         SPG: "Guests came. The ticket did not. One-up the next open, and do not buy it with a discount.",
         SPH: "The hours did not pay for themselves. Match posted hours to who actually worked.",
         Ticket: "The ticket shrank. Step the mattress, then the base, then the care plan.",
-        Traffic: "The door slowed and the weather does not explain it. Check the circular and the road sign.",
+        Traffic: "The door slowed. Check the circular and the road sign.",
         Close: "Traffic did not turn into tickets. Watch the first sit. No one works a guest alone."
       };
       const v = paceView(s);
@@ -558,7 +557,7 @@
       const pastHtml = past.length ? past.map((it) => {
         const key = id + "|" + it.label;
         const tagged = state.reviews[key];
-        return `<p class="note">${it.label}: ${it.adj_pct}% off pace, next week ${it.next_pct}% after weather, ${it.recovered ? "back on pace" : "still off"}. Rain ${it.wx_inches} in, next week ${it.next_wx} in.
+        return `<p class="note">${it.label}: ${it.adj_pct}% off pace, next week ${it.next_pct}%, ${it.recovered ? "back on pace" : "still off"}.
           <button class="textbtn" data-review="${key}" data-driver="${s.driver}" data-rec="${it.recovered}">${tagged ? "Tagged" : "Tag this coaching"}</button></p>`;
       }).join("") : `<p class="note">No earlier flag for this store in the review window. The estimate uses other stores with the same driver.</p>`;
       return `
@@ -567,7 +566,7 @@
         <p class="meta">${s.zone} · ${s.climate}</p>
         ${metricCards(s)}
         <p class="note">${coachBlurb(s)}</p>
-        ${state.mode === "week" ? weekSvg(s) + wxSvg(s) + metricCharts(s) : ""}
+        ${state.mode === "week" ? weekSvg(s) + metricCharts(s) : ""}
         <p class="tipbox" id="sheet-tip">Tap a bar or a card for the numbers.</p>
         <label>Entered by</label>
         <input id="who" list="who-list" placeholder="Search a manager" value="${log ? log.who : ""}" style="width:100%;border:1px solid var(--line-strong);background:var(--card);border-radius:10px;padding:8px;font:inherit" />
@@ -601,7 +600,7 @@
       return `<button class="close-x" data-close>Close</button><h2>Scope</h2><p class="note">North is the Northeast. Central is the central East Coast. South is Florida, Georgia, Alabama. Weather is simulated for that climate.</p><div class="scopes"><button data-scope="company" class="${state.scope === "company" ? "on" : ""}"><span>Company</span><span>23</span></button>${regions}</div>`;
     }
     function methodSheet() {
-      return `<button class="close-x" data-close>Close</button><h2>How a flag is earned</h2><p>${D.method}</p><p>Own pace is the same weekday over the prior 8 weeks. Weather then moves that pace. Sales per guest, average ticket, and sales per hour are pushed to the manager when they are 15% or more under that habit. Those three are not excused by rain. A visit counts the same as a call.</p><p>The screen shows the dollar hole and the percent off pace. Hover a bar for the day.</p><p><button class="textbtn" id="reset">Reset this phone</button></p>`;
+      return `<button class="close-x" data-close>Close</button><h2>How a flag is earned</h2><p>Own pace is the same weekday over the prior 8 weeks. A week is the sum of those day paces. Sales per guest, average ticket, and sales per hour are pushed when they are 15% or more under that habit. A visit counts the same as a call.</p><p>The screen shows the dollar hole and the percent off pace. Tap a bar for the day.</p><p><button class="textbtn" id="reset">Reset this phone</button></p>`;
     }
 
     function openSheet(html) {
