@@ -272,24 +272,24 @@
       const rows = scoped.map((s) => {
         const w = worstShift(s);
         const words = {
-          SPG: "Guests wrote less",
-          SPH: "Hours did not pay",
-          Ticket: "The ticket shrank",
-          Traffic: "The door slowed",
-          Close: "Traffic did not close"
+          SPG: "Guests came, but tickets did not",
+          SPH: "Hours were there, but the sales were not",
+          Ticket: "Tickets wrote, but the ticket shrank",
+          Traffic: "The door slowed, and weather does not explain it",
+          Close: "Guests came, but they did not close"
         }[w.label];
-        const why = dayMode ? words : (s.title || words);
-        const nums = `<span class="nums"><span class="hot">${w.label} ${pct(w.pct)}</span> · ${pct(dayMode ? daySnap(s).pacePct : s.adj_pct)}</span>`;
-        if (!dayMode) return { s, pct: s.adj_pct, gap: s.adj_gap, why, nums };
+        const why = words;
+        const shift = `${w.label} ${pct(w.pct)} · ${pct(dayMode ? daySnap(s).pacePct : s.adj_pct)}`;
+        if (!dayMode) return { s, pct: s.adj_pct, gap: s.adj_gap, why, shift };
         const v = daySnap(s);
-        return { s, pct: v.pacePct, gap: v.gap, why, nums };
+        return { s, pct: v.pacePct, gap: v.gap, why, shift };
       }).sort((a, b) => a.pct - b.pct);
       const calls = rows.filter((r) => r.pct <= -30);
       const companyNet = dayMode ? scoped.reduce((n, s) => n + dayOf(s).net, 0) : D.company_week.net;
       const companyPace = dayMode ? scoped.reduce((n, s) => n + dayOf(s).exp, 0) : null;
       const companyPct = dayMode && companyPace ? (companyNet - companyPace) / companyPace * 100 : D.company_week.peer_median;
       const rest = rows.filter((r) => r.pct > -30);
-      const row = (r) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span><b>${r.s.name}</b><span>${r.why}</span>${r.nums}</span><em>${money(r.gap)}</em></button>`;
+      const row = (r) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span><b>${r.s.name}</b><span class="nums">${r.why} · <span class="hot">${r.shift}</span></span></span><em>${money(r.gap)}</em></button>`;
       document.getElementById("app").innerHTML = `
         <header class="top">
           <div class="mark"><b>PULSE</b><span>Page 2</span></div>
