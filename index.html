@@ -275,10 +275,6 @@
       if (!m) return "";
       return `$${Math.round(m.actual)} versus $${Math.round(m.pace)} pace, ${pct(m.pct)}`;
     }
-      const ahead = s.adj_pct >= 0;
-      return `<button class="slim${ahead ? " ok" : ""}" data-open="${s.id}"><span><b>${s.name}</b><span>${s.climate} · ${s.title} · ${pct(s.adj_pct)}</span></span><em>${money(s.adj_gap)}</em></button>`;
-    }
-
     function slim(s) {
       const ahead = s.adj_pct >= 0;
       const extra = metricFlags(s).map((m) => m.label.split(" ").slice(-1) + " " + pct(m.pct)).join(" · ");
