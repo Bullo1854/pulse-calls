@@ -39,7 +39,10 @@
     .mode button { flex: 1; border: 1px solid var(--line-strong); background: var(--card); border-radius: 999px; padding: 8px; font: inherit; }
     .mode button.on { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
     .readout { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px; margin-top: 12px; }
-    .readout b { font-family: var(--serif); font-size: 28px; font-weight: 500; letter-spacing: -0.03em; display: block; }
+    .readout .slim { padding: 4px 0; }
+    .readout .slim b { font-size: 14px; }
+    .readout .slim > span span { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .readout h1 { font-size: 20px; margin: 8px 0 2px; }
     .filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 0; }
     .filters select, .storefilter { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 10px; font: inherit; font-size: 14px; }
     .storefilter { margin-top: 8px; }
@@ -280,7 +283,7 @@
       const companyPace = dayMode ? scoped.reduce((n, s) => n + dayOf(s).exp, 0) : null;
       const companyPct = dayMode && companyPace ? (companyNet - companyPace) / companyPace * 100 : D.company_week.peer_median;
       const rest = rows.filter((r) => r.pct > -30);
-      const row = (r) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span><b>${r.s.name}</b><span>${r.s.climate} · ${r.note} · ${pct(r.pct)}</span></span><em>${money(r.gap)}</em></button>`;
+      const row = (r, tight) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span><b>${r.s.name}</b><span>${tight ? r.note : r.s.climate + " · " + r.note} · ${pct(r.pct)}</span></span><em>${money(r.gap)}</em></button>`;
       document.getElementById("app").innerHTML = `
         <header class="top">
           <div class="mark"><b>PULSE</b><span>Page 2</span></div>
@@ -290,7 +293,7 @@
         <div class="mode"><button id="mode-day" class="${dayMode ? "on" : ""}">Day</button><button id="mode-week" class="${dayMode ? "" : "on"}">Week</button></div>
         <div class="weekbar">
           <button id="step-prev" aria-label="Previous" ${idx === 0 ? "disabled" : ""}>‹</button>
-          <div class="weeknow"><b>${dayMode ? dayLabel(state.day) : weekLabel(D)}</b><span>${dayMode ? "Pace is the same weekday, prior 8 weeks" : "Pace is the week versus that habit"}${easterWeek(D.as_of) ? " · Easter shift" : ""}</span></div>
+          <div class="weeknow"><b>${dayMode ? dayLabel(state.day) : weekLabel(D)}</b></div>
           <button id="step-next" aria-label="Next" ${idx === (dayMode ? allDays.length : weeks.length) - 1 ? "disabled" : ""}>›</button>
         </div>
         ${dayMode ? "" : easterBanner(D.as_of)}
@@ -302,12 +305,12 @@
         <section class="readout">
           <span class="note">${dayMode ? dayLabel(state.day) : weekLabel(D)}. Company ${pct(companyPct)} versus ${dayMode ? "the same weekday" : "its own pace"}.</span>
           <h1>Needs a call or a visit</h1>
-          ${calls.length ? calls.map(row).join("") : `<p class="note">None in this filter.</p>`}
+          ${calls.length ? calls.map((r) => row(r, true)).join("") : `<p class="note">None in this filter.</p>`}
         </section>
         <div class="zrow">${dotPlot(rows)}</div>
         <div class="legend"><span><i class="sw" style="background:#8d3419"></i>30% or more off</span><span><i class="sw" style="background:#8a5a16"></i>Under</span><span><i class="sw" style="background:#1d5c40"></i>On pace</span></div>
         <h3 class="sec">The rest</h3>
-        ${rest.map(row).join("")}
+        ${rest.map((r) => row(r, false)).join("")}
         ${learnBlock()}
         <p class="tie">${dayMode ? "Day" : "Week"} net <b>${companyNet.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b>. Pace is the same weekday over the prior 8 weeks. <a class="textbtn" href="notes.html">Definitions</a></p>`;
       document.getElementById("mode-day").onclick = () => { state.mode = "day"; D = weekFor(state.day); byId = Object.fromEntries(D.stores.map((s) => [s.id, s])); save(); render(); };
