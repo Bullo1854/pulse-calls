@@ -299,11 +299,13 @@
           <select id="mm-filter" aria-label="Market manager"><option value="">All market managers</option>${window.PULSE_ORG.managers.filter((m) => !state.region || m.region === state.region).map((m) => `<option value="${m.id}"${state.manager === m.id ? " selected" : ""}>${m.name} (${m.region})</option>`).join("")}</select>
         </div>
         <select id="store-filter" class="storefilter" aria-label="Store"><option value="">All stores</option>${D.stores.slice().sort((a, b) => a.name.localeCompare(b.name)).map((s) => `<option value="${s.id}"${state.store === s.id ? " selected" : ""}>${s.name}</option>`).join("")}</select>
-        <section class="readout"><span class="note">${dayMode ? dayLabel(state.day) : weekLabel(D)}. Company ${pct(companyPct)} versus ${dayMode ? "the same weekday" : "its own pace"}. ${money(companyNet)} net.</span></section>
+        <section class="readout">
+          <span class="note">${dayMode ? dayLabel(state.day) : weekLabel(D)}. Company ${pct(companyPct)} versus ${dayMode ? "the same weekday" : "its own pace"}.</span>
+          <h1>Needs a call or a visit</h1>
+          ${calls.length ? calls.map(row).join("") : `<p class="note">None in this filter.</p>`}
+        </section>
         <div class="zrow">${dotPlot(rows)}</div>
         <div class="legend"><span><i class="sw" style="background:#8d3419"></i>30% or more off</span><span><i class="sw" style="background:#8a5a16"></i>Under</span><span><i class="sw" style="background:#1d5c40"></i>On pace</span></div>
-        <h1>Needs a call or a visit</h1>
-        ${calls.length ? calls.map(row).join("") : `<p class="note">None in this filter.</p>`}
         <h3 class="sec">The rest</h3>
         ${rest.map(row).join("")}
         ${learnBlock()}
