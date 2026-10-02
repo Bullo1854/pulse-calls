@@ -70,7 +70,7 @@
     .mcards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
     .mcard { background: var(--sheet); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; text-align: left; }
     .mcard b { display: block; font-size: 13px; }
-    .mcard span { color: var(--muted); font-size: 12px; }
+    .mcard.wide { grid-column: 1 / -1; }
     .learn { background: var(--sheet); border: 1px solid var(--line); border-radius: 16px; padding: 12px; margin-top: 14px; }
     .barline { display: grid; grid-template-columns: 78px 1fr 52px; gap: 8px; align-items: center; font-size: 12.5px; margin-top: 6px; }
     .track { height: 8px; background: #efe7dc; border-radius: 99px; overflow: hidden; }
@@ -267,7 +267,7 @@
         <p class="title">${positive(s).title}</p>
         ${weekSvg(s)}
         ${metricCards(s)}
-        <div class="chips"><span class="chip daily">Daily</span><span class="chip wx">${s.wx.inches} in vs ${s.wx.ly_inches} in last year</span>${metricChips(s)}${productFlags(s).length ? `<span class="chip">Product mix</span>` : ""}${log ? `<span class="logged">Logged · ${log.how || "call"} · ${log.role || "entered"}</span>` : ""}</div>
+        ${log ? `<p class="note">Logged · ${log.how || "call"} · ${log.who || log.role || "entered"}</p>` : ""}
         <p class="note">${positive(s).say}</p>
       </button>`;
     }
@@ -289,10 +289,18 @@
       return shortMetric(m.label) + " $" + Math.round(m.actual) + " versus $" + Math.round(m.pace) + " own pace, " + pct(m.pct) + ". Flagged at 15% under.";
     }
     function metricCards(s) {
-      return `<div class="mcards">${["Sales per guest", "Sales per hour"].map((label) => {
-        const m = (s.metrics || []).find((x) => x.label === label) || { label, actual: 0, pace: 0, pct: 0 };
-        return `<div class="mcard" title="${tip(metricTip(m))}"><b>${shortMetric(label)} ${pct(m.pct)}</b><span>$${Math.round(m.actual)} vs $${Math.round(m.pace)} pace</span></div>`;
-      }).join("")}</div>`;
+      const ticket = (s.metrics || []).find((x) => x.label === "Average ticket") || { actual: 0, pace: 0, pct: 0 };
+      const spg = (s.metrics || []).find((x) => x.label === "Sales per guest") || { actual: 0, pace: 0, pct: 0 };
+      const sph = (s.metrics || []).find((x) => x.label === "Sales per hour") || { actual: 0, pace: 0, pct: 0 };
+      const trafPct = s.expected.traf ? (s.actual.traf - s.expected.traf) / s.expected.traf * 100 : 0;
+      const cards = [
+        ["SPG", pct(spg.pct), `$${Math.round(spg.actual)} vs $${Math.round(spg.pace)} pace`, metricTip(spg)],
+        ["SPH", pct(sph.pct), `$${Math.round(sph.actual)} vs $${Math.round(sph.pace)} pace`, metricTip(sph)],
+        ["Ticket", pct(ticket.pct), `$${Math.round(ticket.actual)} vs $${Math.round(ticket.pace)} pace`, "Average ticket $" + Math.round(ticket.actual) + " versus $" + Math.round(ticket.pace) + " own pace, " + pct(ticket.pct) + ". Flagged at 15% under."],
+        ["Traffic", pct(trafPct), `${Math.round(s.actual.traf)} vs ${Math.round(s.expected.traf)} pace`, "Traffic " + Math.round(s.actual.traf) + " guests versus a " + Math.round(s.expected.traf) + " habit, " + pct(trafPct) + "."],
+        ["Weather", s.wx.high + "°", `${s.wx.inches} in vs ${s.wx.ly_inches} in last year`, "High " + s.wx.high + "° versus " + s.wx.ly_high + "° last year. " + s.wx.inches + " inches versus " + s.wx.ly_inches + " on the comparable days."]
+      ];
+      return `<div class="mcards">${cards.map(([name, big, sub, title]) => `<div class="mcard${name === "Weather" ? " wide" : ""}" title="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
     }
     function positive(s) {
       if (s.adj_pct < 0) return { title: s.title, say: s.say };
