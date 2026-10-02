@@ -570,8 +570,14 @@
           role: roleFor(who) || document.getElementById("role").value,
           how: document.getElementById("how").value,
           at: new Date().toISOString(),
-          driver: byId[id].driver
+          driver: byId[id].driver,
+          span: state.mode === "week" ? "week" : "day",
+          when: state.mode === "week" ? D.as_of : state.day,
+          before: state.mode === "week" ? byId[id].adj_pct : daySnap(byId[id]).pacePct
         };
+        const hist = JSON.parse(localStorage.getItem(KEY + ".actions") || "[]");
+        hist.push(Object.assign({ id }, state.logs[id]));
+        localStorage.setItem(KEY + ".actions", JSON.stringify(hist));
         save(); closeSheet(); render();
       };
       const reset = document.getElementById("reset");

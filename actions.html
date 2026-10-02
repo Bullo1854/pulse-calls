@@ -3,54 +3,49 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Pulse Page 2 · Did the coaching hold</title>
+  <title>Pulse Page 2 · Did it hold</title>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Outfit:wght@380;460;560&display=swap" rel="stylesheet" />
   <style>
     :root { --paper:#e7e1d5; --card:#fbf8f2; --ink:#1b1612; --muted:#6d645b; --line:#ddd4c6; --line-strong:#cfc4b4; --call:#8d3419; --ok:#1d5c40; }
     * { box-sizing: border-box; }
     body { margin: 0; background: var(--paper); color: var(--ink); font-family: Outfit, sans-serif; font-weight: 380; }
-    main { width: min(100%, 880px); margin: 0 auto; padding: 20px 16px 48px; }
-    a { color: var(--call); }
+    main { width: min(100%, 520px); margin: 0 auto; padding: 16px 16px 40px; }
+    a { color: var(--call); text-decoration: none; }
     h1, h2 { font-family: Fraunces, Palatino, serif; font-weight: 500; letter-spacing: -0.03em; }
-    h1 { font-size: 32px; margin: 8px 0 4px; }
-    h2 { font-size: 22px; margin: 22px 0 8px; }
+    h1 { font-size: 30px; margin: 6px 0 4px; }
+    h2 { font-size: 20px; margin: 18px 0 8px; }
     .kicker { letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px; color: var(--muted); }
     .note { color: var(--muted); font-size: 14px; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
-    select { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 10px; font: inherit; }
-    .stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-    .stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
-    .stat b { display: block; font-size: 28px; font-family: Fraunces, serif; font-weight: 500; }
+    .links { display: flex; gap: 14px; margin: 8px 0 12px; }
+    .mode { display: flex; gap: 6px; }
+    .mode button { flex: 1; border: 1px solid var(--line-strong); background: var(--card); border-radius: 999px; padding: 8px; font: inherit; }
+    .mode button.on { background: var(--ink); color: #f6f2ea; }
+    select { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 10px; font: inherit; font-size: 16px; margin-top: 8px; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px; }
+    .stat b { display: block; font-family: Fraunces, serif; font-size: 26px; font-weight: 500; }
     .stat span { color: var(--muted); font-size: 12px; }
-    .barline { display: grid; grid-template-columns: 140px 1fr 52px; gap: 8px; align-items: center; font-size: 14px; margin: 6px 0; }
+    .barline { display: grid; grid-template-columns: 108px 1fr 42px; gap: 8px; align-items: center; font-size: 14px; margin: 6px 0; }
     .track { height: 8px; background: #e4d8c8; border-radius: 99px; }
     .track b { display: block; height: 8px; background: var(--ok); border-radius: 99px; }
-    table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-    th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--line); font-size: 14px; }
-    th { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; margin-top: 8px; }
     .ok { color: var(--ok); } .bad { color: var(--call); }
-    .links a { margin-right: 14px; }
   </style>
 </head>
 <body>
   <main>
-    <p class="kicker">Pulse Page 2 · action log</p>
-    <h1>Did the coaching hold</h1>
-    <p class="note" id="lede">Next week versus the week the action was logged, after weather. Back on pace means −12% or better.</p>
+    <p class="kicker">Pulse Page 2</p>
+    <h1>Did it hold</h1>
+    <p class="note" id="lede">A day action holds if the next same weekday is −12% or better. A week action holds on the next close.</p>
     <p class="links"><a href="log.html">Action log</a><a href="index.html">Call list</a></p>
-    <div class="row">
-      <select id="region" aria-label="Region"><option value="">All regions</option><option>North</option><option>Central</option><option>South</option></select>
-      <select id="manager" aria-label="Market manager"><option value="">All market managers</option></select>
-    </div>
+    <div class="mode"><button id="all" class="on">All</button><button id="day">Day</button><button id="week">Week</button></div>
+    <select id="region" aria-label="Region"><option value="">All regions</option><option>North</option><option>Central</option><option>South</option></select>
+    <select id="manager" aria-label="Market manager"><option value="">All market managers</option></select>
     <div class="stats" id="stats"></div>
-    <h2>Over time</h2>
-    <div id="trend"></div>
-    <h2>By market manager</h2>
+    <h2>By manager</h2>
     <div id="by-manager"></div>
-    <h2>By problem</h2>
-    <div id="by-driver"></div>
     <h2>Each action</h2>
-    <div id="table"></div>
+    <div id="list"></div>
   </main>
   <script src="org.js"></script>
   <script src="actions.js"></script>
@@ -60,71 +55,49 @@
     const latest = window.PULSE_WEEKS[window.PULSE_WEEKS.length - 1];
     const byId = Object.fromEntries(latest.stores.map((s) => [s.id, s]));
     document.getElementById("manager").innerHTML += ORG.managers.map((m) => `<option value="${m.id}">${m.name} (${m.region})</option>`).join("");
-    ["region", "manager"].forEach((id) => { const v = localStorage.getItem("pulse2.z.v1." + id); if (v) document.getElementById(id).value = v; });
-    const pct = (n) => n == null ? "—" : (n < 0 ? "−" : "+") + Math.abs(n).toFixed(0) + "%";
+    let span = "all";
+    const pct = (n) => n == null ? "—" : (n < 0 ? "−" : "+") + Math.abs(Math.round(n)) + "%";
+    function rate(list) {
+      const scored = list.filter((a) => a.recovered != null);
+      const got = scored.filter((a) => a.recovered).length;
+      return { n: scored.length, got, open: list.length - scored.length, rate: scored.length ? got / scored.length : 0 };
+    }
     function selected() {
       const region = document.getElementById("region").value;
       const manager = document.getElementById("manager").value;
       const mgr = ORG.managers.find((m) => m.id === manager);
       return window.PULSE_ACTIONS.filter((a) => {
         const s = byId[a.id] || {};
+        if (span !== "all" && a.span !== span) return false;
         if (region && s.region !== region) return false;
         if (mgr && !mgr.stores.includes(a.id)) return false;
         return true;
       });
     }
-    function rate(list) {
-      const scored = list.filter((a) => a.recovered != null);
-      const got = scored.filter((a) => a.recovered).length;
-      return { n: scored.length, got, open: list.length - scored.length, rate: scored.length ? got / scored.length : 0 };
-    }
     function draw() {
-      const region = document.getElementById("region").value;
-      const manager = document.getElementById("manager").value;
-      localStorage.setItem("pulse2.z.v1.region", region);
-      localStorage.setItem("pulse2.z.v1.manager", manager);
       const list = selected();
       const r = rate(list);
-      const mgr = ORG.managers.find((m) => m.id === manager);
-      document.getElementById("lede").textContent = mgr
-        ? mgr.name + " (" + mgr.region + ") · " + mgr.patch + ". A held action is back inside −12% the next week."
-        : "Company view. Filter to a region or a market manager. Open actions are waiting on the next close.";
       document.getElementById("stats").innerHTML = `
-        <div class="stat"><b>${r.got}/${r.n}</b><span>Back on pace</span></div>
-        <div class="stat"><b>${r.n ? Math.round(r.rate * 100) : 0}%</b><span>Held</span></div>
+        <div class="stat"><b>${r.got}/${r.n}</b><span>Held</span></div>
+        <div class="stat"><b>${r.n ? Math.round(r.rate * 100) : 0}%</b><span>Rate</span></div>
         <div class="stat"><b>${r.open}</b><span>Waiting</span></div>`;
-      const weeks = [...new Set(list.map((a) => a.week))].sort();
-      document.getElementById("trend").innerHTML = weeks.map((w) => {
-        const rows = list.filter((a) => a.week === w && a.recovered != null);
-        const got = rows.filter((a) => a.recovered).length;
-        const label = new Date(w + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
-        return `<div class="barline"><span>${label}</span><div class="track"><b style="width:${rows.length ? got / rows.length * 100 : 0}%"></b></div><span>${got}/${rows.length}</span></div>`;
-      }).join("") || `<p class="note">No scored actions in this filter.</p>`;
-      document.getElementById("by-manager").innerHTML = ORG.managers.filter((m) => !region || m.region === region).map((m) => {
-        const rows = list.filter((a) => m.stores.includes(a.id));
-        const rr = rate(rows);
-        return `<div class="barline"><span>${m.name}</span><div class="track"><b style="width:${rr.rate * 100}%"></b></div><span>${rr.got}/${rr.n}</span></div>`;
-      }).join("");
-      const drivers = [...new Set(list.map((a) => a.driver))];
-      document.getElementById("by-driver").innerHTML = drivers.map((d) => {
-        const rr = rate(list.filter((a) => a.driver === d));
-        return `<div class="barline"><span>${d}</span><div class="track"><b style="width:${rr.rate * 100}%"></b></div><span>${rr.got}/${rr.n}</span></div>`;
-      }).join("");
-      document.getElementById("table").innerHTML = `<table><thead><tr><th>Week</th><th>Store</th><th>Action</th><th>Change</th></tr></thead><tbody>${
-        list.slice().sort((a, b) => a.week < b.week ? 1 : -1).map((a) => `<tr>
-          <td>${a.week.slice(5)}</td>
-          <td>${(byId[a.id] || {}).name}<span class="note"> ${a.who}</span></td>
-          <td>${a.how} · ${a.action}</td>
-          <td class="${a.recovered ? "ok" : a.recovered == null ? "" : "bad"}">${pct(a.before)} → ${pct(a.after)}</td>
-        </tr>`).join("")
-      }</tbody></table>`;
-    }
-    document.getElementById("region").onchange = () => {
       const region = document.getElementById("region").value;
-      document.getElementById("manager").innerHTML = `<option value="">All market managers</option>` + ORG.managers.filter((m) => !region || m.region === region).map((m) => `<option value="${m.id}">${m.name} (${m.region})</option>`).join("");
+      document.getElementById("by-manager").innerHTML = ORG.managers.filter((m) => !region || m.region === region).map((m) => {
+        const rr = rate(list.filter((a) => m.stores.includes(a.id)));
+        return `<div class="barline"><span>${m.name.split(" ")[0]}</span><div class="track"><b style="width:${rr.rate * 100}%"></b></div><span>${rr.got}/${rr.n}</span></div>`;
+      }).join("");
+      document.getElementById("list").innerHTML = list.slice().sort((a, b) => a.week < b.week ? 1 : -1).map((a) => `<article class="card">
+        <b>${(byId[a.id] || {}).name}</b> <span class="note">${a.span} · ${a.week.slice(5)}</span>
+        <p>${a.how} · ${a.action}</p>
+        <p class="${a.recovered ? "ok" : a.recovered == null ? "note" : "bad"}">${pct(a.before)} → ${pct(a.after)} · ${a.who}</p>
+      </article>`).join("");
+    }
+    document.querySelectorAll(".mode button").forEach((b) => b.onclick = () => {
+      span = b.id;
+      document.querySelectorAll(".mode button").forEach((x) => x.classList.toggle("on", x === b));
       draw();
-    };
-    document.getElementById("manager").onchange = draw;
+    });
+    ["region", "manager"].forEach((id) => document.getElementById(id).oninput = draw);
     draw();
   </script>
 </body>
