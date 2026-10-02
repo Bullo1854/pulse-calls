@@ -409,7 +409,8 @@
         ["SPH", pct(v.sphPct), `$${Math.round(v.sph)} vs $${Math.round(v.sphPace)} 8-week pace`, tone(v.sphPct), "SPH from the same 8-week weekday pace as the call list."],
         ["Ticket", pct(v.ticketPct), `$${Math.round(v.ticket)} vs $${Math.round(v.ticketPace)} 8-week pace`, tone(v.ticketPct), "Average ticket from the same 8-week weekday pace as the call list."],
         ["Traffic", pct(v.trafPct), `${Math.round(v.traf)} vs ${Math.round(v.expTraf)} 8-week pace`, tone(v.trafPct), "Traffic versus the 8-week same-weekday pace."],
-        ["Close", v.close.toFixed(0) + "%", `${v.closePts >= 0 ? "+" : "−"}${Math.abs(v.closePts).toFixed(1)} pts vs ${v.closePace.toFixed(0)}% 8-week habit`, v.closePts <= -3 ? "bad" : v.closePts >= 2 ? "good" : "", "Close is tickets divided by traffic, versus the 8-week same-weekday pace."]
+        ["Close", v.close.toFixed(0) + "%", `${v.closePts >= 0 ? "+" : "−"}${Math.abs(v.closePts).toFixed(1)} pts vs ${v.closePace.toFixed(0)}% 8-week habit`, v.closePts <= -3 ? "bad" : v.closePts >= 2 ? "good" : "", "Close is tickets divided by traffic, versus the 8-week same-weekday pace."],
+        ["Weather", wx.high + "°", `${tempGap >= 0 ? "+" : "−"}${Math.abs(tempGap).toFixed(0)}° vs last year · ${inches} in vs ${lyIn} in`, wxTone, "High and inches versus last year. Red is wetter. Green is drier."]
       ];
       return `<div class="mcards">${cards.map(([name, big, sub, toneName, title]) => `<div class="mcard ${toneName}" data-tip="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
     }
