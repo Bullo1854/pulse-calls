@@ -34,6 +34,8 @@
     .scope .who { font-weight: 560; }
     .scope .sub { display: block; color: var(--muted); font-size: 12px; }
     .scope .chg { color: var(--call); letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; }
+    .navline { display: flex; gap: 14px; margin: 10px 0 0; font-size: 14px; }
+    .navline a { color: var(--call); text-decoration: none; font-weight: 560; }
     h1 { font-family: var(--serif); font-weight: 500; font-size: 30px; letter-spacing: -0.03em; margin: 14px 0 4px; }
     .lede { margin: 0; font-size: 14.5px; }
     .zrow { margin: 12px 0 4px; }
@@ -162,6 +164,7 @@
           <div class="mark"><b>PULSE</b><span>Calls</span></div>
           <div class="fresh"><div class="pill"><i></i> ${D.freshness}</div><small>${D.as_of_label}</small></div>
         </header>
+        <p class="navline"><a href="log.html">Action log</a><a href="notes.html">Definitions</a></p>
         <button class="scope" id="open-scope"><span><span class="who">${scopeLabel()}</span><span class="sub">${scoped.length} stores · dollars and percent off pace</span></span><span class="chg">Scope</span></button>
         <h1>Who is off pace?</h1>
         <p class="lede">${calls.length} call${calls.length === 1 ? "" : "s"}. A typical store was ${pct(D.company_week.peer_median)} versus its own pace, after weather. The mark on the plot is about 30% off — far enough to call.</p>

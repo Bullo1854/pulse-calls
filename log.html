@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Pulse · Action log</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Outfit:wght@380;460;560&display=swap" rel="stylesheet" />
+  <style>
+    :root { --paper:#e7e1d5; --sheet:#f6f2ea; --card:#fbf8f2; --ink:#1b1612; --muted:#6d645b; --line:#ddd4c6; --line-strong:#cfc4b4; --call:#8d3419; --ok:#1d5c40; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: Outfit, sans-serif; font-weight: 380; }
+    main { width: min(100%, 880px); margin: 0 auto; padding: 20px 16px 48px; }
+    a { color: var(--call); }
+    h1 { font-family: Fraunces, Palatino, serif; font-weight: 500; font-size: 32px; letter-spacing: -0.03em; margin: 8px 0 4px; }
+    .kicker { letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px; color: var(--muted); }
+    .note { color: var(--muted); font-size: 14px; }
+    .tools { display: grid; gap: 8px; margin: 14px 0; }
+    input, select { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 10px; font: inherit; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (min-width: 720px) { .row { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+    table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 14px; }
+    th { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); cursor: pointer; background: var(--sheet); }
+    th.on { color: var(--call); }
+    .who { font-weight: 560; }
+    .sub { display: block; color: var(--muted); font-size: 12px; }
+    .empty { padding: 18px; color: var(--muted); }
+    .count { font-size: 13px; color: var(--muted); margin: 0 0 8px; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="kicker">Page 2 of Pulse</p>
+    <h1>Action log</h1>
+    <p class="note">Who entered the coaching, and what they told the manager. Phone entries sit with the sample file. Search, filter, and sort.</p>
+    <p><a href="index.html">Back to the call list</a></p>
+    <div class="tools">
+      <input id="q" placeholder="Search store, name, action, note" />
+      <div class="row">
+        <select id="region"><option value="">All regions</option></select>
+        <select id="role"><option value="">All roles</option><option>Regional manager</option><option>Executive</option></select>
+        <select id="driver"><option value="">All drivers</option></select>
+        <select id="source"><option value="">Phone and sample</option><option value="phone">This phone only</option><option value="sample">Sample only</option></select>
+      </div>
+    </div>
+    <p class="count" id="count"></p>
+    <div id="table"></div>
+  </main>
+  <script src="data.js"></script>
+  <script>
+    const D = window.PULSE2;
+    const byId = Object.fromEntries(D.stores.map((s) => [s.id, s]));
+    const phone = JSON.parse(localStorage.getItem("pulse2.z.v1.logs") || "{}");
+    const sample = {
+      S101: { store: "Northgate", region: "North", driver: "margin", action: "Review Saturday’s written tickets for unauthorized discount", note: "Asked the manager to pull Saturday’s written tickets before the Monday huddle.", who: "Elena Voss", role: "Regional manager", at: "2029-09-09T18:10:00Z" },
+      S120: { store: "Fairhaven", region: "Central", driver: "yield", action: "One up system on Saturday: no one works a guest alone past the first sit", note: "Saturday floor was one person on the ups. One-up starts this week.", who: "Marcus Hale", role: "Executive", at: "2029-09-09T18:22:00Z" },
+      S115: { store: "Upland Mills", region: "South", driver: "sleep", action: "Put the sleep specialist on Saturday, not on the weekday recovery shift", note: "Not a call. Logged because sleep missed and home held.", who: "Priya Nand", role: "Regional manager", at: "2029-09-09T18:30:00Z" }
+    };
+    const rows = [];
+    Object.entries(sample).forEach(([id, log]) => rows.push(row(id, log, "sample")));
+    Object.entries(phone).forEach(([id, log]) => rows.push(row(id, log, "phone")));
+    function row(id, log, source) {
+      const s = byId[id] || {};
+      return {
+        id, source,
+        store: log.store || s.name || id,
+        region: log.region || s.region || "",
+        climate: s.climate || "",
+        driver: log.driver || s.driver || "",
+        action: log.action || "",
+        note: log.note || "",
+        who: log.who || "",
+        role: log.role || "",
+        at: log.at || ""
+      };
+    }
+    const regions = [...new Set(rows.map((r) => r.region).filter(Boolean))].sort();
+    const drivers = [...new Set(rows.map((r) => r.driver).filter(Boolean))].sort();
+    document.getElementById("region").innerHTML += regions.map((r) => `<option>${r}</option>`).join("");
+    document.getElementById("driver").innerHTML += drivers.map((r) => `<option>${r}</option>`).join("");
+    let sortKey = "at";
+    let sortDir = -1;
+    function filtered() {
+      const q = document.getElementById("q").value.trim().toLowerCase();
+      const region = document.getElementById("region").value;
+      const role = document.getElementById("role").value;
+      const driver = document.getElementById("driver").value;
+      const source = document.getElementById("source").value;
+      return rows.filter((r) => {
+        if (region && r.region !== region) return false;
+        if (role && r.role !== role) return false;
+        if (driver && r.driver !== driver) return false;
+        if (source && r.source !== source) return false;
+        if (!q) return true;
+        return [r.store, r.who, r.role, r.action, r.note, r.region, r.driver, r.climate].join(" ").toLowerCase().includes(q);
+      }).sort((a, b) => {
+        const av = (a[sortKey] || "").toString().toLowerCase();
+        const bv = (b[sortKey] || "").toString().toLowerCase();
+        return av < bv ? -sortDir : av > bv ? sortDir : 0;
+      });
+    }
+    function when(iso) {
+      if (!iso) return "—";
+      const d = new Date(iso);
+      return d.toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+    }
+    function draw() {
+      const list = filtered();
+      document.getElementById("count").textContent = list.length + " of " + rows.length;
+      const heads = [["when", "When"], ["store", "Store"], ["who", "Entered by"], ["driver", "Driver"], ["action", "Action"]];
+      const head = heads.map(([k, label]) => `<th data-sort="${k}" class="${sortKey === k ? "on" : ""}">${label}${sortKey === k ? (sortDir < 0 ? " ↓" : " ↑") : ""}</th>`).join("");
+      const body = list.length ? list.map((r) => `<tr>
+        <td>${when(r.at)}<span class="sub">${r.source === "phone" ? "This phone" : "Sample"}</span></td>
+        <td>${r.store}<span class="sub">${r.region}${r.climate ? " · " + r.climate : ""}</span></td>
+        <td><span class="who">${r.who || "—"}</span><span class="sub">${r.role || "Role not set"}</span></td>
+        <td>${r.driver || "—"}</td>
+        <td>${r.action}<span class="sub">${r.note || ""}</span></td>
+      </tr>`).join("") : `<tr><td class="empty" colspan="5">Nothing matches. Log an action on a store sheet and it appears here.</td></tr>`;
+      document.getElementById("table").innerHTML = `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+      document.querySelectorAll("[data-sort]").forEach((th) => th.onclick = () => {
+        const key = th.dataset.sort;
+        sortDir = sortKey === key ? -sortDir : key === "at" ? -1 : 1;
+        sortKey = key;
+        draw();
+      });
+    }
+    ["q", "region", "role", "driver", "source"].forEach((id) => document.getElementById(id).oninput = draw);
+    draw();
+  </script>
+</body>
+</html>
