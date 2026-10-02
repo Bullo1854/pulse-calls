@@ -13,7 +13,7 @@
     h1 { font-size: 38px; line-height: 1.05; margin: 8px 0 12px; }
     h2 { font-size: 26px; margin: 28px 0 6px; }
     p, li { font-size: 17px; color: #3b342c; }
-    a { color: #8d3419; }
+    .note { background: #f3ead2; border: 1px solid #e0d3ae; border-radius: 12px; padding: 12px 14px; }
   </style>
 </head>
 <body>
@@ -36,9 +36,10 @@
     </ul>
     <p>The store sheet charts each flagged metric by day. Sand is own pace. Ink is the day. The percent under each day is that day’s gap. Hover or tap-hold a bar for the dollars.</p>
 
-    <h2>Easter and the year-ago week</h2>
-    <p>The file’s last-year date is 364 days back, the same weekday. That misses Easter. Easter 2029 was Sunday, April 1. Easter 2028 was Sunday, April 16. The gap is 14 days.</p>
-    <p>On the week ending April 1, the week ending April 8, and the week ending April 15, Page 2 shifts the comparable 14 days so the week is read against the same days relative to Easter. Easter Sunday is not a normal Sunday: the hole on April 1 is the holiday, and it is taken out before the rest of the week is coached. Last year’s sales are not in the file. The shift is the comparable, not a second set of receipts.</p>
+    <h2>Note — Easter shifts the year-ago week</h2>
+    <p class="note">The file’s last-year date is 364 days back, the same weekday. That misses Easter. Easter 2029 was Sunday, April 1. Easter 2028 was Sunday, April 16. The gap is 14 days. On the weeks ending April 1, April 8, and April 15, Page 2 shifts the comparable 14 days so the week is read against the same days relative to Easter. Easter Sunday is not a normal Sunday: the hole on April 1 is the holiday, and it is taken out before the rest of the week is coached. Last year’s sales are not in the file. The shift is the comparable, not a second set of receipts.</p>
+
+    <h2>Weather</h2>
     <p>Dates in the file are in 2029. There is no weather feed. Each store-day gets simulated weather for its market’s climate, including the comparable day last year. The same inch does not mean the same thing.</p>
     <ul>
       <li>An inch of snow on the New England coast costs about 6% of the day. Stores and roads are built for it.</li>
