@@ -75,6 +75,8 @@
     .slim > span { flex: 1; min-width: 0; }
     .slim b { font-weight: 560; }
     .slim > span span { display: block; color: var(--muted); font-size: 12px; }
+    .slim .nums { white-space: nowrap; font-size: 12px; }
+    .slim .hot { display: inline; }
     .slim em { flex: none; white-space: nowrap; font-style: normal; font-family: var(--serif); color: var(--watch); }
     .slim.ok em { color: var(--ok); }
     .mcards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
@@ -269,17 +271,25 @@
       const idx = dayMode ? allDays.indexOf(state.day) : weeks.findIndex((w) => w.as_of === D.as_of);
       const rows = scoped.map((s) => {
         const w = worstShift(s);
-        const note = `<span class="hot">${w.label} ${pct(w.pct)}</span>`;
-        if (!dayMode) return { s, pct: s.adj_pct, gap: s.adj_gap, note };
+        const words = {
+          SPG: "Guests wrote less",
+          SPH: "Hours did not pay",
+          Ticket: "The ticket shrank",
+          Traffic: "The door slowed",
+          Close: "Traffic did not close"
+        }[w.label];
+        const why = dayMode ? words : (s.title || words);
+        const nums = `<span class="nums"><span class="hot">${w.label} ${pct(w.pct)}</span> · ${pct(dayMode ? daySnap(s).pacePct : s.adj_pct)}</span>`;
+        if (!dayMode) return { s, pct: s.adj_pct, gap: s.adj_gap, why, nums };
         const v = daySnap(s);
-        return { s, pct: v.pacePct, gap: v.gap, note };
+        return { s, pct: v.pacePct, gap: v.gap, why, nums };
       }).sort((a, b) => a.pct - b.pct);
       const calls = rows.filter((r) => r.pct <= -30);
       const companyNet = dayMode ? scoped.reduce((n, s) => n + dayOf(s).net, 0) : D.company_week.net;
       const companyPace = dayMode ? scoped.reduce((n, s) => n + dayOf(s).exp, 0) : null;
       const companyPct = dayMode && companyPace ? (companyNet - companyPace) / companyPace * 100 : D.company_week.peer_median;
       const rest = rows.filter((r) => r.pct > -30);
-      const row = (r, tight) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span><b>${r.s.name}</b><span>${tight ? r.note : r.s.climate + " · " + r.note} · ${pct(r.pct)}</span></span><em>${money(r.gap)}</em></button>`;
+      const row = (r) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span><b>${r.s.name}</b><span>${r.why}</span>${r.nums}</span><em>${money(r.gap)}</em></button>`;
       document.getElementById("app").innerHTML = `
         <header class="top">
           <div class="mark"><b>PULSE</b><span>Page 2</span></div>
@@ -301,13 +311,13 @@
         <section class="readout">
           <span class="note">${dayMode ? dayLabel(state.day) : weekLabel(D)}. Company ${pct(companyPct)} versus ${dayMode ? "the same weekday" : "its own pace"}.</span>
           <h1>Needs a call or a visit</h1>
-          ${calls.length ? calls.map((r) => row(r, true)).join("") : `<p class="note">None in this filter.</p>`}
+          ${calls.length ? calls.map(row).join("") : `<p class="note">None in this filter.</p>`}
         </section>
         <div class="zrow">${dotPlot(rows)}</div>
         <p class="tipbox" id="plot-tip">Tap a dot for the store.</p>
         <div class="legend"><span><i class="sw" style="background:#8d3419"></i>30% or more off</span><span><i class="sw" style="background:#8a5a16"></i>Under</span><span><i class="sw" style="background:#1d5c40"></i>On pace</span></div>
         <h3 class="sec">The rest</h3>
-        ${rest.map((r) => row(r, false)).join("")}
+        ${rest.map(row).join("")}
         ${learnBlock()}
         <p class="tie">${dayMode ? "Day" : "Week"} net <b>${companyNet.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b>. Pace is the same weekday over the prior 8 weeks. <a class="textbtn" href="notes.html">Definitions</a></p>`;
       document.getElementById("mode-day").onclick = () => { state.mode = "day"; D = weekFor(state.day); byId = Object.fromEntries(D.stores.map((s) => [s.id, s])); save(); render(); };
