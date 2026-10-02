@@ -4,13 +4,15 @@ Page 2 of Pulse. Who is off pace, by how many dollars and what percent, what to 
 
 Fictitious practice data. Safe to publish.
 
-## Preview on GitHub Pages
+## Preview
 
-This is a static site. No build. The easiest preview link is GitHub Pages.
+The site is already on `main`. The shareable link, once Pages is publishing, is:
 
-1. Create a new public repository, for example `pulse-calls`.
-2. Unzip this folder and put its contents at the repository root, not inside another folder. You should see `index.html` next to `README.md`.
-3. Commit and push to `main`.
+https://bullo1854.github.io/pulse-calls/
+
+GitHub blocked the Pages switch from this connection (`Resource not accessible by integration`). One click finishes it: [Settings → Pages](https://github.com/Bullo1854/pulse-calls/settings/pages) → Build and deployment → Deploy from a branch → `main` / `/ (root)` → Save. It usually appears within a minute.
+
+This is a static site. No build.
 
 ```bash
 cd pulse
