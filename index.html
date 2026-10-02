@@ -396,12 +396,14 @@
       const inches = wx.inches;
       const lyIn = ly.inches == null ? s.wx.ly_inches : ly.inches;
       const tone = (n) => n <= -15 ? "bad" : n >= 5 ? "good" : "";
+      const wxTone = inches > lyIn + 0.1 ? "bad" : lyIn > inches + 0.1 ? "good" : "";
       const cards = [
         ["SPG", pct(spg.pct), `$${Math.round(spg.actual)} vs $${Math.round(spg.pace)} pace`, tone(spg.pct), "SPG $" + Math.round(spg.actual) + " versus $" + Math.round(spg.pace) + " pace, " + pct(spg.pct)],
         ["SPH", pct(sph.pct), `$${Math.round(sph.actual)} vs $${Math.round(sph.pace)} pace`, tone(sph.pct), "SPH $" + Math.round(sph.actual) + " versus $" + Math.round(sph.pace) + " pace, " + pct(sph.pct)],
         ["Ticket", pct(ticket.pct), `$${Math.round(ticket.actual)} vs $${Math.round(ticket.pace)} pace`, tone(ticket.pct), "Average ticket $" + Math.round(ticket.actual) + " versus $" + Math.round(ticket.pace) + " pace, " + pct(ticket.pct)],
         ["Traffic", pct(trafPct), `${Math.round(trafAct)} vs ${Math.round(trafPace)} pace`, tone(trafPct), "Traffic " + Math.round(trafAct) + " versus " + Math.round(trafPace) + " pace, " + pct(trafPct)],
-        ["Close", close == null ? "—" : close.toFixed(0) + "%", `${closePts >= 0 ? "+" : "−"}${Math.abs(closePts).toFixed(1)} pts vs ${closePace == null ? "—" : closePace.toFixed(0)}% habit`, closePts <= -3 ? "bad" : closePts >= 2 ? "good" : "", "Close rate versus habit."]
+        ["Close", close == null ? "—" : close.toFixed(0) + "%", `${closePts >= 0 ? "+" : "−"}${Math.abs(closePts).toFixed(1)} pts vs ${closePace == null ? "—" : closePace.toFixed(0)}% habit`, closePts <= -3 ? "bad" : closePts >= 2 ? "good" : "", "Close rate versus habit."],
+        ["Weather", wx.high + "°", `${tempGap >= 0 ? "+" : "−"}${Math.abs(tempGap).toFixed(0)}° vs last year · ${inches} in vs ${lyIn} in`, wxTone, "Weather versus last year. Red is wetter. Green is drier. Not taken out of sales."]
       ];
       return `<div class="mcards">${cards.map(([name, big, sub, tone, title]) => `<div class="mcard ${tone}" data-tip="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
     }
