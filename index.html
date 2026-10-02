@@ -237,21 +237,20 @@
       </svg>`;
     }
 
-    function dotPlot(list) {
+    function dotPlot(rows) {
       const min = -70, max = 50;
       const x = (p) => 16 + (Math.max(min, Math.min(max, p)) - min) / (max - min) * 300;
-      const dots = list.map((s) => {
-        const call = D.call_ids.includes(s.id);
-        const watch = D.watch_ids.includes(s.id);
-        const color = call ? "#8d3419" : watch ? "#8a5a16" : "#1d5c40";
-        return `<circle cx="${x(s.adj_pct)}" cy="28" r="${call ? 6 : 4}" fill="${color}"><title>${s.name}: ${pct(s.adj_pct)} and ${money(s.adj_gap)} after weather. ${call ? "Call or visit" : watch ? "Watch" : "On pace"}.</title></circle>`;
+      const dots = rows.map((r) => {
+        const color = r.pct <= -30 ? "#8d3419" : r.pct < 0 ? "#8a5a16" : "#1d5c40";
+        return `<circle cx="${x(r.pct)}" cy="28" r="${r.pct <= -30 ? 6 : 4}" fill="${color}"><title>${r.s.name}: ${pct(r.pct)} and ${money(r.gap)}</title></circle>`;
       }).join("");
-      return `<svg viewBox="0 0 332 52" role="img" aria-label="Percent off pace after weather">
+      return `<svg viewBox="0 0 332 52" role="img" aria-label="Every store on the percent off pace scale">
         <line x1="16" y1="28" x2="316" y2="28" stroke="#cfc4b4"/>
         <line x1="${x(-30)}" y1="16" x2="${x(-30)}" y2="40" stroke="#8d3419" stroke-dasharray="2 2"/>
         <line x1="${x(0)}" y1="18" x2="${x(0)}" y2="38" stroke="#8d847a"/>
         ${dots}
         <text x="16" y="50" font-size="9" fill="#8d847a">−70%</text>
+        <text x="150" y="50" font-size="9" fill="#8d847a">0</text>
         <text x="292" y="50" font-size="9" fill="#8d847a">+50%</text>
       </svg>`;
     }
@@ -296,6 +295,8 @@
         </div>
         <select id="store-filter" class="storefilter" aria-label="Store"><option value="">All stores</option>${D.stores.slice().sort((a, b) => a.name.localeCompare(b.name)).map((s) => `<option value="${s.id}"${state.store === s.id ? " selected" : ""}>${s.name}</option>`).join("")}</select>
         <section class="readout"><b>${calls.length} to coach</b><span class="note">${dayMode ? dayLabel(state.day) : weekLabel(D)}. Company ${pct(companyPct)} versus ${dayMode ? "the same weekday" : "its own pace"}. ${money(companyNet)} net.</span></section>
+        <div class="zrow">${dotPlot(rows)}</div>
+        <div class="legend"><span><i class="sw" style="background:#8d3419"></i>30% or more off</span><span><i class="sw" style="background:#8a5a16"></i>Under</span><span><i class="sw" style="background:#1d5c40"></i>On pace</span></div>
         <h1>${dayMode ? "Who is off today?" : "Who needs a call or a visit?"}</h1>
         <p class="lede">Tap a store for the cards${dayMode ? ". Graphs are on the week view." : " and the week graphs."}</p>
         ${rows.map((r) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span><b>${r.s.name}</b><span>${r.s.climate} · ${r.note} · ${pct(r.pct)}</span></span><em>${money(r.gap)}</em></button>`).join("")}
