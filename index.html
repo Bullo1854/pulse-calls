@@ -274,14 +274,14 @@
       const rows = scoped.map((s) => {
         const w = worstShift(s);
         const words = {
-          SPG: "Guests came, but tickets did not",
-          SPH: "Hours were there, but the sales were not",
-          Ticket: "Tickets wrote, but the ticket shrank",
-          Traffic: "The door slowed, and weather does not explain it",
-          Close: "Guests came, but they did not close"
+          SPG: "Guests came, tickets did not",
+          SPH: "Hours up, sales did not",
+          Ticket: "Tickets wrote, ticket shrank",
+          Traffic: "Door slowed",
+          Close: "Guests came, did not close"
         }[w.label];
         const why = words;
-        const shift = `${w.label} ${pct(w.pct)} · ${pct(dayMode ? daySnap(s).pacePct : s.adj_pct)}`;
+        const shift = `${w.label} ${pct(w.pct)} · rev pace ${pct(dayMode ? daySnap(s).pacePct : s.adj_pct)}`;
         if (!dayMode) return { s, pct: s.adj_pct, gap: s.adj_gap, why, shift };
         const v = daySnap(s);
         return { s, pct: v.pacePct, gap: v.gap, why, shift };
