@@ -76,6 +76,9 @@
     .mcards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
     .mcard { background: var(--sheet); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; text-align: left; }
     .mcard b { display: block; font-size: 13px; }
+    .mcard span { color: var(--muted); font-size: 12px; }
+    .mcard.bad b { color: var(--call); }
+    .mcard.good b { color: var(--ok); }
     .mcard.wide { grid-column: 1 / -1; }
     .learn { background: var(--sheet); border: 1px solid var(--line); border-radius: 16px; padding: 12px; margin-top: 14px; }
     .barline { display: grid; grid-template-columns: 78px 1fr 52px; gap: 8px; align-items: center; font-size: 12.5px; margin-top: 6px; }
@@ -524,7 +527,7 @@
         <div class="acts">
           <button class="primary" id="save-log" data-id="${id}">${log ? "Update log" : "Log action"}</button>
         </div>
-        ${log ? `<p class="note">Logged ${log.at.slice(0, 10)} by ${log.who || "unknown"}, ${log.role || "role not set"}: ${log.action}</p>` : ""}
+        ${log ? `<p class="note">Logged ${log.at.slice(0, 10)} by ${log.who || "unknown"}, ${log.role || "role not set"}: ${log.action}</p>` : ""}`;
     }
 
     function scopeSheet() {
