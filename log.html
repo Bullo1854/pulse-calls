@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Pulse · Action log</title>
+  <title>Pulse Page 2 · Action log</title>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Outfit:wght@380;460;560&display=swap" rel="stylesheet" />
   <style>
     :root { --paper:#e7e1d5; --sheet:#f6f2ea; --card:#fbf8f2; --ink:#1b1612; --muted:#6d645b; --line:#ddd4c6; --line-strong:#cfc4b4; --call:#8d3419; --ok:#1d5c40; }
     * { box-sizing: border-box; }
     body { margin: 0; background: var(--paper); color: var(--ink); font-family: Outfit, sans-serif; font-weight: 380; }
-    main { width: min(100%, 880px); margin: 0 auto; padding: 20px 16px 48px; }
+    main { width: min(100%, 980px); margin: 0 auto; padding: 20px 16px 48px; }
     a { color: var(--call); }
     h1 { font-family: Fraunces, Palatino, serif; font-weight: 500; font-size: 32px; letter-spacing: -0.03em; margin: 8px 0 4px; }
     .kicker { letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px; color: var(--muted); }
@@ -17,154 +17,134 @@
     .tools { display: grid; gap: 8px; margin: 14px 0; }
     input, select { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 10px; font: inherit; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    @media (min-width: 720px) { .row { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+    @media (min-width: 800px) { .row { grid-template-columns: 1fr 1.4fr 1fr 1fr; } }
     table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
     th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 14px; }
     th { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); cursor: pointer; background: var(--sheet); }
     th.on { color: var(--call); }
     .who { font-weight: 560; }
     .sub { display: block; color: var(--muted); font-size: 12px; }
+    .ok { color: var(--ok); font-weight: 560; }
+    .bad { color: var(--call); font-weight: 560; }
     .empty { padding: 18px; color: var(--muted); }
     .count { font-size: 13px; color: var(--muted); margin: 0 0 8px; }
+    .links a { margin-right: 14px; }
   </style>
 </head>
 <body>
   <main>
-    <p class="kicker">Page 2 of Pulse</p>
+    <p class="kicker">Pulse Page 2</p>
     <h1>Action log</h1>
-    <p class="note" id="lede">All 23 stores for the week on the call list. Pick a store to see every week for that store.</p>
-    <p><a href="index.html">Back to the call list</a></p>
+    <p class="note" id="lede">Pick a market manager or a region. The result is the next week, after weather.</p>
+    <p class="links"><a href="index.html">Call list</a><a href="actions.html">Did the coaching hold</a><a href="notes.html">Definitions</a></p>
     <div class="tools">
-      <select id="store"><option value="">All stores, this week</option></select>
-      <input id="q" placeholder="Search store, name, action, note" />
       <div class="row">
-        <select id="region"><option value="">All regions</option></select>
-        <select id="role"><option value="">All roles</option><option>Regional manager</option><option>Executive</option></select>
-        <select id="driver"><option value="">All drivers</option></select>
-        <select id="status"><option value="">All statuses</option><option value="call">Call</option><option value="watch">Watch</option><option value="pace">On pace</option><option value="logged">Has an action</option></select>
+        <select id="region" aria-label="Region"><option value="">All regions</option><option>North</option><option>Central</option><option>South</option></select>
+        <select id="manager" aria-label="Market manager"><option value="">All market managers</option></select>
+        <select id="store"><option value="">All stores</option></select>
+        <select id="status"><option value="">All statuses</option><option value="recovered">Back on pace</option><option value="missed">Still off</option><option value="open">Waiting on next close</option></select>
       </div>
+      <input id="q" placeholder="Search store, manager, action" />
     </div>
     <p class="count" id="count"></p>
     <div id="table"></div>
   </main>
-  <script src="data.js?v=weeks"></script>
+  <script src="org.js"></script>
+  <script src="actions.js"></script>
+  <script src="data.js?v=metrics"></script>
   <script>
-    const weeks = window.PULSE_WEEKS || [window.PULSE2];
-    const current = weeks.find((w) => w.as_of === localStorage.getItem("pulse2.z.v1.week")) || weeks[weeks.length - 1];
-    const stores = current.stores.slice().sort((a, b) => a.name.localeCompare(b.name));
-    document.getElementById("store").innerHTML += stores.map((s) => `<option value="${s.id}">${s.name} · ${s.region}</option>`).join("");
-    const phone = JSON.parse(localStorage.getItem("pulse2.z.v1.logs") || "{}");
-    const sample = {
-      S101: { who: "Elena Voss", role: "Regional manager", action: "Review Saturday’s written tickets for unauthorized discount", note: "Asked the manager to pull Saturday’s written tickets before the Monday huddle.", at: "2029-09-09T18:10:00Z" },
-      S120: { who: "Marcus Hale", role: "Executive", action: "One up system on Saturday: no one works a guest alone past the first sit", note: "Saturday floor was one person on the ups. One-up starts this week.", at: "2029-09-09T18:22:00Z" },
-      S115: { who: "Priya Nand", role: "Regional manager", action: "Put the sleep specialist on Saturday, not on the weekday recovery shift", note: "Not a call. Logged because sleep missed and home held.", at: "2029-09-09T18:30:00Z" }
-    };
-    const money = (n) => (n < 0 ? "−" : "+") + "$" + (Math.abs(n) / 1000).toFixed(1) + "k";
-    const pct = (n) => (n < 0 ? "−" : "+") + Math.abs(n).toFixed(0) + "%";
+    const ORG = window.PULSE_ORG;
+    const weeks = window.PULSE_WEEKS;
+    const latest = weeks[weeks.length - 1];
+    const byId = Object.fromEntries(latest.stores.map((s) => [s.id, s]));
+    const managerOf = Object.fromEntries(ORG.managers.flatMap((m) => m.stores.map((id) => [id, m])));
+    const saved = JSON.parse(localStorage.getItem("pulse2.z.v1.logs") || "{}");
+    const phone = Object.entries(saved).map(([id, log]) => ({
+      id, week: "2029-09-09", who: log.who || "This phone", role: log.role || "Entered",
+      how: log.how || "Call", action: log.action, driver: log.driver || (byId[id] || {}).driver,
+      before: byId[id] ? byId[id].adj_pct : null, after: null, recovered: null, source: "phone"
+    }));
+    const actions = window.PULSE_ACTIONS.concat(phone);
+    document.getElementById("manager").innerHTML += ORG.managers.map((m) => `<option value="${m.id}">${m.name} (${m.region})</option>`).join("");
+    document.getElementById("store").innerHTML += latest.stores.slice().sort((a, b) => a.name.localeCompare(b.name)).map((s) => `<option value="${s.id}">${s.name}</option>`).join("");
+    ["region", "manager"].forEach((id) => { const v = localStorage.getItem("pulse2.z.v1." + id); if (v) document.getElementById(id).value = v; });
+    const pct = (n) => n == null ? "—" : (n < 0 ? "−" : "+") + Math.abs(n).toFixed(0) + "%";
     function weekLabel(asOf) {
       const end = new Date(asOf + "T12:00:00");
-      const start = new Date(end);
-      start.setDate(end.getDate() - 6);
+      const start = new Date(end); start.setDate(end.getDate() - 6);
       const left = start.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-      if (start.getMonth() === end.getMonth()) return left + " – " + end.getDate() + ", " + end.getFullYear();
-      return left + " – " + end.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + ", " + end.getFullYear();
+      return (start.getMonth() === end.getMonth() ? left + " – " + end.getDate() : left + " – " + end.toLocaleDateString("en-US", { month: "short", day: "numeric" })) + ", " + end.getFullYear();
     }
-    function inWeek(at, asOf) {
-      if (!at) return false;
-      const end = new Date(asOf + "T23:59:59");
-      const start = new Date(end);
-      start.setDate(end.getDate() - 6);
-      start.setHours(0, 0, 0, 0);
-      const t = new Date(at);
-      return t >= start && t <= end;
+    function resultText(a) {
+      if (a.recovered == null) return `<span class="sub">Waiting on the next close</span>`;
+      const change = a.after - a.before;
+      return `<span class="${a.recovered ? "ok" : "bad"}">${a.recovered ? "Back on pace" : "Still off"}</span><span class="sub">${pct(a.before)} then ${pct(a.after)} · ${change >= 0 ? "+" : "−"}${Math.abs(change).toFixed(0)} pts</span>`;
     }
-    function rowFor(week, s) {
-      const log = phone[s.id] || sample[s.id] || null;
-      const loggedHere = log && inWeek(log.at, week.as_of);
-      const status = week.call_ids.includes(s.id) ? "call" : week.watch_ids.includes(s.id) ? "watch" : "pace";
-      return {
-        id: s.id, as_of: week.as_of, week: weekLabel(week.as_of),
-        store: s.name, region: s.region, climate: s.climate, format: s.format,
-        driver: s.driver, title: s.title, blurb: s.why,
-        gap: s.adj_gap, pct: s.adj_pct, status,
-        who: loggedHere ? log.who || "" : "", role: loggedHere ? log.role || "" : "",
-        action: loggedHere ? log.action || "" : "", note: loggedHere ? log.note || "" : ""
-      };
-    }
-    function sourceRows() {
-      const storeId = document.getElementById("store").value;
-      if (!storeId) return current.stores.map((s) => rowFor(current, s));
-      return weeks.map((week) => {
-        const s = week.stores.find((x) => x.id === storeId);
-        return s ? rowFor(week, s) : null;
-      }).filter(Boolean);
-    }
-    const regions = [...new Set(stores.map((s) => s.region))].sort();
-    const drivers = ["yield", "sleep", "traffic", "cancels", "margin", "weather"];
-    document.getElementById("region").innerHTML += regions.map((r) => `<option>${r}</option>`).join("");
-    document.getElementById("driver").innerHTML += drivers.map((r) => `<option>${r}</option>`).join("");
-    let sortKey = "pct";
-    let sortDir = 1;
-    function filtered() {
-      const storeId = document.getElementById("store").value;
-      const q = document.getElementById("q").value.trim().toLowerCase();
+    let sortKey = "week", sortDir = -1;
+    function rows() {
       const region = document.getElementById("region").value;
-      const role = document.getElementById("role").value;
-      const driver = document.getElementById("driver").value;
+      const manager = document.getElementById("manager").value;
+      const store = document.getElementById("store").value;
       const status = document.getElementById("status").value;
-      const rows = sourceRows();
-      return rows.filter((r) => {
-        if (region && r.region !== region) return false;
-        if (role && r.role !== role) return false;
-        if (driver && r.driver !== driver) return false;
-        if (status === "logged" && !r.action) return false;
-        if (status && status !== "logged" && r.status !== status) return false;
+      const q = document.getElementById("q").value.trim().toLowerCase();
+      const mgr = ORG.managers.find((m) => m.id === manager);
+      return actions.filter((a) => {
+        const s = byId[a.id] || {};
+        if (region && s.region !== region) return false;
+        if (mgr && !mgr.stores.includes(a.id)) return false;
+        if (store && a.id !== store) return false;
+        if (status === "recovered" && a.recovered !== true) return false;
+        if (status === "missed" && a.recovered !== false) return false;
+        if (status === "open" && a.recovered != null) return false;
         if (!q) return true;
-        return [r.store, r.week, r.who, r.role, r.action, r.note, r.region, r.driver, r.climate, r.blurb, r.title].join(" ").toLowerCase().includes(q);
+        return [s.name, a.who, a.action, a.driver, a.how].join(" ").toLowerCase().includes(q);
       }).sort((a, b) => {
-        const key = storeId && sortKey === "pct" ? "as_of" : sortKey;
-        const dir = storeId && sortKey === "pct" ? -1 : sortDir;
-        const av = a[key], bv = b[key];
-        if (typeof av === "number" || typeof bv === "number") return ((av || 0) - (bv || 0)) * dir;
-        const as = (av || "").toString().toLowerCase();
-        const bs = (bv || "").toString().toLowerCase();
-        return as < bs ? -dir : as > bs ? dir : 0;
+        const av = sortKey === "store" ? (byId[a.id] || {}).name : a[sortKey];
+        const bv = sortKey === "store" ? (byId[b.id] || {}).name : b[sortKey];
+        if (typeof av === "number" || typeof bv === "number") return ((av || 0) - (bv || 0)) * sortDir;
+        return String(av || "").localeCompare(String(bv || "")) * sortDir;
       });
     }
-    function when(iso) {
-      if (!iso) return "—";
-      const d = new Date(iso);
-      return d.toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
-    }
     function draw() {
-      const storeId = document.getElementById("store").value;
-      const list = filtered();
-      const total = sourceRows().length;
-      const picked = stores.find((s) => s.id === storeId);
-      document.getElementById("lede").textContent = picked
-        ? picked.name + " across " + total + " weeks, newest first. The blurb is that week versus the store’s own pace, after weather."
-        : "All 23 stores for " + weekLabel(current.as_of) + ". Pick a store to see every week for that store.";
-      document.getElementById("count").textContent = list.length + " of " + total;
-      const heads = storeId
-        ? [["as_of", "Week"], ["pct", "Off pace"], ["who", "Entered by"], ["action", "Blurb"]]
-        : [["store", "Store"], ["pct", "Off pace"], ["who", "Entered by"], ["action", "Blurb"]];
-      const head = heads.map(([k, label]) => `<th data-sort="${k}" class="${sortKey === k ? "on" : ""}">${label}${sortKey === k ? (sortDir < 0 ? " ↓" : " ↑") : ""}</th>`).join("");
-      const statusLabel = { call: "Call", watch: "Watch", pace: "On pace" };
-      const body = list.length ? list.map((r) => `<tr>
-        <td>${storeId ? r.week : r.store}<span class="sub">${storeId ? r.driver : r.region + " · " + r.climate + " · " + r.format}</span></td>
-        <td>${pct(r.pct)}<span class="sub">${money(r.gap)} after weather · ${statusLabel[r.status]}</span></td>
-        <td><span class="who">${r.who || "—"}</span><span class="sub">${r.role || "No action this week"}</span></td>
-        <td><b>${r.title}.</b> ${r.blurb}${r.action ? `<span class="sub">${r.who ? r.who + ": " : ""}${r.action}${r.note ? " — " + r.note : ""}</span>` : ""}</td>
-      </tr>`).join("") : `<tr><td class="empty" colspan="4">Nothing matches.</td></tr>`;
+      const region = document.getElementById("region").value;
+      const manager = document.getElementById("manager").value;
+      localStorage.setItem("pulse2.z.v1.region", region);
+      localStorage.setItem("pulse2.z.v1.manager", manager);
+      const list = rows();
+      const mgr = ORG.managers.find((m) => m.id === manager);
+      const leader = ORG.regions.find((r) => r.id === region);
+      document.getElementById("lede").textContent = mgr
+        ? mgr.name + " · " + mgr.patch + " (" + mgr.region + "). " + mgr.stores.length + " stores. Result is the next week after weather."
+        : leader ? leader.id + " · " + leader.leader + ", regional leader. Result is the next week after weather."
+        : "All regions. Elena Voss has the North, Marcus Hale the Central, Priya Nand the South.";
+      document.getElementById("count").textContent = list.length + " actions";
+      const heads = [["week", "Week"], ["store", "Store"], ["who", "Entered by"], ["action", "Action"], ["after", "Result"]];
+      const head = heads.map(([k, label]) => `<th data-sort="${k}" class="${sortKey === k ? "on" : ""}">${label}</th>`).join("");
+      const body = list.length ? list.map((a) => {
+        const s = byId[a.id] || {};
+        const mm = managerOf[a.id];
+        return `<tr>
+          <td>${weekLabel(a.week)}<span class="sub">${a.how}</span></td>
+          <td>${s.name || a.id}<span class="sub">${s.region || ""} · ${mm ? mm.name : ""}</span></td>
+          <td><span class="who">${a.who}</span><span class="sub">${a.role}</span></td>
+          <td>${a.action}<span class="sub">${a.driver} · product mix is weekly, not daily</span></td>
+          <td>${resultText(a)}</td>
+        </tr>`;
+      }).join("") : `<tr><td class="empty" colspan="5">Nothing in this patch.</td></tr>`;
       document.getElementById("table").innerHTML = `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
       document.querySelectorAll("[data-sort]").forEach((th) => th.onclick = () => {
-        const key = th.dataset.sort;
-        sortDir = sortKey === key ? -sortDir : key === "as_of" ? -1 : 1;
-        sortKey = key;
+        sortDir = sortKey === th.dataset.sort ? -sortDir : th.dataset.sort === "week" ? -1 : 1;
+        sortKey = th.dataset.sort;
         draw();
       });
     }
-    ["q", "store", "region", "role", "driver", "status"].forEach((id) => document.getElementById(id).oninput = draw);
+    document.getElementById("region").onchange = () => {
+      const region = document.getElementById("region").value;
+      const mgr = document.getElementById("manager");
+      mgr.innerHTML = `<option value="">All market managers</option>` + ORG.managers.filter((m) => !region || m.region === region).map((m) => `<option value="${m.id}">${m.name} (${m.region})</option>`).join("");
+      draw();
+    };
+    ["manager", "store", "status", "q"].forEach((id) => document.getElementById(id).oninput = draw);
     draw();
   </script>
 </body>

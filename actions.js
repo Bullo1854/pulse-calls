@@ -1,0 +1,20 @@
+window.PULSE_ACTIONS = [
+  { id: "S112", week: "2029-07-15", who: "Lila Chen", role: "Market manager", how: "Visit", action: "Put the sleep specialist on Saturday", driver: "sleep", before: -27.7, after: -8.1, recovered: true },
+  { id: "S119", week: "2029-07-15", who: "Camille Ortiz", role: "Market manager", how: "Call", action: "One up system on Saturday", driver: "yield", before: -23.0, after: 21.2, recovered: true },
+  { id: "S108", week: "2029-07-22", who: "Andre Solis", role: "Market manager", how: "Visit", action: "Walk the ups on Saturday open", driver: "yield", before: -2.0, after: -4.7, recovered: true },
+  { id: "S101", week: "2029-07-29", who: "Elena Voss", role: "Regional leader", how: "Visit", action: "Review Saturday tickets for unauthorized discount", driver: "yield", before: -53.8, after: -15.6, recovered: false },
+  { id: "S109", week: "2029-07-29", who: "Samir Holt", role: "Market manager", how: "Call", action: "One up system on Saturday", driver: "yield", before: -38.8, after: -12.1, recovered: false },
+  { id: "S111", week: "2029-08-05", who: "Ruth Keene", role: "Market manager", how: "Call", action: "No one works a guest alone past the first sit", driver: "yield", before: -46.5, after: -5.1, recovered: true },
+  { id: "S106", week: "2029-08-12", who: "Lila Chen", role: "Market manager", how: "Visit", action: "Review written tickets for unauthorized discount", driver: "margin", before: -56.7, after: -5.9, recovered: true },
+  { id: "S104", week: "2029-08-19", who: "Jonah Pell", role: "Market manager", how: "Visit", action: "Dress the hero beds before open", driver: "sleep", before: -21.8, after: 22.7, recovered: true },
+  { id: "S109", week: "2029-08-19", who: "Priya Nand", role: "Regional leader", how: "Call", action: "One up system on Saturday", driver: "yield", before: -43.3, after: -9.8, recovered: true },
+  { id: "S123", week: "2029-08-19", who: "Ruth Keene", role: "Market manager", how: "Visit", action: "Put the sleep specialist on Saturday", driver: "sleep", before: -40.3, after: -2.4, recovered: true },
+  { id: "S103", week: "2029-08-26", who: "Lila Chen", role: "Market manager", how: "Call", action: "One up system on Saturday", driver: "yield", before: -25.9, after: -15.2, recovered: false },
+  { id: "S105", week: "2029-08-26", who: "Andre Solis", role: "Market manager", how: "Visit", action: "Walk the ups on Saturday open", driver: "yield", before: -25.8, after: -1.8, recovered: true },
+  { id: "S107", week: "2029-09-02", who: "Jonah Pell", role: "Market manager", how: "Call", action: "One up system on Saturday", driver: "yield", before: -42.5, after: -18.0, recovered: false },
+  { id: "S116", week: "2029-09-02", who: "Jonah Pell", role: "Market manager", how: "Visit", action: "Match posted hours to who worked Saturday", driver: "yield", before: -35.7, after: -19.0, recovered: false },
+  { id: "S119", week: "2029-09-02", who: "Camille Ortiz", role: "Market manager", how: "Call", action: "Check the circular and the road sign", driver: "traffic", before: -34.5, after: 44.3, recovered: true },
+  { id: "S101", week: "2029-09-09", who: "Elena Voss", role: "Regional leader", how: "Call", action: "Review Saturday’s written tickets for unauthorized discount", driver: "margin", before: -45.4, after: null, recovered: null },
+  { id: "S120", week: "2029-09-09", who: "Marcus Hale", role: "Regional leader", how: "Visit", action: "One up system on Saturday", driver: "yield", before: -58.2, after: null, recovered: null },
+  { id: "S115", week: "2029-09-09", who: "Priya Nand", role: "Regional leader", how: "Call", action: "Put the sleep specialist on Saturday", driver: "sleep", before: -9.3, after: null, recovered: null }
+];

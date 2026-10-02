@@ -35,7 +35,8 @@
     .scope .sub { display: block; color: var(--muted); font-size: 12px; }
     .scope .chg { color: var(--call); letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; }
     .navline { display: flex; gap: 14px; margin: 10px 0 0; font-size: 14px; }
-    .navline a { color: var(--call); text-decoration: none; font-weight: 560; }
+    .filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 0; }
+    .filters select { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 10px; font: inherit; font-size: 14px; }
     .weekbar { display: grid; grid-template-columns: 48px 1fr 48px; gap: 8px; align-items: center; margin: 12px 0 0; }
     .weekbar button { height: 48px; border: 1px solid var(--line-strong); background: var(--card); border-radius: 12px; font-size: 22px; color: var(--ink); }
     .weekbar button:disabled { opacity: 0.35; }
@@ -93,7 +94,9 @@
   <main class="phone"><div class="app" id="app"></div></main>
   <div class="sheet-back" id="back"></div>
   <section class="sheet" id="sheet"></section>
+  <script src="org.js"></script>
   <script src="data.js?v=metrics"></script>
+  <script src="product.js"></script>
   <script>
     const weeks = window.PULSE_WEEKS || [window.PULSE2];
     let D = weeks.find((w) => w.as_of === localStorage.getItem("pulse2.z.v1.week")) || weeks[weeks.length - 1];
@@ -101,15 +104,26 @@
     const KEY = "pulse2.z.v1";
     const state = {
       scope: localStorage.getItem(KEY + ".scope") || "company",
+      region: localStorage.getItem(KEY + ".region") || "",
+      manager: localStorage.getItem(KEY + ".manager") || "",
       logs: JSON.parse(localStorage.getItem(KEY + ".logs") || "{}"),
       reviews: JSON.parse(localStorage.getItem(KEY + ".reviews") || "{}"),
     };
     const save = () => {
       localStorage.setItem(KEY + ".scope", state.scope);
+      localStorage.setItem(KEY + ".region", state.region);
+      localStorage.setItem(KEY + ".manager", state.manager);
       localStorage.setItem(KEY + ".logs", JSON.stringify(state.logs));
       localStorage.setItem(KEY + ".reviews", JSON.stringify(state.reviews));
     };
-    const inScope = (s) => state.scope === "company" || (state.scope.startsWith("region:") && s.region === state.scope.slice(7)) || (state.scope.startsWith("market:") && s.market === state.scope.slice(7));
+    const inScope = (s) => {
+      if (state.region && s.region !== state.region) return false;
+      if (state.manager) {
+        const mgr = window.PULSE_ORG.managers.find((m) => m.id === state.manager);
+        if (mgr && !mgr.stores.includes(s.id)) return false;
+      }
+      return state.scope === "company" || (state.scope.startsWith("region:") && s.region === state.scope.slice(7)) || (state.scope.startsWith("market:") && s.market === state.scope.slice(7));
+    };
     const scopeLabel = () => state.scope === "company" ? "Company" : state.scope.split(":")[1];
     const money = (n) => {
       if (n == null) return "—";
@@ -207,13 +221,17 @@
           <div class="mark"><b>PULSE</b><span>Page 2</span></div>
           <div class="fresh"><div class="pill"><i></i> ${D.freshness}</div><small>${D.as_of_label}</small></div>
         </header>
-        <p class="navline"><a href="log.html">Action log</a><a href="notes.html">Definitions</a></p>
+        <p class="navline"><a href="log.html">Action log</a><a href="actions.html">Did it hold</a><a href="notes.html">Definitions</a></p>
         <div class="weekbar">
           <button id="week-prev" aria-label="Previous week" ${idx === 0 ? "disabled" : ""}>‹</button>
           <div class="weeknow"><b>${weekLabel(D)}</b><span>${idx === weeks.length - 1 ? "Latest close" : "Week " + (idx + 1) + " of " + weeks.length}${easterWeek(D.as_of) ? " · Easter shift" : ""}</span></div>
           <button id="week-next" aria-label="Next week" ${idx === weeks.length - 1 ? "disabled" : ""}>›</button>
         </div>
         ${easterBanner(D.as_of)}
+        <div class="filters">
+          <select id="region-filter" aria-label="Region">${["", "North", "Central", "South"].map((r) => `<option value="${r}"${state.region === r ? " selected" : ""}>${r || "All regions"}</option>`).join("")}</select>
+          <select id="mm-filter" aria-label="Market manager"><option value="">All market managers</option>${window.PULSE_ORG.managers.filter((m) => !state.region || m.region === state.region).map((m) => `<option value="${m.id}"${state.manager === m.id ? " selected" : ""}>${m.name} (${m.region})</option>`).join("")}</select>
+        </div>
         <button class="scope" id="open-scope"><span><span class="who">${scopeLabel()}</span><span class="sub">${scoped.length} stores · dollars and percent off pace</span></span><span class="chg">Scope</span></button>
         <h1>Who needs a call or a visit?</h1>
         <p class="lede">${calls.length} to coach. A call is not the only move — a floor visit counts. A typical store was ${pct(D.company_week.peer_median)} versus its own pace, after weather. The mark on the plot is about 30% off.</p>
@@ -226,6 +244,8 @@
         ${learnBlock()}
         <p class="tie">Week net <b>${D.company_week.net.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b> · ${D.company_week.rows} rows. Ties to net sales. Weather is simulated for the climate. <a class="textbtn" href="notes.html">Definitions</a></p>`;
       document.getElementById("open-scope").onclick = () => openSheet(scopeSheet());
+      document.getElementById("region-filter").onchange = (e) => { state.region = e.target.value; if (state.manager && !window.PULSE_ORG.managers.find((m) => m.id === state.manager && (!state.region || m.region === state.region))) state.manager = ""; save(); render(); };
+      document.getElementById("mm-filter").onchange = (e) => { state.manager = e.target.value; save(); render(); };
       document.getElementById("week-prev").onclick = () => idx > 0 && setWeek(weeks[idx - 1].as_of);
       document.getElementById("week-next").onclick = () => idx < weeks.length - 1 && setWeek(weeks[idx + 1].as_of);
       document.querySelectorAll("[data-open]").forEach((b) => b.onclick = () => openSheet(evidence(b.dataset.open)));
@@ -241,9 +261,20 @@
         <div class="meta">${s.format} · ${s.market} · ${s.climate}</div>
         <p class="title">${s.title}</p>
         ${weekSvg(s)}
-        <div class="chips"><span class="chip daily">Daily</span><span class="chip wx">${s.wx.inches} in vs ${s.wx.ly_inches} in last year</span>${metricChips(s)}${log ? `<span class="logged">Logged · ${log.how || "call"} · ${log.role || "entered"}</span>` : ""}</div>
+        <div class="chips"><span class="chip daily">Daily</span><span class="chip wx">${s.wx.inches} in vs ${s.wx.ly_inches} in last year</span>${metricChips(s)}${productFlags(s).length ? `<span class="chip">Product mix</span>` : ""}${log ? `<span class="logged">Logged · ${log.how || "call"} · ${log.role || "entered"}</span>` : ""}</div>
         <p class="note">${s.say}</p>
       </button>`;
+    }
+    function productFlags(s) {
+      const week = (window.PULSE_PRODUCTS || {})[D.as_of] || {};
+      return ((week[s.id] || {}).flags || []).filter((f) => f.pts <= -15 || (f.kind === "sku" && f.pts >= 15));
+    }
+    function productNote(s) {
+      const flags = productFlags(s);
+      if (!flags.length) return "";
+      return flags.map((f) => f.kind === "sku"
+        ? `${f.label} is ${f.share}% of the written file this week, versus a ${f.habit}% habit. One product is carrying the week.`
+        : `${f.label} is ${f.share}% of the written file this week, versus a ${f.habit}% habit (${f.pts} pts).`).join(" ");
     }
     function metricFlags(s) {
       return (s.metrics || []).filter((m) => m.pct <= -15);
@@ -351,7 +382,7 @@
         ${easterRead(s)}
         <p>${s.why}</p>
         <p class="note">An inch of snow costs about ${s.snow_hit}% of a day here, versus about 6% on the New England coast and about 40% in Georgia. An inch of rain costs about ${s.rain_hit}%. Florida is used to a storm. Georgia is not used to snow.</p>
-        <p><strong>Push to the manager:</strong> ${metricFlags(s).length ? metricFlags(s).map((m) => `${m.label} $${Math.round(m.actual)} versus $${Math.round(m.pace)} pace, ${pct(m.pct)}`).join(". ") + "." : "Sales per guest, ticket, and sales per hour are inside 15% of this store’s habit."}</p>
+        <p><strong>Push to the manager:</strong> ${metricFlags(s).length ? metricFlags(s).map((m) => `${m.label} $${Math.round(m.actual)} versus $${Math.round(m.pace)} pace, ${pct(m.pct)}`).join(". ") + "." : "Sales per guest, ticket, and sales per hour are inside 15% of this store’s habit."} ${productNote(s)}</p>
         <p class="note">Sand is own pace. Ink is the day. A red day is 15% or more under pace. Hover a bar for the dollars.</p>
         ${metricCharts(s)}
         <p><strong>Say this:</strong> ${s.say}</p>
