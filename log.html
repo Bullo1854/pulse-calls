@@ -32,9 +32,10 @@
   <main>
     <p class="kicker">Page 2 of Pulse</p>
     <h1>Action log</h1>
-    <p class="note">All 23 stores. The blurb is this week versus the store’s own pace, after weather. A logged action sits under the blurb.</p>
+    <p class="note" id="lede">All 23 stores for the week on the call list. Pick a store to see every week for that store.</p>
     <p><a href="index.html">Back to the call list</a></p>
     <div class="tools">
+      <select id="store"><option value="">All stores, this week</option></select>
       <input id="q" placeholder="Search store, name, action, note" />
       <div class="row">
         <select id="region"><option value="">All regions</option></select>
@@ -49,40 +50,69 @@
   <script src="data.js?v=weeks"></script>
   <script>
     const weeks = window.PULSE_WEEKS || [window.PULSE2];
-    const D = weeks.find((w) => w.as_of === localStorage.getItem("pulse2.z.v1.week")) || weeks[weeks.length - 1];
-    const byId = Object.fromEntries(D.stores.map((s) => [s.id, s]));
+    const current = weeks.find((w) => w.as_of === localStorage.getItem("pulse2.z.v1.week")) || weeks[weeks.length - 1];
+    const stores = current.stores.slice().sort((a, b) => a.name.localeCompare(b.name));
+    document.getElementById("store").innerHTML += stores.map((s) => `<option value="${s.id}">${s.name} · ${s.region}</option>`).join("");
     const phone = JSON.parse(localStorage.getItem("pulse2.z.v1.logs") || "{}");
     const sample = {
-      S101: { who: "Elena Voss", role: "Regional manager", action: "Review Saturday’s written tickets for unauthorized discount", note: "Asked the manager to pull Saturday’s written tickets before the Monday huddle.", at: "2029-09-09T18:10:00Z", source: "sample" },
-      S120: { who: "Marcus Hale", role: "Executive", action: "One up system on Saturday: no one works a guest alone past the first sit", note: "Saturday floor was one person on the ups. One-up starts this week.", at: "2029-09-09T18:22:00Z", source: "sample" },
-      S115: { who: "Priya Nand", role: "Regional manager", action: "Put the sleep specialist on Saturday, not on the weekday recovery shift", note: "Not a call. Logged because sleep missed and home held.", at: "2029-09-09T18:30:00Z", source: "sample" }
+      S101: { who: "Elena Voss", role: "Regional manager", action: "Review Saturday’s written tickets for unauthorized discount", note: "Asked the manager to pull Saturday’s written tickets before the Monday huddle.", at: "2029-09-09T18:10:00Z" },
+      S120: { who: "Marcus Hale", role: "Executive", action: "One up system on Saturday: no one works a guest alone past the first sit", note: "Saturday floor was one person on the ups. One-up starts this week.", at: "2029-09-09T18:22:00Z" },
+      S115: { who: "Priya Nand", role: "Regional manager", action: "Put the sleep specialist on Saturday, not on the weekday recovery shift", note: "Not a call. Logged because sleep missed and home held.", at: "2029-09-09T18:30:00Z" }
     };
     const money = (n) => (n < 0 ? "−" : "+") + "$" + (Math.abs(n) / 1000).toFixed(1) + "k";
     const pct = (n) => (n < 0 ? "−" : "+") + Math.abs(n).toFixed(0) + "%";
-    const rows = D.stores.map((s) => {
+    function weekLabel(asOf) {
+      const end = new Date(asOf + "T12:00:00");
+      const start = new Date(end);
+      start.setDate(end.getDate() - 6);
+      const left = start.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      if (start.getMonth() === end.getMonth()) return left + " – " + end.getDate() + ", " + end.getFullYear();
+      return left + " – " + end.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + ", " + end.getFullYear();
+    }
+    function inWeek(at, asOf) {
+      if (!at) return false;
+      const end = new Date(asOf + "T23:59:59");
+      const start = new Date(end);
+      start.setDate(end.getDate() - 6);
+      start.setHours(0, 0, 0, 0);
+      const t = new Date(at);
+      return t >= start && t <= end;
+    }
+    function rowFor(week, s) {
       const log = phone[s.id] || sample[s.id] || null;
-      const status = D.call_ids.includes(s.id) ? "call" : D.watch_ids.includes(s.id) ? "watch" : "pace";
+      const loggedHere = log && inWeek(log.at, week.as_of);
+      const status = week.call_ids.includes(s.id) ? "call" : week.watch_ids.includes(s.id) ? "watch" : "pace";
       return {
-        id: s.id, store: s.name, region: s.region, climate: s.climate, format: s.format,
-        driver: s.driver, title: s.title, blurb: s.why, say: s.say,
+        id: s.id, as_of: week.as_of, week: weekLabel(week.as_of),
+        store: s.name, region: s.region, climate: s.climate, format: s.format,
+        driver: s.driver, title: s.title, blurb: s.why,
         gap: s.adj_gap, pct: s.adj_pct, status,
-        who: log ? log.who || "" : "", role: log ? log.role || "" : "",
-        action: log ? log.action || "" : "", note: log ? log.note || "" : "",
-        at: log ? log.at || "" : "", source: phone[s.id] ? "phone" : log ? "sample" : ""
+        who: loggedHere ? log.who || "" : "", role: loggedHere ? log.role || "" : "",
+        action: loggedHere ? log.action || "" : "", note: loggedHere ? log.note || "" : ""
       };
-    });
-    const regions = [...new Set(rows.map((r) => r.region).filter(Boolean))].sort();
-    const drivers = [...new Set(rows.map((r) => r.driver).filter(Boolean))].sort();
+    }
+    function sourceRows() {
+      const storeId = document.getElementById("store").value;
+      if (!storeId) return current.stores.map((s) => rowFor(current, s));
+      return weeks.map((week) => {
+        const s = week.stores.find((x) => x.id === storeId);
+        return s ? rowFor(week, s) : null;
+      }).filter(Boolean);
+    }
+    const regions = [...new Set(stores.map((s) => s.region))].sort();
+    const drivers = ["yield", "sleep", "traffic", "cancels", "margin", "weather"];
     document.getElementById("region").innerHTML += regions.map((r) => `<option>${r}</option>`).join("");
     document.getElementById("driver").innerHTML += drivers.map((r) => `<option>${r}</option>`).join("");
     let sortKey = "pct";
     let sortDir = 1;
     function filtered() {
+      const storeId = document.getElementById("store").value;
       const q = document.getElementById("q").value.trim().toLowerCase();
       const region = document.getElementById("region").value;
       const role = document.getElementById("role").value;
       const driver = document.getElementById("driver").value;
       const status = document.getElementById("status").value;
+      const rows = sourceRows();
       return rows.filter((r) => {
         if (region && r.region !== region) return false;
         if (role && r.role !== role) return false;
@@ -90,13 +120,15 @@
         if (status === "logged" && !r.action) return false;
         if (status && status !== "logged" && r.status !== status) return false;
         if (!q) return true;
-        return [r.store, r.who, r.role, r.action, r.note, r.region, r.driver, r.climate, r.blurb, r.title].join(" ").toLowerCase().includes(q);
+        return [r.store, r.week, r.who, r.role, r.action, r.note, r.region, r.driver, r.climate, r.blurb, r.title].join(" ").toLowerCase().includes(q);
       }).sort((a, b) => {
-        const av = a[sortKey], bv = b[sortKey];
-        if (typeof av === "number" || typeof bv === "number") return ((av || 0) - (bv || 0)) * sortDir;
+        const key = storeId && sortKey === "pct" ? "as_of" : sortKey;
+        const dir = storeId && sortKey === "pct" ? -1 : sortDir;
+        const av = a[key], bv = b[key];
+        if (typeof av === "number" || typeof bv === "number") return ((av || 0) - (bv || 0)) * dir;
         const as = (av || "").toString().toLowerCase();
         const bs = (bv || "").toString().toLowerCase();
-        return as < bs ? -sortDir : as > bs ? sortDir : 0;
+        return as < bs ? -dir : as > bs ? dir : 0;
       });
     }
     function when(iso) {
@@ -105,26 +137,34 @@
       return d.toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
     }
     function draw() {
+      const storeId = document.getElementById("store").value;
       const list = filtered();
-      document.getElementById("count").textContent = list.length + " of " + rows.length;
-      const heads = [["store", "Store"], ["pct", "Off pace"], ["who", "Entered by"], ["action", "Action"]];
+      const total = sourceRows().length;
+      const picked = stores.find((s) => s.id === storeId);
+      document.getElementById("lede").textContent = picked
+        ? picked.name + " across " + total + " weeks, newest first. The blurb is that week versus the store’s own pace, after weather."
+        : "All 23 stores for " + weekLabel(current.as_of) + ". Pick a store to see every week for that store.";
+      document.getElementById("count").textContent = list.length + " of " + total;
+      const heads = storeId
+        ? [["as_of", "Week"], ["pct", "Off pace"], ["who", "Entered by"], ["action", "Blurb"]]
+        : [["store", "Store"], ["pct", "Off pace"], ["who", "Entered by"], ["action", "Blurb"]];
       const head = heads.map(([k, label]) => `<th data-sort="${k}" class="${sortKey === k ? "on" : ""}">${label}${sortKey === k ? (sortDir < 0 ? " ↓" : " ↑") : ""}</th>`).join("");
       const statusLabel = { call: "Call", watch: "Watch", pace: "On pace" };
       const body = list.length ? list.map((r) => `<tr>
-        <td>${r.store}<span class="sub">${r.region} · ${r.climate} · ${r.format}</span></td>
+        <td>${storeId ? r.week : r.store}<span class="sub">${storeId ? r.driver : r.region + " · " + r.climate + " · " + r.format}</span></td>
         <td>${pct(r.pct)}<span class="sub">${money(r.gap)} after weather · ${statusLabel[r.status]}</span></td>
-        <td><span class="who">${r.who || "—"}</span><span class="sub">${r.role || "No action yet"}</span></td>
+        <td><span class="who">${r.who || "—"}</span><span class="sub">${r.role || "No action this week"}</span></td>
         <td><b>${r.title}.</b> ${r.blurb}${r.action ? `<span class="sub">${r.who ? r.who + ": " : ""}${r.action}${r.note ? " — " + r.note : ""}</span>` : ""}</td>
       </tr>`).join("") : `<tr><td class="empty" colspan="4">Nothing matches.</td></tr>`;
       document.getElementById("table").innerHTML = `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
       document.querySelectorAll("[data-sort]").forEach((th) => th.onclick = () => {
         const key = th.dataset.sort;
-        sortDir = sortKey === key ? -sortDir : key === "at" ? -1 : 1;
+        sortDir = sortKey === key ? -sortDir : key === "as_of" ? -1 : 1;
         sortKey = key;
         draw();
       });
     }
-    ["q", "region", "role", "driver", "status"].forEach((id) => document.getElementById(id).oninput = draw);
+    ["q", "store", "region", "role", "driver", "status"].forEach((id) => document.getElementById(id).oninput = draw);
     draw();
   </script>
 </body>
