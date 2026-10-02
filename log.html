@@ -46,9 +46,10 @@
     <p class="count" id="count"></p>
     <div id="table"></div>
   </main>
-  <script src="data.js"></script>
+  <script src="data.js?v=weeks"></script>
   <script>
-    const D = window.PULSE2;
+    const weeks = window.PULSE_WEEKS || [window.PULSE2];
+    const D = weeks.find((w) => w.as_of === localStorage.getItem("pulse2.z.v1.week")) || weeks[weeks.length - 1];
     const byId = Object.fromEntries(D.stores.map((s) => [s.id, s]));
     const phone = JSON.parse(localStorage.getItem("pulse2.z.v1.logs") || "{}");
     const sample = {
