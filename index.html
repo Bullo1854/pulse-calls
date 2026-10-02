@@ -35,8 +35,14 @@
     .scope .sub { display: block; color: var(--muted); font-size: 12px; }
     .scope .chg { color: var(--call); letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; }
     .navline { display: flex; gap: 14px; margin: 10px 0 0; font-size: 14px; }
+    .mode { display: flex; gap: 6px; margin: 10px 0 0; }
+    .mode button { flex: 1; border: 1px solid var(--line-strong); background: var(--card); border-radius: 999px; padding: 8px; font: inherit; }
+    .mode button.on { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+    .readout { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px; margin-top: 12px; }
+    .readout b { font-family: var(--serif); font-size: 28px; font-weight: 500; letter-spacing: -0.03em; display: block; }
     .filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 0; }
-    .filters select { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 10px; font: inherit; font-size: 14px; }
+    .filters select, .storefilter { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 10px; font: inherit; font-size: 14px; }
+    .storefilter { margin-top: 8px; }
     .weekbar { display: grid; grid-template-columns: 48px 1fr 48px; gap: 8px; align-items: center; margin: 12px 0 0; }
     .weekbar button { height: 48px; border: 1px solid var(--line-strong); background: var(--card); border-radius: 12px; font-size: 22px; color: var(--ink); }
     .weekbar button:disabled { opacity: 0.35; }
@@ -111,6 +117,9 @@
       scope: localStorage.getItem(KEY + ".scope") || "company",
       region: localStorage.getItem(KEY + ".region") || "",
       manager: localStorage.getItem(KEY + ".manager") || "",
+      store: localStorage.getItem(KEY + ".store") || "",
+      mode: localStorage.getItem(KEY + ".mode") || "day",
+      day: localStorage.getItem(KEY + ".day") || "",
       logs: JSON.parse(localStorage.getItem(KEY + ".logs") || "{}"),
       reviews: JSON.parse(localStorage.getItem(KEY + ".reviews") || "{}"),
     };
@@ -118,11 +127,15 @@
       localStorage.setItem(KEY + ".scope", state.scope);
       localStorage.setItem(KEY + ".region", state.region);
       localStorage.setItem(KEY + ".manager", state.manager);
+      localStorage.setItem(KEY + ".store", state.store);
+      localStorage.setItem(KEY + ".mode", state.mode);
+      localStorage.setItem(KEY + ".day", state.day);
       localStorage.setItem(KEY + ".logs", JSON.stringify(state.logs));
       localStorage.setItem(KEY + ".reviews", JSON.stringify(state.reviews));
     };
     const inScope = (s) => {
       if (state.region && s.region !== state.region) return false;
+      if (state.store && s.id !== state.store) return false;
       if (state.manager) {
         const mgr = window.PULSE_ORG.managers.find((m) => m.id === state.manager);
         if (mgr && !mgr.stores.includes(s.id)) return false;
@@ -154,6 +167,33 @@
         return `<p class="note">Easter Sunday was ${money(sunday.net)} against a ${money(sunday.exp)} Sunday habit, ${money(hole)}. Take that holiday Sunday out and the week is ${money(rest)} after weather. Last year this Sunday was Apr 16, not the file’s Apr 2.</p>`;
       }
       return `<p class="note">Calendar YoY would use the week of ${D.as_of === "2029-04-15" ? "Apr 16, 2028, which was Easter" : "Apr 9, 2028, still before Easter"}. The shifted comparable is 14 days later, so this week is not scored as if it were Easter week last year.</p>`;
+    }
+    const allDays = [...new Set(weeks.flatMap((w) => w.stores[0].days.map((d) => d.date)))].sort();
+    if (!allDays.includes(state.day)) state.day = allDays[allDays.length - 1];
+    function weekFor(date) {
+      return weeks.find((w) => w.stores.some((s) => s.days.some((d) => d.date === date))) || weeks[weeks.length - 1];
+    }
+    if (state.mode === "day") D = weekFor(state.day);
+    function dayOf(s) {
+      return s.days.find((d) => d.date === state.day) || s.days[s.days.length - 1];
+    }
+    function daySnap(s) {
+      const d = dayOf(s);
+      const gap = d.net - d.exp;
+      const pacePct = d.exp ? gap / d.exp * 100 : 0;
+      const spg = d.traf ? d.net / d.traf : 0;
+      const spgPace = d.exp_traf ? d.exp / d.exp_traf : 0;
+      const ticket = d.tix ? d.net / d.tix : 0;
+      const ticketPace = d.exp_tix ? d.exp / d.exp_tix : 0;
+      const sph = d.hours ? d.net / d.hours : 0;
+      const sphPace = d.exp_hours ? d.exp / d.exp_hours : 0;
+      const close = d.traf ? d.tix / d.traf * 100 : 0;
+      const closePace = d.exp_traf ? d.exp_tix / d.exp_traf * 100 : 0;
+      const trafPct = d.exp_traf ? (d.traf - d.exp_traf) / d.exp_traf * 100 : 0;
+      return { d, gap, pacePct, spg, spgPace, ticket, ticketPace, sph, sphPace, close, closePace, trafPct };
+    }
+    function dayLabel(date) {
+      return new Date(date + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", year: "numeric" });
     }
     function weekLabel(w) {
       const end = new Date(w.as_of + "T12:00:00");
@@ -217,47 +257,68 @@
     }
 
     function render() {
-      const calls = D.call_ids.map((id) => byId[id]).filter(inScope);
-      const watches = D.watch_ids.map((id) => byId[id]).filter(inScope);
       const scoped = D.stores.filter(inScope);
-      const idx = weeks.findIndex((w) => w.as_of === D.as_of);
+      const dayMode = state.mode !== "week";
+      const idx = dayMode ? allDays.indexOf(state.day) : weeks.findIndex((w) => w.as_of === D.as_of);
+      const rows = scoped.map((s) => {
+        if (!dayMode) return { s, pct: s.adj_pct, gap: s.adj_gap, note: positive(s).title };
+        const v = daySnap(s);
+        const soft = [
+          ["SPG", v.spgPace ? (v.spg - v.spgPace) / v.spgPace * 100 : 0],
+          ["Ticket", v.ticketPace ? (v.ticket - v.ticketPace) / v.ticketPace * 100 : 0],
+          ["SPH", v.sphPace ? (v.sph - v.sphPace) / v.sphPace * 100 : 0],
+          ["Traffic", v.trafPct],
+          ["Close", v.close - v.closePace]
+        ].sort((a, b) => a[1] - b[1])[0];
+        const note = v.pacePct >= 0 ? "Ahead of the same " + v.d.wd : soft[1] <= -15 ? soft[0] + " " + pct(soft[1]) : "Off the same " + v.d.wd;
+        return { s, pct: v.pacePct, gap: v.gap, note };
+      }).sort((a, b) => a.pct - b.pct);
+      const calls = rows.filter((r) => r.pct <= -30);
+      const companyNet = dayMode ? scoped.reduce((n, s) => n + dayOf(s).net, 0) : D.company_week.net;
+      const companyPace = dayMode ? scoped.reduce((n, s) => n + dayOf(s).exp, 0) : null;
+      const companyPct = dayMode && companyPace ? (companyNet - companyPace) / companyPace * 100 : D.company_week.peer_median;
       document.getElementById("app").innerHTML = `
         <header class="top">
           <div class="mark"><b>PULSE</b><span>Page 2</span></div>
-          <div class="fresh"><div class="pill"><i></i> ${D.freshness}</div><small>${D.as_of_label}</small></div>
+          <div class="fresh"><div class="pill"><i></i> ${D.freshness}</div><small>${dayMode ? "Same weekday" : D.as_of_label}</small></div>
         </header>
         <p class="navline"><a href="log.html">Action log</a><a href="actions.html">Did it hold</a><a href="notes.html">Definitions</a></p>
+        <div class="mode"><button id="mode-day" class="${dayMode ? "on" : ""}">Day</button><button id="mode-week" class="${dayMode ? "" : "on"}">Week</button></div>
         <div class="weekbar">
-          <button id="week-prev" aria-label="Previous week" ${idx === 0 ? "disabled" : ""}>‹</button>
-          <div class="weeknow"><b>${weekLabel(D)}</b><span>${idx === weeks.length - 1 ? "Latest close" : "Week " + (idx + 1) + " of " + weeks.length}${easterWeek(D.as_of) ? " · Easter shift" : ""}</span></div>
-          <button id="week-next" aria-label="Next week" ${idx === weeks.length - 1 ? "disabled" : ""}>›</button>
+          <button id="step-prev" aria-label="Previous" ${idx === 0 ? "disabled" : ""}>‹</button>
+          <div class="weeknow"><b>${dayMode ? dayLabel(state.day) : weekLabel(D)}</b><span>${dayMode ? "Pace is the same weekday, prior 8 weeks" : "Pace is the week versus that habit"}${easterWeek(D.as_of) ? " · Easter shift" : ""}</span></div>
+          <button id="step-next" aria-label="Next" ${idx === (dayMode ? allDays.length : weeks.length) - 1 ? "disabled" : ""}>›</button>
         </div>
-        ${easterBanner(D.as_of)}
+        ${dayMode ? "" : easterBanner(D.as_of)}
         <div class="filters">
           <select id="region-filter" aria-label="Region">${["", "North", "Central", "South"].map((r) => `<option value="${r}"${state.region === r ? " selected" : ""}>${r || "All regions"}</option>`).join("")}</select>
           <select id="mm-filter" aria-label="Market manager"><option value="">All market managers</option>${window.PULSE_ORG.managers.filter((m) => !state.region || m.region === state.region).map((m) => `<option value="${m.id}"${state.manager === m.id ? " selected" : ""}>${m.name} (${m.region})</option>`).join("")}</select>
         </div>
-        <button class="scope" id="open-scope"><span><span class="who">${scopeLabel()}</span><span class="sub">${scoped.length} stores · dollars and percent off pace</span></span><span class="chg">Scope</span></button>
-        <h1>Who needs a call or a visit?</h1>
-        <p class="lede">${calls.length} to coach. A call is not the only move — a floor visit counts. A typical store was ${pct(D.company_week.peer_median)} versus its own pace, after weather. The mark on the plot is about 30% off.</p>
-        <div class="zrow">${dotPlot(scoped)}</div>
-        <div class="legend"><span><i class="sw" style="background:#8d3419"></i>Call or visit</span><span><i class="sw" style="background:#8a5a16"></i>Watch</span><span><i class="sw" style="background:#1d5c40"></i>On pace</span></div>
-        ${calls.map(card).join("")}
-        ${watches.length ? `<h3 class="sec">Watch — coach if you are already there</h3>` + watches.map(slim).join("") : ""}
-        <h3 class="sec">All stores — tap any of them</h3>
-        ${scoped.slice().sort((a, b) => a.adj_pct - b.adj_pct).map(slim).join("")}
+        <select id="store-filter" class="storefilter" aria-label="Store"><option value="">All stores</option>${D.stores.slice().sort((a, b) => a.name.localeCompare(b.name)).map((s) => `<option value="${s.id}"${state.store === s.id ? " selected" : ""}>${s.name}</option>`).join("")}</select>
+        <section class="readout"><b>${calls.length} to coach</b><span class="note">${dayMode ? dayLabel(state.day) : weekLabel(D)}. Company ${pct(companyPct)} versus ${dayMode ? "the same weekday" : "its own pace"}. ${money(companyNet)} net.</span></section>
+        <h1>${dayMode ? "Who is off today?" : "Who needs a call or a visit?"}</h1>
+        <p class="lede">Tap a store for the cards${dayMode ? ". Graphs are on the week view." : " and the week graphs."}</p>
+        ${rows.map((r) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span><b>${r.s.name}</b><span>${r.s.climate} · ${r.note} · ${pct(r.pct)}</span></span><em>${money(r.gap)}</em></button>`).join("")}
         ${learnBlock()}
-        <p class="tie">Week net <b>${D.company_week.net.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b> · ${D.company_week.rows} rows. Ties to net sales. Weather is simulated for the climate. <a class="textbtn" href="notes.html">Definitions</a></p>`;
-      document.getElementById("open-scope").onclick = () => openSheet(scopeSheet());
+        <p class="tie">${dayMode ? "Day" : "Week"} net <b>${companyNet.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b>. Pace is the same weekday over the prior 8 weeks. <a class="textbtn" href="notes.html">Definitions</a></p>`;
+      document.getElementById("mode-day").onclick = () => { state.mode = "day"; D = weekFor(state.day); byId = Object.fromEntries(D.stores.map((s) => [s.id, s])); save(); render(); };
+      document.getElementById("mode-week").onclick = () => { state.mode = "week"; save(); render(); };
+      document.getElementById("step-prev").onclick = () => dayMode ? idx > 0 && setDay(allDays[idx - 1]) : idx > 0 && setWeek(weeks[idx - 1].as_of);
+      document.getElementById("step-next").onclick = () => dayMode ? idx < allDays.length - 1 && setDay(allDays[idx + 1]) : idx < weeks.length - 1 && setWeek(weeks[idx + 1].as_of);
       document.getElementById("region-filter").onchange = (e) => { state.region = e.target.value; if (state.manager && !window.PULSE_ORG.managers.find((m) => m.id === state.manager && (!state.region || m.region === state.region))) state.manager = ""; save(); render(); };
       document.getElementById("mm-filter").onchange = (e) => { state.manager = e.target.value; save(); render(); };
-      document.getElementById("week-prev").onclick = () => idx > 0 && setWeek(weeks[idx - 1].as_of);
-      document.getElementById("week-next").onclick = () => idx < weeks.length - 1 && setWeek(weeks[idx + 1].as_of);
+      document.getElementById("store-filter").onchange = (e) => { state.store = e.target.value; save(); render(); };
       document.querySelectorAll("[data-open]").forEach((b) => b.onclick = () => openSheet(evidence(b.dataset.open)));
       const m = document.getElementById("open-method");
       if (m) m.onclick = () => openSheet(methodSheet());
     }
-
+    function setDay(date) {
+      state.day = date;
+      D = weekFor(date);
+      byId = Object.fromEntries(D.stores.map((s) => [s.id, s]));
+      save();
+      render();
+    }
     function card(s) {
       const log = state.logs[s.id];
       return `<button class="card" data-open="${s.id}">
@@ -289,21 +350,29 @@
       return shortMetric(m.label) + " $" + Math.round(m.actual) + " versus $" + Math.round(m.pace) + " own pace, " + pct(m.pct) + ". Flagged at 15% under.";
     }
     function metricCards(s) {
-      const ticket = (s.metrics || []).find((x) => x.label === "Average ticket") || { actual: 0, pace: 0, pct: 0 };
-      const spg = (s.metrics || []).find((x) => x.label === "Sales per guest") || { actual: 0, pace: 0, pct: 0 };
-      const sph = (s.metrics || []).find((x) => x.label === "Sales per hour") || { actual: 0, pace: 0, pct: 0 };
-      const trafPct = s.expected.traf ? (s.actual.traf - s.expected.traf) / s.expected.traf * 100 : 0;
-      const close = s.rates.close;
-      const closePace = s.base_rates.close;
+      const dayMode = state.mode !== "week";
+      const v = dayMode ? daySnap(s) : null;
+      const ticket = dayMode ? { actual: v.ticket, pace: v.ticketPace, pct: v.ticketPace ? (v.ticket - v.ticketPace) / v.ticketPace * 100 : 0 } : ((s.metrics || []).find((x) => x.label === "Average ticket") || { actual: 0, pace: 0, pct: 0 });
+      const spg = dayMode ? { actual: v.spg, pace: v.spgPace, pct: v.spgPace ? (v.spg - v.spgPace) / v.spgPace * 100 : 0 } : ((s.metrics || []).find((x) => x.label === "Sales per guest") || { actual: 0, pace: 0, pct: 0 });
+      const sph = dayMode ? { actual: v.sph, pace: v.sphPace, pct: v.sphPace ? (v.sph - v.sphPace) / v.sphPace * 100 : 0 } : ((s.metrics || []).find((x) => x.label === "Sales per hour") || { actual: 0, pace: 0, pct: 0 });
+      const trafPct = dayMode ? v.trafPct : (s.expected.traf ? (s.actual.traf - s.expected.traf) / s.expected.traf * 100 : 0);
+      const trafAct = dayMode ? v.d.traf : s.actual.traf;
+      const trafPace = dayMode ? v.d.exp_traf : s.expected.traf;
+      const close = dayMode ? v.close : s.rates.close;
+      const closePace = dayMode ? v.closePace : s.base_rates.close;
       const closePts = close != null && closePace != null ? close - closePace : 0;
-      const tempGap = s.wx.high - s.wx.ly_high;
+      const wx = dayMode ? v.d.wx : s.wx;
+      const ly = dayMode ? v.d.ly : { high: s.wx.ly_high, inches: s.wx.ly_inches };
+      const tempGap = wx.high - (ly.high || 0);
+      const inches = wx.inches;
+      const lyIn = ly.inches == null ? s.wx.ly_inches : ly.inches;
       const cards = [
-        ["SPG", pct(spg.pct), `$${Math.round(spg.actual)} vs $${Math.round(spg.pace)} pace`, metricTip(spg)],
-        ["SPH", pct(sph.pct), `$${Math.round(sph.actual)} vs $${Math.round(sph.pace)} pace`, metricTip(sph)],
-        ["Ticket", pct(ticket.pct), `$${Math.round(ticket.actual)} vs $${Math.round(ticket.pace)} pace`, "Average ticket $" + Math.round(ticket.actual) + " versus $" + Math.round(ticket.pace) + " own pace, " + pct(ticket.pct) + ". Flagged at 15% under."],
-        ["Traffic", pct(trafPct), `${Math.round(s.actual.traf)} vs ${Math.round(s.expected.traf)} pace`, "Traffic " + Math.round(s.actual.traf) + " guests versus a " + Math.round(s.expected.traf) + " habit, " + pct(trafPct) + "."],
-        ["Close", (close == null ? "—" : close + "%"), `${closePts >= 0 ? "+" : "−"}${Math.abs(closePts).toFixed(1)} pts vs ${closePace}% habit`, "Close rate " + close + "% versus a " + closePace + "% habit. Tickets divided by traffic."],
-        ["Weather", s.wx.high + "°", `${tempGap >= 0 ? "+" : "−"}${Math.abs(tempGap).toFixed(0)}° vs last year · ${s.wx.inches} in vs ${s.wx.ly_inches} in`, "High " + s.wx.high + "° versus " + s.wx.ly_high + "° last year, " + (tempGap >= 0 ? "+" : "") + tempGap.toFixed(0) + "°. " + s.wx.inches + " inches versus " + s.wx.ly_inches + " on the comparable days."]
+        ["SPG", pct(spg.pct), `$${Math.round(spg.actual)} vs $${Math.round(spg.pace)} pace`, "SPG $" + Math.round(spg.actual) + " versus $" + Math.round(spg.pace) + " same-weekday pace, " + pct(spg.pct)],
+        ["SPH", pct(sph.pct), `$${Math.round(sph.actual)} vs $${Math.round(sph.pace)} pace`, "SPH $" + Math.round(sph.actual) + " versus $" + Math.round(sph.pace) + " same-weekday pace, " + pct(sph.pct)],
+        ["Ticket", pct(ticket.pct), `$${Math.round(ticket.actual)} vs $${Math.round(ticket.pace)} pace`, "Average ticket $" + Math.round(ticket.actual) + " versus $" + Math.round(ticket.pace) + " pace, " + pct(ticket.pct)],
+        ["Traffic", pct(trafPct), `${Math.round(trafAct)} vs ${Math.round(trafPace)} pace`, "Traffic " + Math.round(trafAct) + " versus " + Math.round(trafPace) + " pace, " + pct(trafPct)],
+        ["Close", close == null ? "—" : close.toFixed(0) + "%", `${closePts >= 0 ? "+" : "−"}${Math.abs(closePts).toFixed(1)} pts vs ${closePace == null ? "—" : closePace.toFixed(0)}% habit`, "Close rate " + (close == null ? "—" : close.toFixed(1)) + "% versus a " + (closePace == null ? "—" : closePace.toFixed(1)) + "% habit."],
+        ["Weather", wx.high + "°", `${tempGap >= 0 ? "+" : "−"}${Math.abs(tempGap).toFixed(0)}° vs last year · ${inches} in vs ${lyIn} in`, "High " + wx.high + "° versus " + ly.high + "° last year. " + inches + " inches versus " + lyIn + "."]
       ];
       return `<div class="mcards">${cards.map(([name, big, sub, title]) => `<div class="mcard" title="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
     }
@@ -430,13 +499,11 @@
         <button class="close-x" data-close>Close</button>
         <p class="meta">${s.zone} · ${s.climate}</p>
         <h2>${s.name}</h2>
-        <p class="title">${s.title} · ${pct(s.adj_pct)} and ${money(s.adj_gap)} after weather</p>
-        ${easterRead(s)}
-        <p>${s.why}</p>
-        <p class="note">An inch of snow costs about ${s.snow_hit}% of a day here, versus about 6% on the New England coast and about 40% in Georgia. An inch of rain costs about ${s.rain_hit}%. Florida is used to a storm. Georgia is not used to snow.</p>
-        <p><strong>Push to the manager:</strong> ${metricFlags(s).length ? metricFlags(s).map((m) => `${m.label} $${Math.round(m.actual)} versus $${Math.round(m.pace)} pace, ${pct(m.pct)}`).join(". ") + "." : "Sales per guest, ticket, and sales per hour are inside 15% of this store’s habit."} ${productNote(s)}</p>
-        <p class="note">Sand is own pace. Ink is the day. A red day is 15% or more under pace. Hover a bar for the dollars.</p>
-        ${metricCharts(s)}
+        <p class="title">${state.mode === "week" ? s.title + " · " + pct(s.adj_pct) + " and " + money(s.adj_gap) + " after weather" : dayLabel(state.day) + " · " + pct(daySnap(s).pacePct) + " and " + money(daySnap(s).gap) + " versus the same weekday"}</p>
+        ${state.mode === "week" ? easterRead(s) : ""}
+        <p>${state.mode === "week" ? s.why : "Pace is this store’s same weekday over the prior 8 weeks, not the week total."}</p>
+        ${metricCards(s)}
+        ${state.mode === "week" ? `<p class="note">Sand is own pace. Ink is the day.</p>${metricCharts(s)}${weekSvg(s)}${wxSvg(s)}` : `<p class="note">Graphs are on the week toggle. This readout is the day.</p>`}
         <p><strong>Say this:</strong> ${s.say}</p>
         <ol class="try">${s.try.map((t) => `<li>${t}</li>`).join("")}</ol>
         <label>Entered by</label>
