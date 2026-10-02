@@ -41,7 +41,7 @@
     .weekbar button:disabled { opacity: 0.35; }
     .weeknow { text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; }
     .weeknow b { display: block; font-size: 16px; font-weight: 560; }
-    .weeknow span { color: var(--muted); font-size: 12px; }
+    .note.easter { background: #f3ead2; border: 1px solid #e0d3ae; border-radius: 12px; padding: 10px 12px; color: var(--ink); }
     h1 { font-family: var(--serif); font-weight: 500; font-size: 30px; letter-spacing: -0.03em; margin: 14px 0 4px; }
     .lede { margin: 0; font-size: 14.5px; }
     .zrow { margin: 12px 0 4px; }
@@ -118,6 +118,24 @@
       return a >= 1000 ? sign + "$" + (a / 1000).toFixed(1) + "k" : sign + "$" + Math.round(a);
     };
     const pct = (n) => (n < 0 ? "−" : "+") + Math.abs(n).toFixed(0) + "%";
+    function easterWeek(asOf) {
+      return ["2029-04-01", "2029-04-08", "2029-04-15"].includes(asOf);
+    }
+    function easterBanner(asOf) {
+      if (!easterWeek(asOf)) return "";
+      const shifted = asOf === "2029-04-01" ? "Easter week" : asOf === "2029-04-08" ? "the week after Easter" : "the week the file would have called Easter";
+      return `<p class="note easter">YoY shifted 14 days for Easter. Easter 2029 was Apr 1. Easter 2028 was Apr 16. The file’s comparable is 364 days back, so this week is ${shifted}. Page 2 reads it against the same days relative to Easter, not the calendar date.</p>`;
+    }
+    function easterRead(s) {
+      if (!easterWeek(D.as_of)) return "";
+      const sunday = s.days.find((d) => d.date === "2029-04-01");
+      if (sunday) {
+        const hole = sunday.net - sunday.exp;
+        const rest = s.adj_gap - hole;
+        return `<p class="note">Easter Sunday was ${money(sunday.net)} against a ${money(sunday.exp)} Sunday habit, ${money(hole)}. Take that holiday Sunday out and the week is ${money(rest)} after weather. Last year this Sunday was Apr 16, not the file’s Apr 2.</p>`;
+      }
+      return `<p class="note">Calendar YoY would use the week of ${D.as_of === "2029-04-15" ? "Apr 16, 2028, which was Easter" : "Apr 9, 2028, still before Easter"}. The shifted comparable is 14 days later, so this week is not scored as if it were Easter week last year.</p>`;
+    }
     function weekLabel(w) {
       const end = new Date(w.as_of + "T12:00:00");
       const start = new Date(end);
@@ -192,9 +210,10 @@
         <p class="navline"><a href="log.html">Action log</a><a href="notes.html">Definitions</a></p>
         <div class="weekbar">
           <button id="week-prev" aria-label="Previous week" ${idx === 0 ? "disabled" : ""}>‹</button>
-          <div class="weeknow"><b>${weekLabel(D)}</b><span>${idx === weeks.length - 1 ? "Latest close" : "Week " + (idx + 1) + " of " + weeks.length}${idx < weeks.length - 1 ? " · tap › for newer" : ""}</span></div>
+          <div class="weeknow"><b>${weekLabel(D)}</b><span>${idx === weeks.length - 1 ? "Latest close" : "Week " + (idx + 1) + " of " + weeks.length}${easterWeek(D.as_of) ? " · Easter shift" : ""}</span></div>
           <button id="week-next" aria-label="Next week" ${idx === weeks.length - 1 ? "disabled" : ""}>›</button>
         </div>
+        ${easterBanner(D.as_of)}
         <button class="scope" id="open-scope"><span><span class="who">${scopeLabel()}</span><span class="sub">${scoped.length} stores · dollars and percent off pace</span></span><span class="chg">Scope</span></button>
         <h1>Who needs a call or a visit?</h1>
         <p class="lede">${calls.length} to coach. A call is not the only move — a floor visit counts. A typical store was ${pct(D.company_week.peer_median)} versus its own pace, after weather. The mark on the plot is about 30% off.</p>
@@ -329,6 +348,7 @@
         <p class="meta">${s.zone} · ${s.climate}</p>
         <h2>${s.name}</h2>
         <p class="title">${s.title} · ${pct(s.adj_pct)} and ${money(s.adj_gap)} after weather</p>
+        ${easterRead(s)}
         <p>${s.why}</p>
         <p class="note">An inch of snow costs about ${s.snow_hit}% of a day here, versus about 6% on the New England coast and about 40% in Georgia. An inch of rain costs about ${s.rain_hit}%. Florida is used to a storm. Georgia is not used to snow.</p>
         <p><strong>Push to the manager:</strong> ${metricFlags(s).length ? metricFlags(s).map((m) => `${m.label} $${Math.round(m.actual)} versus $${Math.round(m.pace)} pace, ${pct(m.pct)}`).join(". ") + "." : "Sales per guest, ticket, and sales per hour are inside 15% of this store’s habit."}</p>
