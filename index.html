@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#1b1612" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>Pulse · Calls</title>
+  <title>Pulse Page 2 · Calls and visits</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -93,7 +93,7 @@
   <main class="phone"><div class="app" id="app"></div></main>
   <div class="sheet-back" id="back"></div>
   <section class="sheet" id="sheet"></section>
-  <script src="data.js?v=weeks"></script>
+  <script src="data.js?v=metrics"></script>
   <script>
     const weeks = window.PULSE_WEEKS || [window.PULSE2];
     let D = weeks.find((w) => w.as_of === localStorage.getItem("pulse2.z.v1.week")) || weeks[weeks.length - 1];
@@ -153,8 +153,8 @@
           const eh = Math.max(2, d.exp / max * 32);
           const ah = Math.max(2, Math.abs(d.net) / max * 32);
           const beat = d.net >= d.exp * 0.97;
-          return `<rect x="${x + 6}" y="${36 - eh}" width="8" height="${eh}" rx="1.5" fill="#e4d8c8"/>
-                  <rect x="${x + 18}" y="${d.net < 0 ? 36 : 36 - ah}" width="8" height="${ah}" rx="1.5" fill="${beat ? "#1d5c40" : "#8d3419"}"/>
+          return `<rect x="${x + 6}" y="${36 - eh}" width="8" height="${eh}" rx="1.5" fill="#e4d8c8"><title>${d.wd} own pace ${money(d.exp)}</title></rect>
+                  <rect x="${x + 18}" y="${d.net < 0 ? 36 : 36 - ah}" width="8" height="${ah}" rx="1.5" fill="${beat ? "#1d5c40" : "#8d3419"}"><title>${d.wd} net ${money(d.net)} versus ${money(d.exp)} pace</title></rect>
                   <text x="${x + 16}" y="45" font-size="8" fill="#8d847a" text-anchor="middle">${d.wd[0]}</text>`;
         }).join("")}
       </svg>`;
@@ -167,7 +167,7 @@
         const call = D.call_ids.includes(s.id);
         const watch = D.watch_ids.includes(s.id);
         const color = call ? "#8d3419" : watch ? "#8a5a16" : "#1d5c40";
-        return `<circle cx="${x(s.adj_pct)}" cy="28" r="${call ? 6 : 4}" fill="${color}"><title>${s.name} ${s.adj_pct}%</title></circle>`;
+        return `<circle cx="${x(s.adj_pct)}" cy="28" r="${call ? 6 : 4}" fill="${color}"><title>${s.name}: ${pct(s.adj_pct)} and ${money(s.adj_gap)} after weather. ${call ? "Call or visit" : watch ? "Watch" : "On pace"}.</title></circle>`;
       }).join("");
       return `<svg viewBox="0 0 332 52" role="img" aria-label="Percent off pace after weather">
         <line x1="16" y1="28" x2="316" y2="28" stroke="#cfc4b4"/>
@@ -186,7 +186,7 @@
       const idx = weeks.findIndex((w) => w.as_of === D.as_of);
       document.getElementById("app").innerHTML = `
         <header class="top">
-          <div class="mark"><b>PULSE</b><span>Calls</span></div>
+          <div class="mark"><b>PULSE</b><span>Page 2</span></div>
           <div class="fresh"><div class="pill"><i></i> ${D.freshness}</div><small>${D.as_of_label}</small></div>
         </header>
         <p class="navline"><a href="log.html">Action log</a><a href="notes.html">Definitions</a></p>
@@ -196,12 +196,12 @@
           <button id="week-next" aria-label="Next week" ${idx === weeks.length - 1 ? "disabled" : ""}>›</button>
         </div>
         <button class="scope" id="open-scope"><span><span class="who">${scopeLabel()}</span><span class="sub">${scoped.length} stores · dollars and percent off pace</span></span><span class="chg">Scope</span></button>
-        <h1>Who is off pace?</h1>
-        <p class="lede">${calls.length} call${calls.length === 1 ? "" : "s"}. A typical store was ${pct(D.company_week.peer_median)} versus its own pace, after weather. The mark on the plot is about 30% off — far enough to call.</p>
+        <h1>Who needs a call or a visit?</h1>
+        <p class="lede">${calls.length} to coach. A call is not the only move — a floor visit counts. A typical store was ${pct(D.company_week.peer_median)} versus its own pace, after weather. The mark on the plot is about 30% off.</p>
         <div class="zrow">${dotPlot(scoped)}</div>
-        <div class="legend"><span><i class="sw" style="background:#8d3419"></i>Call</span><span><i class="sw" style="background:#8a5a16"></i>Watch</span><span><i class="sw" style="background:#1d5c40"></i>On pace</span></div>
+        <div class="legend"><span><i class="sw" style="background:#8d3419"></i>Call or visit</span><span><i class="sw" style="background:#8a5a16"></i>Watch</span><span><i class="sw" style="background:#1d5c40"></i>On pace</span></div>
         ${calls.map(card).join("")}
-        ${watches.length ? `<h3 class="sec">Watch — coach if you are already on the phone</h3>` + watches.map(slim).join("") : ""}
+        ${watches.length ? `<h3 class="sec">Watch — coach if you are already there</h3>` + watches.map(slim).join("") : ""}
         <h3 class="sec">All stores — tap any of them</h3>
         ${scoped.slice().sort((a, b) => a.adj_pct - b.adj_pct).map(slim).join("")}
         ${learnBlock()}
@@ -222,13 +222,67 @@
         <div class="meta">${s.format} · ${s.market} · ${s.climate}</div>
         <p class="title">${s.title}</p>
         ${weekSvg(s)}
-        <div class="chips"><span class="chip daily">Daily</span><span class="chip wx">${s.wx.inches} in vs ${s.wx.ly_inches} in last year</span>${log ? `<span class="logged">Logged · ${log.role || "entered"}</span>` : ""}</div>
+        <div class="chips"><span class="chip daily">Daily</span><span class="chip wx">${s.wx.inches} in vs ${s.wx.ly_inches} in last year</span>${metricChips(s)}${log ? `<span class="logged">Logged · ${log.how || "call"} · ${log.role || "entered"}</span>` : ""}</div>
         <p class="note">${s.say}</p>
       </button>`;
     }
-    function slim(s) {
+    function metricFlags(s) {
+      return (s.metrics || []).filter((m) => m.pct <= -15);
+    }
+    function metricChips(s) {
+      return metricFlags(s).map((m) => `<span class="chip">${m.label.split(" ").slice(-1)} ${pct(m.pct)}</span>`).join("");
+    }
+    function tip(text) {
+      return String(text).replace(/"/g, "");
+    }
+    function paceChart(s, spec) {
+      const days = s.days.map((d) => {
+        const act = spec.act(d);
+        const exp = spec.exp(d);
+        const gap = exp ? (act - exp) / exp * 100 : 0;
+        return { wd: d.wd, act, exp, gap };
+      });
+      const max = Math.max(1, ...days.map((d) => Math.max(d.act, d.exp)));
+      const bars = days.map((d, i) => {
+        const x = i * 40;
+        const eh = Math.max(2, d.exp / max * 46);
+        const ah = Math.max(2, d.act / max * 46);
+        const label = spec.money
+          ? `${d.wd}: ${money(d.act)} versus ${money(d.exp)} own pace, ${pct(d.gap)}`
+          : `${d.wd}: $${Math.round(d.act)} versus $${Math.round(d.exp)} own pace, ${pct(d.gap)}`;
+        return `<rect x="${x + 4}" y="${58 - eh}" width="10" height="${eh}" rx="1.5" fill="#e4d8c8"><title>${tip(label)}. Sand is own pace.</title></rect>
+                <rect x="${x + 16}" y="${58 - ah}" width="10" height="${ah}" rx="1.5" fill="${d.gap < -15 ? "#8d3419" : "#1d5c40"}"><title>${tip(label)}. Ink is the day.</title></rect>
+                <text x="${x + 15}" y="72" font-size="8" fill="#8d847a" text-anchor="middle">${d.wd[0]}</text>
+                <text x="${x + 15}" y="82" font-size="8" fill="${d.gap < -15 ? "#8d3419" : "#6d645b"}" text-anchor="middle">${pct(d.gap)}</text>`;
+      }).join("");
+      return `<p class="note" style="margin:12px 0 4px"><b>${spec.label}</b> · ${spec.week}</p>
+        <svg viewBox="0 0 280 86" width="100%" height="86" role="img" aria-label="${tip(spec.label + " by day versus own pace")}">
+          ${bars}
+        </svg>`;
+    }
+    function metricCharts(s) {
+      const flagged = new Set(metricFlags(s).map((m) => m.label));
+      const specs = [
+        { label: "Net sales", week: `${money(s.adj_gap)} after weather`, money: true, act: (d) => d.net, exp: (d) => d.exp, show: true },
+        { label: "Sales per guest", week: weekMetric(s, "Sales per guest"), act: (d) => d.traf ? d.net / d.traf : 0, exp: (d) => d.exp_traf ? d.exp / d.exp_traf : 0, show: flagged.has("Sales per guest") },
+        { label: "Average ticket", week: weekMetric(s, "Average ticket"), act: (d) => d.tix ? d.net / d.tix : 0, exp: (d) => d.exp_tix ? d.exp / d.exp_tix : 0, show: flagged.has("Average ticket") },
+        { label: "Sales per hour", week: weekMetric(s, "Sales per hour"), act: (d) => d.hours ? d.net / d.hours : 0, exp: (d) => d.exp_hours ? d.exp / d.exp_hours : 0, show: flagged.has("Sales per hour") },
+      ];
+      return specs.filter((sp) => sp.show).map((sp) => paceChart(s, sp)).join("");
+    }
+    function weekMetric(s, label) {
+      const m = (s.metrics || []).find((x) => x.label === label);
+      if (!m) return "";
+      return `$${Math.round(m.actual)} versus $${Math.round(m.pace)} pace, ${pct(m.pct)}`;
+    }
       const ahead = s.adj_pct >= 0;
       return `<button class="slim${ahead ? " ok" : ""}" data-open="${s.id}"><span><b>${s.name}</b><span>${s.climate} · ${s.title} · ${pct(s.adj_pct)}</span></span><em>${money(s.adj_gap)}</em></button>`;
+    }
+
+    function slim(s) {
+      const ahead = s.adj_pct >= 0;
+      const extra = metricFlags(s).map((m) => m.label.split(" ").slice(-1) + " " + pct(m.pct)).join(" · ");
+      return `<button class="slim${ahead ? " ok" : ""}" data-open="${s.id}"><span><b>${s.name}</b><span>${s.climate} · ${s.title} · ${pct(s.adj_pct)}${extra ? " · " + extra : ""}</span></span><em>${money(s.adj_gap)}</em></button>`;
     }
 
     function learnBlock() {
@@ -281,6 +335,9 @@
         <p class="title">${s.title} · ${pct(s.adj_pct)} and ${money(s.adj_gap)} after weather</p>
         <p>${s.why}</p>
         <p class="note">An inch of snow costs about ${s.snow_hit}% of a day here, versus about 6% on the New England coast and about 40% in Georgia. An inch of rain costs about ${s.rain_hit}%. Florida is used to a storm. Georgia is not used to snow.</p>
+        <p><strong>Push to the manager:</strong> ${metricFlags(s).length ? metricFlags(s).map((m) => `${m.label} $${Math.round(m.actual)} versus $${Math.round(m.pace)} pace, ${pct(m.pct)}`).join(". ") + "." : "Sales per guest, ticket, and sales per hour are inside 15% of this store’s habit."}</p>
+        <p class="note">Sand is own pace. Ink is the day. A red day is 15% or more under pace. Hover a bar for the dollars.</p>
+        ${metricCharts(s)}
         <p><strong>Say this:</strong> ${s.say}</p>
         <ol class="try">${s.try.map((t) => `<li>${t}</li>`).join("")}</ol>
         <label>Entered by</label>
@@ -290,8 +347,13 @@
           <option ${log && log.role === "Regional manager" ? "selected" : ""}>Regional manager</option>
           <option ${log && log.role === "Executive" ? "selected" : ""}>Executive</option>
         </select>
+        <label>How</label>
+        <select id="how">
+          <option ${!log || log.how === "Call" ? "selected" : ""}>Call</option>
+          <option ${log && log.how === "Visit" ? "selected" : ""}>Visit</option>
+        </select>
         <label>Corrective action</label>
-        <select id="act">${s.try.map((t) => `<option>${t}</option>`).join("")}<option>Other — note below</option></select>
+        <select id="act"><option>Visit the floor — walk the ups, the desk, and the sleep gallery</option><option>Call the manager before open</option>${s.try.map((t) => `<option>${t}</option>`).join("")}<option>Other — note below</option></select>
         <label>Note for the file</label>
         <textarea id="note" rows="2" placeholder="What you told the manager">${log ? log.note : ""}</textarea>
         <div class="acts">
@@ -314,7 +376,7 @@
       return `<button class="close-x" data-close>Close</button><h2>Scope</h2><p class="note">North is the Northeast. Central is the central East Coast. South is Florida, Georgia, Alabama. Weather is simulated for that climate.</p><div class="scopes"><button data-scope="company" class="${state.scope === "company" ? "on" : ""}"><span>Company</span><span>23</span></button>${regions}</div>`;
     }
     function methodSheet() {
-      return `<button class="close-x" data-close>Close</button><h2>How a flag is earned</h2><p>${D.method}</p><p>Own pace is the same weekday over the prior 8 weeks. Weather then moves that pace. An inch of snow is a small hit on the New England coast, about 6% of the day, and a shutdown in Georgia, about 40%. Florida treats an inch of rain as a normal storm, about 5%. The same inch in New England costs about 10%.</p><p>The screen shows the dollar hole and the percent off pace. A store is a call when that percent is far below both its own habit and the typical store, after weather.</p><p>Logging an action stores it on this phone. Tagging a past flag folds that result into the rate for that kind of problem.</p><p><button class="textbtn" id="reset">Reset this phone</button></p>`;
+      return `<button class="close-x" data-close>Close</button><h2>How a flag is earned</h2><p>${D.method}</p><p>Own pace is the same weekday over the prior 8 weeks. Weather then moves that pace. Sales per guest, average ticket, and sales per hour are pushed to the manager when they are 15% or more under that habit. Those three are not excused by rain. A visit counts the same as a call.</p><p>The screen shows the dollar hole and the percent off pace. Hover a bar for the day.</p><p><button class="textbtn" id="reset">Reset this phone</button></p>`;
     }
 
     function openSheet(html) {
@@ -338,6 +400,7 @@
           note: document.getElementById("note").value,
           who,
           role: document.getElementById("role").value,
+          how: document.getElementById("how").value,
           at: new Date().toISOString(),
           driver: byId[id].driver
         };
