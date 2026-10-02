@@ -75,8 +75,8 @@
     .slim > span { flex: 1; min-width: 0; }
     .slim b { font-weight: 560; }
     .slim > span span { display: block; color: var(--muted); font-size: 12px; }
-    .slim .nums { white-space: nowrap; font-size: 12px; }
-    .slim .hot { display: inline; }
+    .slim .nums, .slim .nums .hot { display: block; white-space: nowrap; }
+    .slim .nums .hot { display: inline; }
     .slim em { flex: none; white-space: nowrap; font-style: normal; font-family: var(--serif); color: var(--watch); }
     .slim.ok em { color: var(--ok); }
     .mcards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
