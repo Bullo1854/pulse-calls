@@ -172,7 +172,8 @@
         <div class="legend"><span><i class="sw" style="background:#8d3419"></i>Call</span><span><i class="sw" style="background:#8a5a16"></i>Watch</span><span><i class="sw" style="background:#1d5c40"></i>On pace</span></div>
         ${calls.map(card).join("")}
         ${watches.length ? `<h3 class="sec">Watch — coach if you are already on the phone</h3>` + watches.map(slim).join("") : ""}
-        ${quiet.length ? `<h3 class="sec">Leave alone</h3>` + quiet.slice(0, 2).map((s) => `<button class="slim ok" data-open="${s.id}"><span><b>${s.name}</b><span>${s.climate} · ${pct(s.adj_pct)} after weather</span></span><em>${money(s.adj_gap)}</em></button>`).join("") : ""}
+        <h3 class="sec">All stores — tap any of them</h3>
+        ${scoped.slice().sort((a, b) => a.adj_pct - b.adj_pct).map(slim).join("")}
         ${learnBlock()}
         <p class="tie">Week net <b>${D.company_week.net.toLocaleString("en-US", { style: "currency", currency: "USD" })}</b> · ${D.company_week.rows} rows. Ties to net sales. Weather is simulated for the climate. <a class="textbtn" href="notes.html">Definitions</a></p>`;
       document.getElementById("open-scope").onclick = () => openSheet(scopeSheet());
@@ -194,7 +195,8 @@
       </button>`;
     }
     function slim(s) {
-      return `<button class="slim" data-open="${s.id}"><span><b>${s.name}</b><span>${s.title} · ${pct(s.adj_pct)}</span></span><em>${money(s.adj_gap)}</em></button>`;
+      const ahead = s.adj_pct >= 0;
+      return `<button class="slim${ahead ? " ok" : ""}" data-open="${s.id}"><span><b>${s.name}</b><span>${s.climate} · ${s.title} · ${pct(s.adj_pct)}</span></span><em>${money(s.adj_gap)}</em></button>`;
     }
 
     function learnBlock() {
