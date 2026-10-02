@@ -43,7 +43,8 @@
     .readout .slim b { font-size: 14px; }
     .readout .slim > span span { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .hot { color: var(--call); font-weight: 560; }
-    .tipbox { min-height: 2.6em; font-size: 13px; margin: 6px 0 0; }
+    .wxbox { background: #e7f0f4; border: 1px solid #c9dde6; border-radius: 14px; padding: 10px 12px; margin-top: 12px; }
+    .wxbox h3 { margin: 0 0 4px; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: #31556a; }
     .filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 0; }
     .filters select, .storefilter { width: 100%; border: 1px solid var(--line-strong); background: var(--card); border-radius: 10px; padding: 10px; font: inherit; font-size: 14px; }
     .storefilter { margin-top: 8px; }
@@ -283,15 +284,15 @@
         }[w.label];
         const why = words;
         const shift = `${w.label} ${pct(w.pct)}`;
-        const rev = pct(dayMode ? daySnap(s).pacePct : s.adj_pct);
-        if (!dayMode) return { s, pct: s.adj_pct, gap: s.adj_gap, why, shift, rev };
+        const rev = pct(dayMode ? daySnap(s).pacePct : s.raw_pct);
+        if (!dayMode) return { s, pct: s.raw_pct, gap: s.raw_gap, why, shift, rev };
         const v = daySnap(s);
         return { s, pct: v.pacePct, gap: v.gap, why, shift, rev };
       }).sort((a, b) => a.pct - b.pct);
       const calls = rows.filter((r) => r.pct <= -30);
       const companyNet = dayMode ? scoped.reduce((n, s) => n + dayOf(s).net, 0) : D.company_week.net;
       const companyPace = dayMode ? scoped.reduce((n, s) => n + dayOf(s).exp, 0) : null;
-      const companyPct = dayMode && companyPace ? (companyNet - companyPace) / companyPace * 100 : D.company_week.peer_median;
+      const companyPct = dayMode && companyPace ? (companyNet - companyPace) / companyPace * 100 : scoped.map((s) => s.raw_pct).sort((a, b) => a - b)[Math.floor(scoped.length / 2)];
       const rest = rows.filter((r) => r.pct > -30);
       const row = (r) => `<button class="slim${r.pct >= 0 ? " ok" : ""}" data-open="${r.s.id}"><span class="line"><b>${r.s.name}</b><span class="nums">${r.why}</span></span><em>${money(r.gap)}<small>${r.rev}</small></em></button>`;
       document.getElementById("app").innerHTML = `
@@ -400,8 +401,7 @@
         ["SPH", pct(sph.pct), `$${Math.round(sph.actual)} vs $${Math.round(sph.pace)} pace`, tone(sph.pct), "SPH $" + Math.round(sph.actual) + " versus $" + Math.round(sph.pace) + " pace, " + pct(sph.pct)],
         ["Ticket", pct(ticket.pct), `$${Math.round(ticket.actual)} vs $${Math.round(ticket.pace)} pace`, tone(ticket.pct), "Average ticket $" + Math.round(ticket.actual) + " versus $" + Math.round(ticket.pace) + " pace, " + pct(ticket.pct)],
         ["Traffic", pct(trafPct), `${Math.round(trafAct)} vs ${Math.round(trafPace)} pace`, tone(trafPct), "Traffic " + Math.round(trafAct) + " versus " + Math.round(trafPace) + " pace, " + pct(trafPct)],
-        ["Close", close == null ? "—" : close.toFixed(0) + "%", `${closePts >= 0 ? "+" : "−"}${Math.abs(closePts).toFixed(1)} pts vs ${closePace == null ? "—" : closePace.toFixed(0)}% habit`, closePts <= -3 ? "bad" : closePts >= 2 ? "good" : "", "Close rate versus habit."],
-        ["Weather", wx.high + "°", `${tempGap >= 0 ? "+" : "−"}${Math.abs(tempGap).toFixed(0)}° vs last year · ${inches} in vs ${lyIn} in`, inches > lyIn + 0.4 ? "bad" : "", "High " + wx.high + "° versus " + ly.high + "° last year."]
+        ["Close", close == null ? "—" : close.toFixed(0) + "%", `${closePts >= 0 ? "+" : "−"}${Math.abs(closePts).toFixed(1)} pts vs ${closePace == null ? "—" : closePace.toFixed(0)}% habit`, closePts <= -3 ? "bad" : closePts >= 2 ? "good" : "", "Close rate versus habit."]
       ];
       return `<div class="mcards">${cards.map(([name, big, sub, tone, title]) => `<div class="mcard ${tone}" data-tip="${tip(title)}"><b>${name} ${big}</b><span>${sub}</span></div>`).join("")}</div>`;
     }
@@ -433,11 +433,19 @@
         Traffic: "The door slowed and the weather does not explain it. Check the circular and the road sign.",
         Close: "Traffic did not turn into tickets. Watch the first sit. No one works a guest alone."
       };
-      if (state.mode === "week") return s.why + " " + s.say;
+      if (state.mode === "week") return s.say;
       const v = daySnap(s);
-      const wx = v.d.wx;
-      const ly = v.d.ly;
-      return dayLabel(state.day) + " was " + money(v.d.net) + " versus a " + money(v.d.exp) + " same-" + v.d.wd + " habit, " + money(v.gap) + ". " + w.label + " is the break, " + pct(w.pct) + ". Traffic " + Math.round(v.d.traf) + " versus " + Math.round(v.d.exp_traf) + ". High " + wx.high + "° versus " + ly.high + "° last year, " + wx.inches + " in versus " + ly.inches + " in. " + lines[w.label];
+      return dayLabel(state.day) + " was " + money(v.d.net) + " versus a " + money(v.d.exp) + " same-" + v.d.wd + " habit, " + money(v.gap) + ". " + w.label + " is the break, " + pct(w.pct) + ". Traffic " + Math.round(v.d.traf) + " versus " + Math.round(v.d.exp_traf) + ". " + lines[w.label];
+    }
+    function weatherSection(s) {
+      const dayMode = state.mode !== "week";
+      const v = dayMode ? daySnap(s) : null;
+      const wx = dayMode ? v.d.wx : s.wx;
+      const lyHigh = dayMode ? v.d.ly.high : s.wx.ly_high;
+      const lyIn = dayMode ? v.d.ly.inches : s.wx.ly_inches;
+      const inches = wx.inches;
+      const moved = s.raw_gap - s.adj_gap;
+      return `<section class="wxbox"><h3>Weather, a possible factor</h3><p>Not taken out of the sales or traffic numbers. High ${wx.high}° versus ${lyHigh}° last year. ${inches} in versus ${lyIn} in on the comparable days. An inch of snow costs about ${s.snow_hit}% of a day here, versus about 6% in New England and about 40% in Georgia. An inch of rain costs about ${s.rain_hit}%. This climate could have moved sales about ${money(moved)}. It can also slow the door.</p></section>`;
     }
     function metricFlags(s) {
       return (s.metrics || []).filter((m) => m.pct <= -15);
@@ -557,6 +565,7 @@
         <p class="meta">${s.zone} · ${s.climate}</p>
         ${metricCards(s)}
         <p class="note">${coachBlurb(s)}</p>
+        ${weatherSection(s)}
         ${state.mode === "week" ? weekSvg(s) + wxSvg(s) + metricCharts(s) : ""}
         <p class="tipbox" id="sheet-tip">Tap a bar or a card for the numbers.</p>
         <label>Entered by</label>
